@@ -13,6 +13,7 @@
     
     
     
+    
     <title>Git 备忘录 | 这是个标题 | 这是个子标题</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
@@ -231,7 +232,7 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone --bare https://github.com/user/repo.git</span><br><span class="line">cd repo.git</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>复制以下脚本，填写好信息，然后执行脚本</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line"></span><br><span class="line">git filter-branch --env-filter '</span><br><span class="line">OLD_EMAIL="填写你的旧邮箱"</span><br><span class="line">CORRECT_NAME="填写你的 Github 用户名"</span><br><span class="line">CORRECT_EMAIL="填写新邮箱"</span><br><span class="line">if [ "$GIT_COMMITTER_EMAIL" = "$OLD_EMAIL" ]</span><br><span class="line">then</span><br><span class="line">    export GIT_COMMITTER_NAME="$CORRECT_NAME"</span><br><span class="line">    export GIT_COMMITTER_EMAIL="$CORRECT_EMAIL"</span><br><span class="line">fi</span><br><span class="line">if [ "$GIT_AUTHOR_EMAIL" = "$OLD_EMAIL" ]</span><br><span class="line">then</span><br><span class="line">    export GIT_AUTHOR_NAME="$CORRECT_NAME"</span><br><span class="line">    export GIT_AUTHOR_EMAIL="$CORRECT_EMAIL"</span><br><span class="line">fi</span><br><span class="line">' --tag-name-filter cat -- --branches --tags</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/sh</span><br><span class="line"></span><br><span class="line">git filter-branch --env-filter '</span><br><span class="line">OLD_EMAIL="填写你的旧邮箱"</span><br><span class="line">CORRECT_NAME="填写你的 Github 用户名"</span><br><span class="line">CORRECT_EMAIL="填写新邮箱"</span><br><span class="line">if [ "$GIT_COMMITTER_EMAIL" = "$OLD_EMAIL" ]</span><br><span class="line">then</span><br><span class="line">    export GIT_COMMITTER_NAME="$CORRECT_NAME"</span><br><span class="line">    export GIT_COMMITTER_EMAIL="$CORRECT_EMAIL"</span><br><span class="line">fi</span><br><span class="line">if [ "$GIT_AUTHOR_EMAIL" = "$OLD_EMAIL" ]</span><br><span class="line">then</span><br><span class="line">    export GIT_AUTHOR_NAME="$CORRECT_NAME"</span><br><span class="line">    export GIT_AUTHOR_EMAIL="$CORRECT_EMAIL"</span><br><span class="line">fi</span><br><span class="line">' --tag-name-filter cat -- --branches --tags</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>运行脚本，等待完成</p>
 </li>
@@ -365,6 +366,12 @@
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </section>
+
+
+
+
+
+
 
 
 
@@ -515,7 +522,7 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
 
 
 
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
 
