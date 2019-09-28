@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Android 仿知乎分享控件 | 这是个标题 | 这是个子标题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="使用 BottomSheetDialog 实现仿知乎分享控件主要步骤：  首先获取手机内所有支持分享的应用，得到 ResolveInfo 对象，利用反射获取应用图标等信息 然后用 RecyclerView 的 GridLayoutManager 网格布局展示，自己实现点击事件就差不多完成了  截图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 仿知乎分享控件">
+<meta property="og:url" content="https://imeiji.github.io/2017/10/02/Android 仿知乎分享控件/index.html">
+<meta property="og:site_name" content="这是个标题">
+<meta property="og:description" content="使用 BottomSheetDialog 实现仿知乎分享控件主要步骤：  首先获取手机内所有支持分享的应用，得到 ResolveInfo 对象，利用反射获取应用图标等信息 然后用 RecyclerView 的 GridLayoutManager 网格布局展示，自己实现点击事件就差不多完成了  截图">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2017/10/02/59d21337b143b.png">
+<meta property="og:updated_time" content="2017-10-02T10:22:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 仿知乎分享控件">
+<meta name="twitter:description" content="使用 BottomSheetDialog 实现仿知乎分享控件主要步骤：  首先获取手机内所有支持分享的应用，得到 ResolveInfo 对象，利用反射获取应用图标等信息 然后用 RecyclerView 的 GridLayoutManager 网格布局展示，自己实现点击事件就差不多完成了  截图">
+<meta name="twitter:image" content="https://i.loli.net/2017/10/02/59d21337b143b.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="这是个标题" href="../../../../atom.xml">
+    
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(../../../../img/brand.jpg)">
+      <div class="brand">
+        <a href="../../../../index.html" class="avatar waves-effect waves-circle waves-light">
+          <img src="../../../../img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">iMeiji</h5>
+          <a href="mailto:meijilmz@gmail.com" title="meijilmz@gmail.com" class="mail">meijilmz@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../index.html"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/iMeiji" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android 仿知乎分享控件</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android 仿知乎分享控件</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-10-02T06:10:54.000Z" itemprop="datePublished" class="page-time">
+  2017-10-02
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#截图"><span class="post-toc-number">1.</span> <span class="post-toc-text">截图</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#简单实现"><span class="post-toc-number">2.</span> <span class="post-toc-text">简单实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#缺点"><span class="post-toc-number">3.</span> <span class="post-toc-text">缺点</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#优点"><span class="post-toc-number">4.</span> <span class="post-toc-text">优点</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Android 仿知乎分享控件"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android 仿知乎分享控件</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-10-02 14:10:54" datetime="2017-10-02T06:10:54.000Z"  itemprop="datePublished">2017-10-02</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>使用 BottomSheetDialog 实现仿知乎分享控件<br>主要步骤：</p>
+<ol>
+<li>首先获取手机内所有支持分享的应用，得到 ResolveInfo 对象，利用反射获取应用图标等信息</li>
+<li>然后用 RecyclerView 的 GridLayoutManager 网格布局展示，自己实现点击事件就差不多完成了</li>
+</ol>
+<h2 id="截图"><a href="#截图" class="headerlink" title="截图"></a>截图</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2017/10/02/59d21337b143b.png" alt="1.png" title="">
+                </div>
+                <div class="image-caption">1.png</div>
+            </figure>
+<h2 id="简单实现"><a href="#简单实现" class="headerlink" title="简单实现"></a>简单实现</h2><ul>
+<li><p>写一个分享界面的布局</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:padding</span>=<span class="string">"16dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"我是广告栏"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:textAppearance</span>=<span class="string">"@style/TextAppearance.AppCompat"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:textSize</span>=<span class="string">"18sp"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">View</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"1px"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:background</span>=<span class="string">"@android:color/darker_gray"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.v7.widget.RecyclerView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/list_view"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 Activity 里使用 BottomSheetDialog 控件显示</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">BottomSheetDialog mBottomSheetDialog = new BottomSheetDialog(this);</span><br><span class="line">mBottomSheetDialog.setContentView(R.layout.dialog_bottom_sheet);</span><br><span class="line">mBottomSheetDialog.show();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>写一个 RecyclerViewAdapter 和 appinfo_item 布局</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;LinearLayout</span><br><span class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">    android:gravity=&quot;center&quot;</span><br><span class="line">    android:orientation=&quot;vertical&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;ImageView</span><br><span class="line">        android:id=&quot;@+id/img_list_item&quot;</span><br><span class="line">        android:layout_width=&quot;48dp&quot;</span><br><span class="line">        android:layout_height=&quot;48dp&quot;</span><br><span class="line">        android:scaleType=&quot;centerCrop&quot;</span><br><span class="line">        tools:src=&quot;@mipmap/ic_launcher&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;TextView</span><br><span class="line">        android:id=&quot;@+id/text_list_item&quot;</span><br><span class="line">        android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:layout_marginTop=&quot;2dp&quot;</span><br><span class="line">        android:ellipsize=&quot;end&quot;</span><br><span class="line">        android:singleLine=&quot;true&quot;</span><br><span class="line">        tools:text=&quot;分享11111111111111&quot;/&gt;</span><br><span class="line">&lt;/LinearLayout&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取手机内所有支持分享的应用列表</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;ResolveInfo&gt; <span class="title">getShareApps</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</span><br><span class="line">        List&lt;ResolveInfo&gt; resolveInfoList;</span><br><span class="line">        PackageManager pm = context.getPackageManager();</span><br><span class="line">        resolveInfoList = pm.queryIntentActivities(intent, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);</span><br><span class="line">        <span class="keyword">return</span> resolveInfoList;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>返回数据给 Activity，然后设置 Adapter 就差不多完成，详细代码见 <a href="https://github.com/iMeiji/ZhihuShareDialog" target="_blank" rel="noopener">ZhihuShareDialog</a></p>
+</li>
+</ul>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><ul>
+<li><p>通过 PackageManager 的 queryIntentActivities 方法获取到的应用是按照应用安装的先后顺序，而 Lollipop(5.0) 开始原生分享已支持自动把常用应用排在最顶部。当然也可以自己实现应用的排序，但比较折腾，可参考源码 <a href="https://github.com/android/platform_frameworks_base/blob/lollipop-release/core/java/com/android/internal/app/ResolverActivity.java#L1052" target="_blank" rel="noopener">ResolverActivity</a></p>
+<p>​</p>
+</li>
+</ul>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ul>
+<li>可以自定义分享界面，比如像知乎那样添加广告栏，设计一套属于自己的 UI ，设置应用的排列顺序等等</li>
+</ul>
+<hr>
+<p>源码下载地址 ： <a href="https://github.com/iMeiji/ZhihuShareDialog" target="_blank" rel="noopener">https://github.com/iMeiji/ZhihuShareDialog</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-10-02T10:22:47.000Z" itemprop="dateUpdated">2017-10-02 18:22:47</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="" target="_blank" rel="external">https://imeiji.github.io/2017/10/02/Android 仿知乎分享控件/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://imeiji.github.io">
+            <img src="../../../../img/avatar.jpg" alt="iMeiji">
+            iMeiji
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2017/10/02/Android 仿知乎分享控件/&title=《Android 仿知乎分享控件》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2017/10/02/Android 仿知乎分享控件/&title=《Android 仿知乎分享控件》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2017/10/02/Android 仿知乎分享控件/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android 仿知乎分享控件》 — 这是个标题&url=https://imeiji.github.io/2017/10/02/Android 仿知乎分享控件/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2017/10/02/Android 仿知乎分享控件/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="../../../11/13/Android App 启动页面最佳实现/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android App 启动页面最佳实现</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="../../../09/16/OpenConnect VPN server/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">OpenConnect VPN server</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'imeijimyblog';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="../../../../index.html" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="../../../../atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>iMeiji &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2017/10/02/Android 仿知乎分享控件/&title=《Android 仿知乎分享控件》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2017/10/02/Android 仿知乎分享控件/&title=《Android 仿知乎分享控件》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2017/10/02/Android 仿知乎分享控件/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android 仿知乎分享控件》 — 这是个标题&url=https://imeiji.github.io/2017/10/02/Android 仿知乎分享控件/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2017/10/02/Android 仿知乎分享控件/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuElEQVR42u3awa7bQAgF0Pz/T6dSV61UOxcYnKfqeBUlkYczC4MZXq/4ev++/vx89c39r1d3zv/z2rjw8PDwWqHnIeZBXP3/PtDkPknMeHh4eNu8ajLIw73foKtv8s8fIsHDw8P7Ki9Z5h1c+fbh4eHh/U+8PPQkAUziwcPDw/sWr/oQ7zV/e8njoV4LHh4eXsybB/r85/XzPTw8PLzWqXp1FODUsdkkwr/uhoeHh7fAS8rW3gBW7+hrMmJVeGPAw8PDG/Dyl/wq7D4lVJsdzeIbDw8Pb41XHZzKMdWUMC/E//HGgIeHh7fGmySGpAjOf60W5VFiwMPDwzvES0rY++/zgjtfK9+4qGGBh4eHd5TXG2OakHrpIY/qwxsDHh4e3lFe3mbNt6O3fc38lhTTeHh4eAu86shUgs9btPmGRmU6Hh4e3gJvMuqUP9DnY1X5WNjlPfHw8PAO8XrjApPH+qkNjSLBw8PDW+P12rV50NU2bm+tyzYuHh4e3iO88lHTuJjOG77lmTI8PDy8R3jJWEC+fH4wlg8KRGkJDw8Pb43Xa5VOiuZeeyJPVHh4eHhP8qot1F77tXeoVl4RDw8Pb42XFMTJsVZSNCerVDexcACGh4eHd5R3asQqTyRVajXN4OHh4W3w5qNO1cZu3nTIV5wMcuHh4eFVeb0CN29MVMenemtFQ1d4eHh4C7zeYdi8zJ2nk8stxsPDw1vgJYv1hgaqqWVS9Te7L3h4eHgt3rt4nW3C5s/wahr7cL6Hh4eHN+BNzomqj/JvjSbg4eHhbfCSZLDRmOgllaRxjIeHh/cMrzdEVR0dmI8dVAtxPDw8vO/yqodSyTcJYBIhHh4e3k/gVRsT1SZCdWuiZgQeHh7eAq/ajOiNCFRbt9WxhvIAAR4eHl6LVz0Am5S8kxGB0TQZHh4e3hneL6LiSt98zGRvAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '这是个标题';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '这是个标题';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

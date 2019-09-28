@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Android 开发艺术探索 - 第二章笔记 | 这是个标题 | 这是个子标题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="2.1 Android IPC 简介 线程是 CPU 调度的最小单元，同时线程是一种有限的系统资源。而进程一般指一个执行单元，在 PC 和移动设备上指一个程序或者一个应用。一个进程可以包含多个线程 Windows 上可以通过剪贴板、管道和油槽等来进行进程间通信；Linux 上可以通过命名管道、共享内存、信号量等来进行进程间通讯；Android 上可以通过 Binder、Socket 实现进程间通讯">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 开发艺术探索 - 第二章笔记">
+<meta property="og:url" content="https://imeiji.github.io/2018/08/01/Android 开发艺术探索 - 第二章笔记/index.html">
+<meta property="og:site_name" content="这是个标题">
+<meta property="og:description" content="2.1 Android IPC 简介 线程是 CPU 调度的最小单元，同时线程是一种有限的系统资源。而进程一般指一个执行单元，在 PC 和移动设备上指一个程序或者一个应用。一个进程可以包含多个线程 Windows 上可以通过剪贴板、管道和油槽等来进行进程间通信；Linux 上可以通过命名管道、共享内存、信号量等来进行进程间通讯；Android 上可以通过 Binder、Socket 实现进程间通讯">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2018/08/01/5b61bccc75dee.png">
+<meta property="og:image" content="https://i.loli.net/2018/08/01/5b61bde931fff.png">
+<meta property="og:image" content="https://i.loli.net/2018/08/04/5b64899d6e169.png">
+<meta property="og:image" content="https://i.loli.net/2018/08/04/5b64976be0f67.png">
+<meta property="og:image" content="https://i.loli.net/2018/08/04/5b6574177a1a4.png">
+<meta property="og:image" content="https://i.loli.net/2018/08/04/5b657f128861a.png">
+<meta property="og:updated_time" content="2018-08-04T10:25:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 开发艺术探索 - 第二章笔记">
+<meta name="twitter:description" content="2.1 Android IPC 简介 线程是 CPU 调度的最小单元，同时线程是一种有限的系统资源。而进程一般指一个执行单元，在 PC 和移动设备上指一个程序或者一个应用。一个进程可以包含多个线程 Windows 上可以通过剪贴板、管道和油槽等来进行进程间通信；Linux 上可以通过命名管道、共享内存、信号量等来进行进程间通讯；Android 上可以通过 Binder、Socket 实现进程间通讯">
+<meta name="twitter:image" content="https://i.loli.net/2018/08/01/5b61bccc75dee.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="这是个标题" href="../../../../atom.xml">
+    
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(../../../../img/brand.jpg)">
+      <div class="brand">
+        <a href="../../../../index.html" class="avatar waves-effect waves-circle waves-light">
+          <img src="../../../../img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">iMeiji</h5>
+          <a href="mailto:meijilmz@gmail.com" title="meijilmz@gmail.com" class="mail">meijilmz@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../index.html"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/iMeiji" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android 开发艺术探索 - 第二章笔记</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android 开发艺术探索 - 第二章笔记</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-07-31T16:15:15.000Z" itemprop="datePublished" class="page-time">
+  2018-08-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-1-Android-IPC-简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">2.1 Android IPC 简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-2-Android-中的多进程模式"><span class="post-toc-number">2.</span> <span class="post-toc-text">2.2 Android 中的多进程模式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-2-1-开启多进程模式"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">2.2.1 开启多进程模式</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-2-2-多进程模式的运行机制"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">2.2.2 多进程模式的运行机制</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-3-IPC-基础概念介绍"><span class="post-toc-number">3.</span> <span class="post-toc-text">2.3 IPC 基础概念介绍</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-3-1-Serializable-接口"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">2.3.1 Serializable 接口</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-3-2-Parcelable-接口"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">2.3.2 Parcelable 接口</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-3-3-Binder"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">2.3.3 Binder</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-4-Android-中的-IPC-方式"><span class="post-toc-number">4.</span> <span class="post-toc-text">2.4 Android 中的 IPC 方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-4-1-使用-Bundle"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">2.4.1 使用 Bundle</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-4-2-使用文件共享"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">2.4.2 使用文件共享</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-4-3-使用-Messenger"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">2.4.3 使用 Messenger</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-4-4-使用-AIDL"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">2.4.4 使用 AIDL</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-4-5-使用-ContentProvider"><span class="post-toc-number">4.5.</span> <span class="post-toc-text">2.4.5 使用 ContentProvider</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-5-Binder-连接池"><span class="post-toc-number">5.</span> <span class="post-toc-text">2.5 Binder 连接池</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-6-选用合适的-IPC-方式"><span class="post-toc-number">6.</span> <span class="post-toc-text">2.6 选用合适的 IPC 方式</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Android 开发艺术探索 - 第二章笔记"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android 开发艺术探索 - 第二章笔记</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-01 00:15:15" datetime="2018-07-31T16:15:15.000Z"  itemprop="datePublished">2018-08-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h3 id="2-1-Android-IPC-简介"><a href="#2-1-Android-IPC-简介" class="headerlink" title="2.1 Android IPC 简介"></a>2.1 Android IPC 简介</h3><ol>
+<li>线程是 CPU 调度的最小单元，同时线程是一种有限的系统资源。而进程一般指一个执行单元，在 PC 和移动设备上指一个程序或者一个应用。一个进程可以包含多个线程</li>
+<li>Windows 上可以通过剪贴板、管道和油槽等来进行进程间通信；Linux 上可以通过命名管道、共享内存、信号量等来进行进程间通讯；Android 上可以通过 Binder、Socket 实现进程间通讯</li>
+</ol>
+<h3 id="2-2-Android-中的多进程模式"><a href="#2-2-Android-中的多进程模式" class="headerlink" title="2.2 Android 中的多进程模式"></a>2.2 Android 中的多进程模式</h3><h4 id="2-2-1-开启多进程模式"><a href="#2-2-1-开启多进程模式" class="headerlink" title="2.2.1 开启多进程模式"></a>2.2.1 开启多进程模式</h4><p>在 Android 中使用多进程的方法，那就是给四大组件（Activity、Service、Receiver、ContentProvider）在 AndroidMenifest 中指定 android:process 属性。其实还有另一种非常规的多进程方法，那就是通过 JNI 在 native 层去 fork 一个新的进程。</p>
+<p>实例：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// 包名为 com.example.application</span><br><span class="line">&lt;service</span><br><span class="line">    android:name=&quot;.service.MyRemoteService&quot;</span><br><span class="line">    android:process=&quot;:remote&quot; /&gt;</span><br><span class="line">&lt;service</span><br><span class="line">    android:name=&quot;.service.MyRemoteServiceII&quot;</span><br><span class="line">    android:process=&quot;com.example.application.remote&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p>当 MyRemoteService 启动时，系统会为它创建一个单独的进程 ”com.example.application:remote“；</p>
+<p>当 MyRemoteServiceII 启动时，系统会为它创建一个单独的进程 ”com.example.application.remote“；</p>
+<p>没有指定 process 属性的，那么它运行在默认进程中，默认进程就是包名。</p>
+<p>”:“ 的含义是指要在当前的进程名前面附加上当前的包名，这是一种简写。其次，进程名以 ”:“ 开头的进程属于当前应用的私有进程，其他应用的组件不可以和它跑在同一个进程中，而进程名不以 ”:“ 开头的进程属于全局进程，其他应用通过 shareUID 方式可以和它跑在同一个进程中。</p>
+<h4 id="2-2-2-多进程模式的运行机制"><a href="#2-2-2-多进程模式的运行机制" class="headerlink" title="2.2.2 多进程模式的运行机制"></a>2.2.2 多进程模式的运行机制</h4><p>一般来说，使用多进程会造成如下几方面的问题：</p>
+<ol>
+<li>静态成员和单例模式完全失效</li>
+<li>线程同步机制完全失效</li>
+<li>SharedPreferences 的可靠性下降</li>
+<li>Application 会多次创建</li>
+</ol>
+<p>第一、二个问题是类似的，既然都不在同一块内存了，那么不管是锁对象还是锁全局类都无法保证线程同步，因为不同进程锁的不是用一个对象。第三个问题因为 SharedPreferences 底层是通过读/写 XML 文件来实现，并发读/写都有可能出现问题。第四个问题，运行在不同进程中的组件是属于两个不同的虚拟机和 Application 的。</p>
+<h3 id="2-3-IPC-基础概念介绍"><a href="#2-3-IPC-基础概念介绍" class="headerlink" title="2.3 IPC 基础概念介绍"></a>2.3 IPC 基础概念介绍</h3><h4 id="2-3-1-Serializable-接口"><a href="#2-3-1-Serializable-接口" class="headerlink" title="2.3.1 Serializable 接口"></a>2.3.1 Serializable 接口</h4><p>Serializable 是 Java 所提供的一个序列化接口，它是一个空接口，为对象提供标准的序列化和反序列化操作。使用  Serializable 只需要在类的声明中指定 serialVersionUID 。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">private static final long serialVersionUID = 233333333333333L</span><br></pre></td></tr></table></figure>
+<p>这个 serialVersionUID 是用来辅助序列化和反序列化过程的，原则上序列化后的数据中的 serialVersionUID 只有和当前类的 serialVersionUID 相同才能够正常地被反序列化。</p>
+<p>默认实现 Serializable 不会自动创建 serialVersionUID 属性，我们可以开启警告，这样按下代码补全就自动生成 serialVersionUID 。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/08/01/5b61bccc75dee.png" alt="Serializable_setting.png" title="">
+                </div>
+                <div class="image-caption">Serializable_setting.png</div>
+            </figure>
+<p>以下两点需要特别注意：</p>
+<ol>
+<li>静态成员变量不属于类对象，所以不会参与序列化过程</li>
+<li>用 transient 关键字标记的成员变量不会参与序列化过程</li>
+</ol>
+<h4 id="2-3-2-Parcelable-接口"><a href="#2-3-2-Parcelable-接口" class="headerlink" title="2.3.2 Parcelable 接口"></a>2.3.2 Parcelable 接口</h4><p>Parcelable 也是一个接口，只要实现了这个接口，一个类的对象就可以实现序列化并可以通过 Intent 和 Binder 传递。Android Studio 支持一键自动生成 Parcelable 代码，所以不用怕麻烦。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/08/01/5b61bde931fff.png" alt="Parcelable.png" title="">
+                </div>
+                <div class="image-caption">Parcelable.png</div>
+            </figure>
+<p>Serializable 和 Parcelable 如何选取？</p>
+<p>Serializable 是 Java 中的序列化接口，其使用起来非常简单但是开销很大，整个过程需要大量 I/O 操作。一般在保存数据到 SD 卡或者网络传输时建议使用 Serializable 即可，虽然效率差一些，好在使用方便。</p>
+<p>而 Parcelable 是 Android 中的序列化方式，更适合在 Android 平台上，缺点是使用起来稍微麻烦，但是它的效率很高。而在运行时数据传递时建议使用 Parcelable，比如 Intent，Bundle 等。</p>
+<h4 id="2-3-3-Binder"><a href="#2-3-3-Binder" class="headerlink" title="2.3.3 Binder"></a>2.3.3 Binder</h4><p>直观来说，Binder 是 Android 中的一个类，它实现了 IBinder 接口。从 IPC 角度来说，Binder 是 Android 中的一种跨进程通讯方式；从  Android Framework 角度来说，Binder 是 ServiceManager 连接各种 Manager（ActivityManager、WindowManager，等等）和相应 ManagerService 的桥梁；从 Android 应用层来说，Binder 是客户端和服务端进行通讯的媒介。</p>
+<p>下面讲几个重要的方法：</p>
+<ul>
+<li><p>asInterface</p>
+  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 用于将服务端的 Binder 对象转换成客户端所需的 AIDL 接口对象</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> com.meiji.<span class="function">IMyAidlInterface <span class="title">asInterface</span><span class="params">(android.os.IBinder obj)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 客户端和服务端位于同一进程，返回服务端的 Stub 对象本身</span></span><br><span class="line">    android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);</span><br><span class="line">    <span class="keyword">if</span> (((iin != <span class="keyword">null</span>) &amp;&amp; (iin <span class="keyword">instanceof</span> com.meiji.IMyAidlInterface))) &#123;</span><br><span class="line">        <span class="keyword">return</span> ((com.meiji.IMyAidlInterface) iin);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 返回封装后的 Stub.Proxy 对象</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> com.meiji.IMyAidlInterface.Stub.Proxy(obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>onTransact</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTransact</span><span class="params">(<span class="keyword">int</span> code, android.os.Parcel data, android.os.Parcel reply, <span class="keyword">int</span> flags)</span> <span class="keyword">throws</span> android.os.RemoteException </span>&#123;</span><br><span class="line"><span class="comment">// 服务端通过 code 确定客户端请求的目标方法</span></span><br><span class="line">  <span class="keyword">switch</span> (code) &#123;</span><br><span class="line">      <span class="keyword">case</span> TRANSACTION_basicTypes: &#123;</span><br><span class="line">          data.enforceInterface(DESCRIPTOR);</span><br><span class="line">          <span class="keyword">int</span> _arg0;</span><br><span class="line">          <span class="comment">// 从 data 中取出参数</span></span><br><span class="line">          _arg0 = data.readInt();</span><br><span class="line">          <span class="comment">// 然后执行目标方法</span></span><br><span class="line">          <span class="keyword">this</span>.basicTypes(_arg0, _arg1, _arg2, _arg3, _arg4, _arg5);</span><br><span class="line">          <span class="comment">// 执行完毕后，向 reply 中写入返回值</span></span><br><span class="line">          reply.writeNoException();</span><br><span class="line">          reply.writeInt(_result);</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">super</span>.onTransact(code, data, reply, flags);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Proxy#toUpperCase</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这个方法是我们在 AIDL 文件里定义的接口实现方法，当客户端调用此方法</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">toUpperCase</span><span class="params">(java.lang.String aString)</span> <span class="keyword">throws</span> android.os.RemoteException </span>&#123;</span><br><span class="line">    <span class="comment">// 创建输入型 Parcel 对象 _data</span></span><br><span class="line">    android.os.Parcel _data = android.os.Parcel.obtain();</span><br><span class="line">    <span class="comment">// 创建输出型 Parcel 对象 _reply</span></span><br><span class="line">    android.os.Parcel _reply = android.os.Parcel.obtain();</span><br><span class="line">    java.lang.String _result;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        _data.writeInterfaceToken(DESCRIPTOR);</span><br><span class="line">        <span class="comment">// 把参数信息写入 _data 中</span></span><br><span class="line">        _data.writeString(aString);</span><br><span class="line">        <span class="comment">// 调用 transact 发起 RPC（远程调用过程），同时挂起当前线程，然后服务端 onTransact 被调用</span></span><br><span class="line">        mRemote.transact(Stub.TRANSACTION_toUpperCase, _data, _reply, <span class="number">0</span>);</span><br><span class="line">        _reply.readException();</span><br><span class="line">        <span class="comment">// 写入服务端 onTransact 返回的数据</span></span><br><span class="line">        _result = _reply.readString();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        _reply.recycle();</span><br><span class="line">        _data.recycle();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 最后返回 _reply 中的数据</span></span><br><span class="line">    <span class="keyword">return</span> _result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>注意几点：</p>
+<ol>
+<li>当客户端发起远程请求时，由于当前线程会被挂起直至服务端进程返回数据，所以如果一个远程方法时很耗时的，那么不能再 UI 线程中发起远程请求</li>
+<li>由于服务端的 Binder 方法运行在 Binder 的线程池中，所以 Binder 方法不管是否耗时都应该采用同步的方式去实现，因为它已经运行在一个线程中了</li>
+<li>通过 Binder 的 linkToDeath 方法可以给 Binder 设置一个死亡代理，当 Binder 死亡时 ，我们就会收到通知，这个时候可以重新发起连接请求从而恢复连接</li>
+</ol>
+<p>Binder 的工作机制：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/08/04/5b64899d6e169.png" alt="Binder工作机制.png" title="">
+                </div>
+                <div class="image-caption">Binder工作机制.png</div>
+            </figure>
+<h3 id="2-4-Android-中的-IPC-方式"><a href="#2-4-Android-中的-IPC-方式" class="headerlink" title="2.4 Android 中的 IPC 方式"></a>2.4 Android 中的 IPC 方式</h3><h4 id="2-4-1-使用-Bundle"><a href="#2-4-1-使用-Bundle" class="headerlink" title="2.4.1 使用 Bundle"></a>2.4.1 使用 Bundle</h4><p>四大组件中的三大组件（Activity、Service、Receiver）都支持在 Intent 中传递 Bundle 数据</p>
+<h4 id="2-4-2-使用文件共享"><a href="#2-4-2-使用文件共享" class="headerlink" title="2.4.2 使用文件共享"></a>2.4.2 使用文件共享</h4><p>两个进程通过读/写同一个文件来交换数据，Android 系统允许并发读/写文件。使用 ObjectOutputStream 、ObjectInputStream 序列化一个对象到文件系统中同时从另一个进程中恢复这个对象。</p>
+<p>SharedPreferences 也属于文件共享的一类，当面对高并发的读/写访问，SharedPreferences 有很大几率会丢失数据。</p>
+<p>综上所示，文件共享方式适合在对数据同步要求不高的进程之间进行通讯，并且要妥协处理并发读/写的问题。</p>
+<h4 id="2-4-3-使用-Messenger"><a href="#2-4-3-使用-Messenger" class="headerlink" title="2.4.3 使用 Messenger"></a>2.4.3 使用 Messenger</h4><p>Messenger 可以翻译为信使，通过它可以在不同进程中传递 Message 对象，在 Message 中放入我们需要传递的数据，就可以轻松地实现数据的进程间传递。Messenger 是一种轻量级的 IPC 方案，它的底层实现是 AIDL 。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/08/04/5b64976be0f67.png" alt="Messenger工作机制.png" title="">
+                </div>
+                <div class="image-caption">Messenger工作机制.png</div>
+            </figure>
+<h4 id="2-4-4-使用-AIDL"><a href="#2-4-4-使用-AIDL" class="headerlink" title="2.4.4 使用 AIDL"></a>2.4.4 使用 AIDL</h4><p>Messenger 的作用主要是为了传递消息，很多时候我们可能需要跨进程调用服务端的方法，这种情形用 Mess anger 就无法做大了，但是可以使用 AIDL 来实现跨进程的方法调用。</p>
+<p>AIDL 大致流程：首先创建一个 Service 和一个 AIDL 接口，接着创建一个类继承 AIDL 接口中的 Stub 类并实现 Stub 中的抽象方法，在 Service 的 onBind 方法中返回这个类的对象，然后客户端就可以绑定服务端 Service，建立连接后就可以访问远程服务端的方法了。</p>
+<p>另外，由于服务端的方法（Stub 中的抽象方法）本身运行在服务端的 Binder 线程池中，所以服务端方法本身就可以执行大量耗时操作，这个时候切记不要再服务端方法中开线程去进行异步任务，除非你明确知道自己在干什么，否则不建议这么做。</p>
+<h4 id="2-4-5-使用-ContentProvider"><a href="#2-4-5-使用-ContentProvider" class="headerlink" title="2.4.5 使用 ContentProvider"></a>2.4.5 使用 ContentProvider</h4><p>和 Messenger 一样，ContentProvider 的底层实现同样也是 Binder，它是 Android 中提供的专门用于不同应用间进行数据共享的方式。系统预置了许多 ContentProvider，比如通讯录信息、日程表信息等。</p>
+<p>ContentProvider 中有六个抽象方法：onCreate、query、update、insert、delete、getType，除了 onCreate 由系统回调并运行在主线程里，其他五个方法均由外界回调并运行在 Binder 线程池中。</p>
+<h3 id="2-5-Binder-连接池"><a href="#2-5-Binder-连接池" class="headerlink" title="2.5 Binder 连接池"></a>2.5 Binder 连接池</h3><p>随着项目越来越大，AIDL 数量的增加，我们不能无限制地增加 Service，应该将所有的 AIDL 放在同一个 Service 中去管理。在这种模式下，服务端提供一个 queryBinder 接口，这个接口能够根据不同业务返回相应的 Binder 对象给客户端，客户端就可以进行远程方法调用了。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/08/04/5b6574177a1a4.png" alt="Binder连接池的工作原理.png" title="">
+                </div>
+                <div class="image-caption">Binder连接池的工作原理.png</div>
+            </figure>
+<h3 id="2-6-选用合适的-IPC-方式"><a href="#2-6-选用合适的-IPC-方式" class="headerlink" title="2.6 选用合适的 IPC 方式"></a>2.6 选用合适的 IPC 方式</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/08/04/5b657f128861a.png" alt="IPC优缺点和适用场景.png" title="">
+                </div>
+                <div class="image-caption">IPC优缺点和适用场景.png</div>
+            </figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-08-04T10:25:35.000Z" itemprop="dateUpdated">2018-08-04 18:25:35</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="" target="_blank" rel="external">https://imeiji.github.io/2018/08/01/Android 开发艺术探索 - 第二章笔记/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://imeiji.github.io">
+            <img src="../../../../img/avatar.jpg" alt="iMeiji">
+            iMeiji
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2018/08/01/Android 开发艺术探索 - 第二章笔记/&title=《Android 开发艺术探索 - 第二章笔记》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2018/08/01/Android 开发艺术探索 - 第二章笔记/&title=《Android 开发艺术探索 - 第二章笔记》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2018/08/01/Android 开发艺术探索 - 第二章笔记/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android 开发艺术探索 - 第二章笔记》 — 这是个标题&url=https://imeiji.github.io/2018/08/01/Android 开发艺术探索 - 第二章笔记/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2018/08/01/Android 开发艺术探索 - 第二章笔记/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="../../10/Android 开发艺术探索 - 第三章笔记/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android 开发艺术探索 - 第三章笔记</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="../../../07/23/Android 开发艺术探索 - 第一章笔记/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android 开发艺术探索 - 第一章笔记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'imeijimyblog';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="../../../../index.html" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="../../../../atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>iMeiji &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2018/08/01/Android 开发艺术探索 - 第二章笔记/&title=《Android 开发艺术探索 - 第二章笔记》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2018/08/01/Android 开发艺术探索 - 第二章笔记/&title=《Android 开发艺术探索 - 第二章笔记》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2018/08/01/Android 开发艺术探索 - 第二章笔记/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android 开发艺术探索 - 第二章笔记》 — 这是个标题&url=https://imeiji.github.io/2018/08/01/Android 开发艺术探索 - 第二章笔记/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2018/08/01/Android 开发艺术探索 - 第二章笔记/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrUlEQVR42u3aQY7bMBAEQP//0xsgpwQbOd0zJNaH0kmQBYmlAznu4esVH1+/j+9X/rz+dJ5c+f5rfs+BAw8PD2809Kfj/Wu+n88YyYd7uvI0Zjw8PLzbvHxSfs9I7nz/cZNfkzHj4eHhfQIvGW4Cy5+wKcHx8PDwPoHXDnE23PYcDw8P76d4SRiRF75toJAU7tezFjw8PLyY107rn3B+sb+Hh4eHt+iqt9PuJurNI4xinHh4eHgXeHmbahM0tEVwEoIUCwYeHh7eUV473Z/aEDBrg7VLCB4eHt4NXj6szdQ/K47b8Dda3vDw8PDWvLMBaxI0JOHFsQgDDw8P7wLvRjm72iAVRMCzpQgPDw/vLG9WsM6m5napyBlFYY2Hh4e35m0C1jzMzYvp/fqGh4eHd4/XTrLtwpBc2bfZHq/g4eHhXeAlIemsbZ+HEbOnDXt6eHh4eId4SWQwa/C3vE3QMAwj8PDw8Ba8WcOpLc1nJfXmOXh4eHg3ePtpfTagVVmcb1PAw8PDO8q7ESjkgWweELfUvxpgeHh4eEd5ySPa4baD25fm/3kCHh4e3gXepszNXzaLMA4vIXh4eHhHeW240Ia/pxaVYWyBh4eHd5Q328bU3jmLYt9/7mLTAB4eHt5lXt49OzWs/ZaFRwUeHh7eBV7+oPaVpzYiXPnfgIeHh7fgDUvVslWWt7VmyOFigIeHh7fgzabjPJDNG2Nt2PHKvzoeHh7emvdVHvtCPPmgs1DjH8/Hw8PDu8DbLB51aXshGp6V/nh4eHh7Xru56t6v+zy2Lqzx8PDwFrxhSFq2pvbRbf5MPDw8vM/kHd65UBbl0Vvw8PDwfpSXt7vye9rWV73FAQ8PD+8aLy9zk6I5L6/3C9WxrAUPDw9v/u++HsosXGin/rZ5hoeHh3eB9wvnP9juBiPugAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '这是个标题';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '这是个标题';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

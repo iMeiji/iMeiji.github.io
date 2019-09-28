@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>eBesucher挂机赚钱教程(LXDE+VNC+restarter) | 这是个标题 | 这是个子标题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="ebesucher是德国目前最著名的自动冲浪赚钱站，该站最低提现金额PAYPAL2欧元，此站除了可以通过自动冲浪来赚钱之外，还可以通过邮件交换的方式来赚钱 关于收益也不好说，各个地区的IP不一样，德国IP最值钱，但是德国IP比较贵；其他欧美地区的IP差不多，收益不多，但是好在可以多台VPS同时挂机，要做到支付还是相当轻松的（100000积分=2.1欧元，2欧元起付，Paypal支付）。  挂机条">
+<meta property="og:type" content="article">
+<meta property="og:title" content="eBesucher挂机赚钱教程(LXDE+VNC+restarter)">
+<meta property="og:url" content="https://imeiji.github.io/2016/04/03/eBesucher挂机赚钱教程(LXDE+VNC+restarter)/index.html">
+<meta property="og:site_name" content="这是个标题">
+<meta property="og:description" content="ebesucher是德国目前最著名的自动冲浪赚钱站，该站最低提现金额PAYPAL2欧元，此站除了可以通过自动冲浪来赚钱之外，还可以通过邮件交换的方式来赚钱 关于收益也不好说，各个地区的IP不一样，德国IP最值钱，但是德国IP比较贵；其他欧美地区的IP差不多，收益不多，但是好在可以多台VPS同时挂机，要做到支付还是相当轻松的（100000积分=2.1欧元，2欧元起付，Paypal支付）。  挂机条">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-03-20T12:03:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="eBesucher挂机赚钱教程(LXDE+VNC+restarter)">
+<meta name="twitter:description" content="ebesucher是德国目前最著名的自动冲浪赚钱站，该站最低提现金额PAYPAL2欧元，此站除了可以通过自动冲浪来赚钱之外，还可以通过邮件交换的方式来赚钱 关于收益也不好说，各个地区的IP不一样，德国IP最值钱，但是德国IP比较贵；其他欧美地区的IP差不多，收益不多，但是好在可以多台VPS同时挂机，要做到支付还是相当轻松的（100000积分=2.1欧元，2欧元起付，Paypal支付）。  挂机条">
+    
+        <link rel="alternate" type="application/atom+xml" title="这是个标题" href="../../../../atom.xml">
+    
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(../../../../img/brand.jpg)">
+      <div class="brand">
+        <a href="../../../../index.html" class="avatar waves-effect waves-circle waves-light">
+          <img src="../../../../img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">iMeiji</h5>
+          <a href="mailto:meijilmz@gmail.com" title="meijilmz@gmail.com" class="mail">meijilmz@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../index.html"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/iMeiji" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">eBesucher挂机赚钱教程(LXDE+VNC+restarter)</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">eBesucher挂机赚钱教程(LXDE+VNC+restarter)</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-04-03T08:15:07.000Z" itemprop="datePublished" class="page-time">
+  2016-04-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/VPS/">VPS</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装轻量级桌面LXDE-VNC"><span class="post-toc-number">1.</span> <span class="post-toc-text">安装轻量级桌面LXDE+VNC</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装浏览器和Flash"><span class="post-toc-number">2.</span> <span class="post-toc-text">安装浏览器和Flash</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装Java-可选"><span class="post-toc-number">3.</span> <span class="post-toc-text">安装Java(可选)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装restarter-可选"><span class="post-toc-number">4.</span> <span class="post-toc-text">安装restarter(可选)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#设置restarter-可选"><span class="post-toc-number">5.</span> <span class="post-toc-text">设置restarter(可选)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#开始冲浪"><span class="post-toc-number">6.</span> <span class="post-toc-text">开始冲浪</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#优化"><span class="post-toc-number">7.</span> <span class="post-toc-text">优化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用docker"><span class="post-toc-number">8.</span> <span class="post-toc-text">使用docker</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-eBesucher挂机赚钱教程(LXDE+VNC+restarter)"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">eBesucher挂机赚钱教程(LXDE+VNC+restarter)</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-04-03 16:15:07" datetime="2016-04-03T08:15:07.000Z"  itemprop="datePublished">2016-04-03</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/VPS/">VPS</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>ebesucher是德国目前最著名的自动冲浪赚钱站，该站最低提现金额PAYPAL2欧元，此站除了可以通过自动冲浪来赚钱之外，还可以通过邮件交换的方式来赚钱</p>
+<p>关于收益也不好说，各个地区的IP不一样，德国IP最值钱，但是德国IP比较贵；其他欧美地区的IP差不多，收益不多，但是好在可以多台VPS同时挂机，要做到支付还是相当轻松的（100000积分=2.1欧元，2欧元起付，Paypal支付）。</p>
+</blockquote>
+<p>挂机条件</p>
+<ul>
+<li>VPS内存在512M以上</li>
+<li>一个欧洲的IP的VPS</li>
+</ul>
+<p>挂机准备</p>
+<ul>
+<li>ebesucher注册地址: <a href="http://www.ebesucher.com/?ref=MeijiLee" target="_blank" rel="noopener">https://www.ebesucher.com</a><br>尽量还是要填写真实信息，收款时会验证手机号，请务必国籍填写中国。</li>
+<li>必须安装 VNC, 浏览器</li>
+<li>可选安装 Java, restarter</li>
+</ul>
+<h2 id="安装轻量级桌面LXDE-VNC"><a href="#安装轻量级桌面LXDE-VNC" class="headerlink" title="安装轻量级桌面LXDE+VNC"></a>安装轻量级桌面LXDE+VNC</h2><blockquote>
+<p>LXDE，全名为Lightweight X11 Desktop Environment，是一个自由桌面环境，可在Unix以及如Linux、BSD等POSIX相容平台上执行。廉价迷你Linux机器Raspberry Pi安装的就是这个桌面，LXDE支持debian及ubuntu环境。</p>
+</blockquote>
+<p><strong>LXDE桌面安装方法</strong></p>
+<ol>
+<li>首先运行update<br><code>apt-get update</code>  </li>
+<li>安装LXDE环境<br><code>apt-get install xorg lxde-core tightvncserver</code><br>其中xorg为x window，tightvncserver为vnc server<br>在过程中有一个机器地区选择，我们默认回车就可以。</li>
+<li>启动VNC/输入密码<br><code>tightvncserver :1</code><br>需要输入vnc密码，提示”Would you like to enter a view-only password (y/n)?”时回车即可</li>
+<li><p>配置xstartup系统文件<br>首先要暂停vnc，可以使用如下代码：<br><code>tightvncserver -kill :1</code><br>编辑xstartup文件：<br><code>vi ~/.vnc/xstartup</code><br>然后在文件的最后添加下面的脚本代码  </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">lxterminal &amp;</span><br><span class="line">/usr/bin/lxsession -s LXDE &amp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启VNC<br><code>tightvncserver :1</code></p>
+</li>
+</ol>
+<p><strong>LXDE桌面使用方法</strong>  </p>
+<ol>
+<li>使用vnc viewer登陆<br>在这里下载: <a href="http://www.realvnc.com/download/viewer/" target="_blank" rel="noopener">http://www.realvnc.com/download/viewer/</a><br>打开客户端，输入IP:590x，这里x是x桌面的编号:<br>连接后输入密码，就可以进入桌面了。</li>
+</ol>
+<h2 id="安装浏览器和Flash"><a href="#安装浏览器和Flash" class="headerlink" title="安装浏览器和Flash"></a>安装浏览器和Flash</h2><blockquote>
+<p>建议安装两个浏览器,方便随时切换  </p>
+</blockquote>
+<ul>
+<li><p>安装Firefox</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># debian</span><br><span class="line">apt-get install iceweasel</span><br><span class="line"># Ubuntu</span><br><span class="line">apt-get install firefox</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装chrome(可选)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 32位</span><br><span class="line">wget https://dl.google.com/linux/direct/google-chrome-stable_current_i386.deb</span><br><span class="line">dpkg -i google-chrome-stable_current_i386.deb</span><br><span class="line"># 64位</span><br><span class="line">wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb</span><br><span class="line">dpkg -i google-chrome-stable_current_amd64.deb</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装Flash<br>方法一:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vi /etc/apt/sources.list</span><br><span class="line"># 添加如下源</span><br><span class="line">deb ftp://ftp.debian.org/debian stable main contrib non-free</span><br><span class="line"># 更新源</span><br><span class="line">apt-get update</span><br><span class="line"># 安装flashplugin-nonfree</span><br><span class="line">apt-get install flashplugin-nonfree</span><br><span class="line"># 安装成功后重启firefox，进入firefox的插件设置页面,看看是否成功</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>​    方法二:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://fpdownload.adobe.com/get/flashplayer/pdc/24.0.0.221/flash_player_npapi_linux.x86_64.tar.gz</span><br><span class="line">tar -zxf flash_player_*_linux.x86_64.tar.gz</span><br><span class="line">cp libflashplayer.so /usr/lib/mozilla/plugins/</span><br><span class="line">cp -r usr /usr</span><br><span class="line"><span class="meta">#</span><span class="bash"> 最新下载地址 https://get.adobe.com/cn/flashplayer/otherversions/</span></span><br></pre></td></tr></table></figure>
+<h2 id="安装Java-可选"><a href="#安装Java-可选" class="headerlink" title="安装Java(可选)"></a>安装Java(可选)</h2><ul>
+<li><p>Debian</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main"</span> | tee /etc/apt/sources.list.d/webupd8team-java.list</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main"</span> | tee -a /etc/apt/sources.list.d/webupd8team-java.list</span><br><span class="line">apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886</span><br><span class="line">apt-get update</span><br><span class="line">apt-get install oracle-java8-installer</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Ubuntu</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install python-software-propertie  software-properties-common</span><br><span class="line">add-apt-repository ppa:webupd8team/java</span><br><span class="line">apt-get update</span><br><span class="line">apt-get install oracle-java8-installer</span><br><span class="line"><span class="comment"># 选择Java版本(可选)</span></span><br><span class="line">update-alternatives --config java</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="安装restarter-可选"><a href="#安装restarter-可选" class="headerlink" title="安装restarter(可选)"></a>安装restarter(可选)</h2><blockquote>
+<p>restarter是ebesucher提供的挂机辅助工具，可以在浏览器出现错误（冲浪的网站弹窗，卡死，崩溃等）时自动重启浏览器，这样极大的方便了我们挂机，避免手动维护。</p>
+</blockquote>
+<ul>
+<li><p>下载restarter</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget https://www.ebesucher.com/data/restarter-setup-others.v1.2.03.zip</span><br><span class="line">apt-get install unzip</span><br><span class="line">unzip restarter-setup-others.v1.2.03.zip</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装好java及restarter之后，通过vnc viewer进入桌面，启动终端界面root Terminal<br>输入以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd /root</span><br><span class="line">java -jar restarter.jar</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这样就已启动restarter</p>
+<h2 id="设置restarter-可选"><a href="#设置restarter-可选" class="headerlink" title="设置restarter(可选)"></a>设置restarter(可选)</h2><blockquote>
+<p>启动restarter之后需要对restarter进行设置</p>
+</blockquote>
+<ol>
+<li>输入username和CODE。<br>CODE可以在 <a href="http://www.ebesucher.com/restarter.html" target="_blank" rel="noopener">http://www.ebesucher.com/restarter.html</a> 中找到</li>
+<li>选择语言language<br>有三个选项，到这里查看你的地址 <a href="https://www.ebesucher.com/punkteverdienen.html" target="_blank" rel="noopener">https://www.ebesucher.com/punkteverdienen.html</a><br>一般我们选择ebesucher.de</li>
+<li>选择浏览器<br>优先选择Firefox<br>chrome需要手动设置路径 <code>/opt/google/chrome/chrome --user-data-dir</code>  </li>
+</ol>
+<p>点击start surfbar即可启动firefox开始冲浪</p>
+<h2 id="开始冲浪"><a href="#开始冲浪" class="headerlink" title="开始冲浪"></a>开始冲浪</h2><ol>
+<li><p>安装 Firefox 插件并设置好你的 username</p>
+<p><a href="https://www.ebesucher.com/addon.html" target="_blank" rel="noopener">https://www.ebesucher.com/addon.html</a></p>
+</li>
+<li><p>检查 flash 是否安装成功</p>
+</li>
+<li><p>点击插件, 开始挂机</p>
+</li>
+<li><p>选择一个积分最多的地区</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http://www.ebesucher.de/surfbar/username</span><br><span class="line">http://www.ebesucher.com/surfbar/username</span><br><span class="line">http://www.ebesucher.ru/surfbar/username</span><br><span class="line">http://www.ebesucher.es/surfbar/username</span><br><span class="line">http://www.ebesucher.fr/surfbar/username</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ol>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><ol>
+<li><p>浏览器不保存历史记录<br>这一点比较重要，因为你一直在冲浪如果保存历史记录，会导致大量的记录文件。<br>进入firefox的preferences-privacy-history，设置为never remember history</p>
+</li>
+<li><p>制作脚本,定时重启浏览器及restarter</p>
+</li>
+</ol>
+<ul>
+<li><p>Firefox</p>
+<p><code>vi /root/Desktop/restart_ff.sh</code><br>写入以下内容</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="built_in">export</span> DISPLAY=localhost:1.0</span><br><span class="line"><span class="built_in">cd</span> /root</span><br><span class="line">rm -rf ~/.vnc/*.<span class="built_in">log</span> /tmp/plugtmp* &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">killall firefox &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">killall java &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">/usr/bin/firefox --new-tab http://www.ebesucher.com/surfbar/username &gt; /dev/null 2&gt;&amp;1 </span><br><span class="line">/usr/bin/java -jar /root/restarter.jar &gt; /dev/null 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p>  其中，<a href="http://www.ebesucher.com/surfbar/username中的username改为你的用户名" target="_blank" rel="noopener">http://www.ebesucher.com/surfbar/username中的username改为你的用户名</a><br>  给脚本添加可执行权限<br>  <code>chmod a+x /root/Desktop/restart_ff.sh</code><br>  编辑cron<br>  <code>vi /etc/crontab</code><br>  设置每小时执行一次该脚本<br>  <code>0 * * * * root /root/Desktop/restart_ff.sh</code><br>  重启cron<br>  <code>service cron restart</code></p>
+</li>
+<li><p>chrome<br> <code>vi /root/Desktop/restart_ch.sh</code><br>  写入以下内容  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="built_in">export</span> DISPLAY=localhost:1.0</span><br><span class="line"><span class="built_in">cd</span> /root</span><br><span class="line">rm -rf ~/.vnc/*.<span class="built_in">log</span> /tmp/plugtmp* &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">killall java &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">killall chrome &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">/opt/google/chrome/chrome --new-tab http://www.ebesucher.com/surfbar/username --user-data-dir  &gt; /dev/null 2&gt;&amp;1 </span><br><span class="line">/usr/bin/java -jar /root/restarter.jar &gt; /dev/null 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p>  其中，<a href="http://www.ebesucher.com/surfbar/username中的username改为你的用户名" target="_blank" rel="noopener">http://www.ebesucher.com/surfbar/username中的username改为你的用户名</a><br>  给脚本添加可执行权限<br>  <code>chmod a+x /root/Desktop/restart_ch.sh</code><br>  编辑cron<br>  <code>vi /etc/crontab</code><br>  设置每小时执行一次该脚本<br>  <code>0 * * * * root /root/Desktop/restart_ch.sh</code><br>  重启cron<br>  <code>service cron restart</code>    </p>
+<p>  3.使用 cpulimit 限制 firefox 的使用, 防止卡死</p>
+  <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apt-get install cpulimit</span><br><span class="line"><span class="meta">#</span><span class="bash"> 限制firefox使用50% cpu 利用率</span></span><br><span class="line">cpulimit -e firefox -l 50 &gt; /dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="使用docker"><a href="#使用docker" class="headerlink" title="使用docker"></a>使用docker</h2><p>使用docker挂机 详细教程查看 <a href="https://github.com/iMeiji/arukas-docker" target="_blank" rel="noopener">https://github.com/iMeiji/arukas-docker</a></p>
+<hr>
+<p>参考<br><a href="http://www.tennfy.com/2761.html" target="_blank" rel="noopener">TENNFY WU » Ebesucher debian vps挂机教程之restarter篇</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-03-20T12:03:12.000Z" itemprop="dateUpdated">2017-03-20 20:03:12</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="" target="_blank" rel="external">https://imeiji.github.io/2016/04/03/eBesucher挂机赚钱教程(LXDE+VNC+restarter)/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://imeiji.github.io">
+            <img src="../../../../img/avatar.jpg" alt="iMeiji">
+            iMeiji
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2016/04/03/eBesucher挂机赚钱教程(LXDE+VNC+restarter)/&title=《eBesucher挂机赚钱教程(LXDE+VNC+restarter)》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2016/04/03/eBesucher挂机赚钱教程(LXDE+VNC+restarter)/&title=《eBesucher挂机赚钱教程(LXDE+VNC+restarter)》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2016/04/03/eBesucher挂机赚钱教程(LXDE+VNC+restarter)/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《eBesucher挂机赚钱教程(LXDE+VNC+restarter)》 — 这是个标题&url=https://imeiji.github.io/2016/04/03/eBesucher挂机赚钱教程(LXDE+VNC+restarter)/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2016/04/03/eBesucher挂机赚钱教程(LXDE+VNC+restarter)/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="../../../../2017/01/05/今日头条Api分析/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">今日头条Api分析</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="../../../03/26/搭建h5ai文件服务器/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">搭建h5ai文件服务器</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'imeijimyblog';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="../../../../index.html" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="../../../../atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>iMeiji &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2016/04/03/eBesucher挂机赚钱教程(LXDE+VNC+restarter)/&title=《eBesucher挂机赚钱教程(LXDE+VNC+restarter)》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2016/04/03/eBesucher挂机赚钱教程(LXDE+VNC+restarter)/&title=《eBesucher挂机赚钱教程(LXDE+VNC+restarter)》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2016/04/03/eBesucher挂机赚钱教程(LXDE+VNC+restarter)/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《eBesucher挂机赚钱教程(LXDE+VNC+restarter)》 — 这是个标题&url=https://imeiji.github.io/2016/04/03/eBesucher挂机赚钱教程(LXDE+VNC+restarter)/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2016/04/03/eBesucher挂机赚钱教程(LXDE+VNC+restarter)/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACqUlEQVR42u3aQZLiQAwEQP7/6d3rRswOVLVawCE5ER7Tdvpg9ZT0eMSfPz8+vx1/fs7zNZMzHxsfPDw8vPGt54x///p85Z9ntiu0jxUPDw9vm/fb0sn35LWeHLn1OPDw8PC+jZe8+vM1k+1yW4rw8PDwvpn3/IbamzsrEnh4eHif4rVxw1k424YOSfm5lrXg4eHhdevXL/rPfl/p7+Hh4eGNu+pn7a7JbT0PfOu7xcPDw1vg5ZdvR6P2NuX5feLh4eFt8/LL5+2rtrmVF4YidMbDw8Nb4CVtqvxlnWCSRld+vA4m8PDw8Ma89uWe38qkudWGFEVJwMPDw7vKO6sqbdk4ixjy8oOHh4f3Kd4kPJ0EuG00/KK04OHh4S3w8v/f283xtfZ/GeMexhN4eHh4Ae9WdNvuadtnf9hmw8PDw1vgnV1mErC2yGR0oK54eHh4eANeGwfkK7QBQb69zo/g4eHh7fHaUaqzQaj2dhNMEdfi4eHhLfDmmLMG1VmkG2368fDw8N7Ca//hn4wL3B26+s/jwMPDw3sjr22S5ezkV/mI1YsihIeHh7fGuzU4dRbXnjXeiqErPDw8vAVe27CfDGm1ZWYSEOPh4eFt8NpxqPycfGQq716dHcHDw8Pb4yVb1fbMyYPL4ww8PDy8T/HOhp+SrfmtgYO2JYaHh4f3Tt7ZxSZRb/4oayQeHh7eW3jJFjmPKtrjbevrct3Dw8PDOyoJ+VZ4r63VRskvZsrw8PDwLvFuLZ0Pcp2NICTnPyYfPDw8vJKXD0vVzaeybTaJd38F4+Hh4a3x8qGBs1GqSYw7WRkPDw/vG3jz3+ZRRV5sXqTUeHh4eB/lbbzE2wGF4rp4eHh4a7x89CoPWyeFYTLigIeHh7fN23uhJwOsecg7Gg7Aw8PDu8P7C4hQnHFaDTCpAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '这是个标题';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '这是个标题';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

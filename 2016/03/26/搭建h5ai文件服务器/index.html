@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>搭建h5ai文件服务器 | 这是个标题 | 这是个子标题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="h5ai是一款不错的php目录列表程序，也就是php列目录工具,支持apache和nginx官网 https://larsjung.de/h5ai/ 介绍 h5ai is a modern file indexer for HTTP web servers with focus on your files. Directories are displayed in a appealing way">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建h5ai文件服务器">
+<meta property="og:url" content="https://imeiji.github.io/2016/03/26/搭建h5ai文件服务器/index.html">
+<meta property="og:site_name" content="这是个标题">
+<meta property="og:description" content="h5ai是一款不错的php目录列表程序，也就是php列目录工具,支持apache和nginx官网 https://larsjung.de/h5ai/ 介绍 h5ai is a modern file indexer for HTTP web servers with focus on your files. Directories are displayed in a appealing way">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-08-12T13:18:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="搭建h5ai文件服务器">
+<meta name="twitter:description" content="h5ai是一款不错的php目录列表程序，也就是php列目录工具,支持apache和nginx官网 https://larsjung.de/h5ai/ 介绍 h5ai is a modern file indexer for HTTP web servers with focus on your files. Directories are displayed in a appealing way">
+    
+        <link rel="alternate" type="application/atom+xml" title="这是个标题" href="../../../../atom.xml">
+    
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(../../../../img/brand.jpg)">
+      <div class="brand">
+        <a href="../../../../index.html" class="avatar waves-effect waves-circle waves-light">
+          <img src="../../../../img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">iMeiji</h5>
+          <a href="mailto:meijilmz@gmail.com" title="meijilmz@gmail.com" class="mail">meijilmz@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../index.html"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/iMeiji" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">搭建h5ai文件服务器</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">搭建h5ai文件服务器</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-03-26T09:16:34.000Z" itemprop="datePublished" class="page-time">
+  2016-03-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/VPS/">VPS</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#介绍"><span class="post-toc-number">1.</span> <span class="post-toc-text">介绍</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装依赖"><span class="post-toc-number">2.</span> <span class="post-toc-text">安装依赖</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装h5ai"><span class="post-toc-number">3.</span> <span class="post-toc-text">安装h5ai</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#查看h5ai配置"><span class="post-toc-number">4.</span> <span class="post-toc-text">查看h5ai配置</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置web服务器"><span class="post-toc-number">5.</span> <span class="post-toc-text">配置web服务器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-number">6.</span> <span class="post-toc-text">参考</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-搭建h5ai文件服务器"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">搭建h5ai文件服务器</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-03-26 17:16:34" datetime="2016-03-26T09:16:34.000Z"  itemprop="datePublished">2016-03-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/VPS/">VPS</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>h5ai是一款不错的php目录列表程序，也就是php列目录工具,支持apache和nginx<br>官网 <a href="https://larsjung.de/h5ai/" target="_blank" rel="noopener">https://larsjung.de/h5ai/</a></p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><blockquote>
+<p>h5ai is a modern file indexer for HTTP web servers with focus on your files. Directories are displayed in a appealing way and browsing them is enhanced by different views, a breadcrumb and a tree overview. Initially h5ai was an acronym for HTML5 Apache Index but now it supports other web servers too.</p>
+</blockquote>
+<p>Requires PHP 5.5+ and works fine with Apache httpd, lighttpd, nginx and Cherokee.  </p>
+<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><p>一条命令安装LAMP<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apt-get install mysql-server mysql-client apache2 php5 php5-cli libapache2-mod-php5 php5-mysql php5-curl php5-gd php-pear php5-imagick php5-mcrypt php5-memcache php5-mhash php5-sqlite php5-xmlrpc php5-xsl php5-json php5-dev libpcre3-dev</span><br></pre></td></tr></table></figure></p>
+<h2 id="安装h5ai"><a href="#安装h5ai" class="headerlink" title="安装h5ai"></a>安装h5ai</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd /var/www/html</span><br><span class="line"># wget https://release.larsjung.de/h5ai/h5ai-0.28.1.zip 旧版本有 搜索/打包下载 等功能</span><br><span class="line">wget https://release.larsjung.de/h5ai/h5ai-0.29.0.zip</span><br><span class="line">apt-get install unzip     </span><br><span class="line">unzip h5ai*.zip</span><br></pre></td></tr></table></figure>
+<h2 id="查看h5ai配置"><a href="#查看h5ai配置" class="headerlink" title="查看h5ai配置"></a>查看h5ai配置</h2><p>打开<code>http://YOUR-DOMAIN.TLD/_h5ai/public/index.php</code></p>
+<ul>
+<li><p><code>Cache directory</code>这个是系统文件夹的权限，分别修改public和private文件夹里的cache文件夹就可以正常</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd _h5ai</span><br><span class="line">chmod 666 private/cache </span><br><span class="line">chmod 666 public/cache</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>Movie thumbs</code>视频预览,执行:<br><code>apt-get install libav-tools</code>  </p>
+</li>
+<li><p><code>PDF thumbs</code>PDF预览,执行: </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apt-get install aptitude</span><br><span class="line">aptitude install imagemagick</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>Shell zip</code>zip预览,执行:<br><code>apt-get install zip</code>  </p>
+</li>
+</ul>
+<h2 id="配置web服务器"><a href="#配置web服务器" class="headerlink" title="配置web服务器"></a>配置web服务器</h2><p>将/_h5ai/public/index.php添加到web服务器配置文件中默认首页文件列表代码的最后位置  </p>
+<ul>
+<li><p>Apache2<br><code>cd  /etc/apache2/sites-available/</code><br>修改配置文件,增加一行<br><code>DirectoryIndex index.html index.php /_h5ai/public/index.php</code><br>然后执行<code>a2enmod rewrite</code><br>最后<code>service apache2 reload</code></p>
+</li>
+<li><p>Nginx<br> 对应的nginx配置文件中找到如下一行<br> <code>index  index.html  index.php</code><br> 改为<br> <code>index  index.html  index.php /_h5ai/public/index.php</code><br> 最后<code>service nginx reload</code></p>
+</li>
+</ul>
+<p>正常安装后，文件放置到和_h5ai平级目录就可以，当然也可以建立文件夹等等</p>
+<p>使用 LNMP 一键包的要删除 PHP 禁用函数</p>
+<p>编辑 <code>/usr/local/php/etc/php.ini</code>  将 <code>scandir</code> <code>exec</code> <code>passthru</code> 三个函数删除, 并保存重启lnmp</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://note.nyko.moe/2015/09/26/h5ai/" target="_blank" rel="noopener">h5ai-默默的文件分享系统</a>  </p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-08-12T13:18:09.000Z" itemprop="dateUpdated">2017-08-12 21:18:09</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="" target="_blank" rel="external">https://imeiji.github.io/2016/03/26/搭建h5ai文件服务器/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://imeiji.github.io">
+            <img src="../../../../img/avatar.jpg" alt="iMeiji">
+            iMeiji
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2016/03/26/搭建h5ai文件服务器/&title=《搭建h5ai文件服务器》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2016/03/26/搭建h5ai文件服务器/&title=《搭建h5ai文件服务器》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2016/03/26/搭建h5ai文件服务器/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《搭建h5ai文件服务器》 — 这是个标题&url=https://imeiji.github.io/2016/03/26/搭建h5ai文件服务器/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2016/03/26/搭建h5ai文件服务器/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="../../../04/03/eBesucher挂机赚钱教程(LXDE+VNC+restarter)/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">eBesucher挂机赚钱教程(LXDE+VNC+restarter)</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="../在Linux上安装deluge实现BT离线下载/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">在Linux上安装deluge实现BT离线下载</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'imeijimyblog';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="../../../../index.html" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="../../../../atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>iMeiji &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2016/03/26/搭建h5ai文件服务器/&title=《搭建h5ai文件服务器》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2016/03/26/搭建h5ai文件服务器/&title=《搭建h5ai文件服务器》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2016/03/26/搭建h5ai文件服务器/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《搭建h5ai文件服务器》 — 这是个标题&url=https://imeiji.github.io/2016/03/26/搭建h5ai文件服务器/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2016/03/26/搭建h5ai文件服务器/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLklEQVR42u3awXKDMAxF0fz/T9NtZlLc+yTIFPl6lWko+LBQZEmvF17Hyapd+f6Xz89nd75gyZAh47GMY7nSzZEtrrdOnvsLVYYMGRswziLY+pr161hfSb4le5MhQ4aMs2v4f5GwK0OGDBnfZ6wTPoKUIUOGjNohlj+sVmLjh2cZMmTsxuBV9+9/vqW/IUOGjEcxjnClj+fB8WgsGTJkzGZ0iv68JVm7A9+PDBkyZNSOlLyRyV9BkL3KkCFjEIMX1PqjFTwQxzuUIUPGBoyrjqn99kDtACxDhox9GHcMWNS2HieyMmTIGM3gBbJ+s7MTpoOjrAwZMoYyeBrH00eO4SU/dGcZMmSMY/QfkBbU+qW9P6qGMmTIGMfgiSCP3Dyx463TIGGVIUPGUEbtEFsbDiPBPW0wyJAhYzYjDY7r7faHVnkojzNcGTJkPJaRpnRpYOXDr7xIFzcGZMiQMYJBAmitZJa2M9MXd5ogypAhYzQjbU/eUUor/jzIkCFjAwbfXNqw7Ixu8NAsQ4aM3Ri1ZDFtHqQDHGiuTYYMGaMZPNTyUj4f2khhKFuUIUPGCMYRrjRlTIMyCfFBbJYhQ8YIRj/Y1UbH0sZnMGwhQ4aMoYzO6EPa8uRtBv6CZMiQsQ8jDXz9tK/2CxAMW8iQIWNjRnoArlUBeWNVhgwZMtJWQdo24Mni7QFXhgwZ/55BDrH8wFkbs6g1IWTIkLEDgx8dr2oVpP2Ky5qaMmTIeB7jBxJ7S6mi60KoAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '这是个标题';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '这是个标题';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Android Studio设置教程 | 这是个标题 | 这是个子标题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="文章是很久之前就写好了, 一直没有发出来, 这篇教程比较折腾, 好处是你的系统盘不会给塞满, 我把所有配置都转移到非系统盘, 如果你的 AS 用久了可以看看 .AndroidStudio 文件夹有多大, 再考虑转移配置  下载官网 http://developer.android.com/sdk/index.html各个版本 http://tools.android.com/download/s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Studio设置教程">
+<meta property="og:url" content="https://imeiji.github.io/2017/08/22/Android Studio设置教程/index.html">
+<meta property="og:site_name" content="这是个标题">
+<meta property="og:description" content="文章是很久之前就写好了, 一直没有发出来, 这篇教程比较折腾, 好处是你的系统盘不会给塞满, 我把所有配置都转移到非系统盘, 如果你的 AS 用久了可以看看 .AndroidStudio 文件夹有多大, 再考虑转移配置  下载官网 http://developer.android.com/sdk/index.html各个版本 http://tools.android.com/download/s">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://i.imgur.com/TBaBBoL.png">
+<meta property="og:image" content="http://i.imgur.com/hWbUQJw.png">
+<meta property="og:image" content="http://i.imgur.com/dNkZTxI.png">
+<meta property="og:image" content="http://i.imgur.com/Kh2X0VK.png">
+<meta property="og:image" content="http://i.imgur.com/ISqSFIO.png">
+<meta property="og:image" content="http://i.imgur.com/RuGGzmM.png">
+<meta property="og:image" content="http://i.imgur.com/YuCVtDI.png">
+<meta property="og:image" content="http://i.imgur.com/UWDzVPc.png">
+<meta property="og:image" content="http://i.imgur.com/WQy5bVQ.png">
+<meta property="og:image" content="http://i.imgur.com/0ZOskTn.png">
+<meta property="og:image" content="http://i.imgur.com/7z4UgAF.png">
+<meta property="og:image" content="http://i.imgur.com/HjWR4NW.png">
+<meta property="og:image" content="http://i.imgur.com/Wu7625a.png">
+<meta property="og:image" content="http://i.imgur.com/2vYMJBz.png">
+<meta property="og:image" content="http://i.imgur.com/ynI0US0.png">
+<meta property="og:updated_time" content="2018-05-31T16:39:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Studio设置教程">
+<meta name="twitter:description" content="文章是很久之前就写好了, 一直没有发出来, 这篇教程比较折腾, 好处是你的系统盘不会给塞满, 我把所有配置都转移到非系统盘, 如果你的 AS 用久了可以看看 .AndroidStudio 文件夹有多大, 再考虑转移配置  下载官网 http://developer.android.com/sdk/index.html各个版本 http://tools.android.com/download/s">
+<meta name="twitter:image" content="http://i.imgur.com/TBaBBoL.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="这是个标题" href="../../../../atom.xml">
+    
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(../../../../img/brand.jpg)">
+      <div class="brand">
+        <a href="../../../../index.html" class="avatar waves-effect waves-circle waves-light">
+          <img src="../../../../img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">iMeiji</h5>
+          <a href="mailto:meijilmz@gmail.com" title="meijilmz@gmail.com" class="mail">meijilmz@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../index.html"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/iMeiji" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android Studio设置教程</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android Studio设置教程</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-08-22T09:16:34.000Z" itemprop="datePublished" class="page-time">
+  2017-08-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#下载"><span class="post-toc-number">1.</span> <span class="post-toc-text">下载</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#环境变量"><span class="post-toc-number">2.</span> <span class="post-toc-text">环境变量</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#设置Android-Studio"><span class="post-toc-number">3.</span> <span class="post-toc-text">设置Android Studio</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#补充"><span class="post-toc-number">4.</span> <span class="post-toc-text">补充</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-number">5.</span> <span class="post-toc-text">参考</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Android Studio设置教程"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android Studio设置教程</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-08-22 17:16:34" datetime="2017-08-22T09:16:34.000Z"  itemprop="datePublished">2017-08-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>文章是很久之前就写好了, 一直没有发出来, 这篇教程比较折腾, 好处是你的系统盘不会给塞满, 我把所有配置都转移到非系统盘, 如果你的 AS 用久了可以看看 <code>.AndroidStudio</code> 文件夹有多大, 再考虑转移配置</p>
+</blockquote>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>官网 <a href="http://developer.android.com/sdk/index.html" target="_blank" rel="noopener">http://developer.android.com/sdk/index.html</a><br>各个版本 <a href="http://tools.android.com/download/studio" target="_blank" rel="noopener">http://tools.android.com/download/studio</a> </p>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><p>请按照实际情况进行修改(Android SDK 我就没配置, 反正可以选下载路径)<br>PATH的要特别注意, 要加到原来的后面  </p>
+<ul>
+<li><p>ADB</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Android=D:\Users\XXX\AppData\Local\Android\sdk\platform-tools</span><br><span class="line">Path=;%Android%;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Java</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">JAVA_HOME=C:\Program Files\Java\jdk1.8.0_66</span><br><span class="line">CLASSPATH=.;%JAVA_HOME%\lib;%JAVA_HOME%\lib\tools.jar</span><br><span class="line"># 注意，%PATH%为原来的环境变量值，添加&quot;;&quot;和后面的内容到原来值的后面</span><br><span class="line">PATH=%PATH%;%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Gradle</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Android Studio正式版后就内置了一个Gradle，当然你也可以另外去Gradle官网下载一个</span><br><span class="line">GRADLE_HOME=D:\Program Files\android-studio\gradle\gradle-2.10</span><br><span class="line">PATH=%PATH%;%GRADLE_HOME%\bin</span><br><span class="line"># 依赖仓库存放路径，平时构建工程时下载的依赖库都放在这里</span><br><span class="line"># 不配置的话，Windows中默认是在C:\Users\&lt;username&gt;\.gradle的</span><br><span class="line"># 重装系统时忘记备份，又不想重新下载依赖的话，就赶紧把这里改了</span><br><span class="line">GRADLE_USER_HOME=D:\Users\XXX\.gradle</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Android SDK  </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ANDROID_HOME=E:\DevTools\Android\sdk</span><br><span class="line">PATH=%PATH%;%ANDROID_HOME%\tools;%ANDROID_HOME%\platform-tools</span><br><span class="line"># ADB端口，可以避免国内一堆软件，如酷狗音乐啥的把ADB端口抢占了，值随便改个不常用的就行</span><br><span class="line">ANDROID_ADB_SERVER_PORT=7123</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Android Studio</p>
+<p>本来是用默认路径也没什么问题，不过在 Windows 环境下，什么东西都往系统盘里塞老是让人觉得不舒服</p>
+<ul>
+<li><p>修改 <code>idea.properties</code> 文件  </p>
+<p>进入 Android Studio 的安装目录, 进入bin文件夹 ,打开 <code>idea.properties</code>  , 修改对应的路径为新路径即可. (PS: 如果你的 <code>idea.properties</code>  文件文件没有以下内容, <a href="http://tools.android.com/tech-docs/configuration" target="_blank" rel="noopener">点这里</a>下载一个, 覆盖到bin文件夹)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">idea.config.path=D:/Users/XXX/.AndroidStudio/config</span><br><span class="line">idea.system.path=D:/Users/XXX/.AndroidStudio/system</span><br><span class="line">idea.plugins.path=$&#123;idea.system.path&#125;/plugins</span><br><span class="line">idea.log.path=$&#123;idea.system.path&#125;/log</span><br></pre></td></tr></table></figure>
+<p>注意<code>plugins</code>和<code>log</code>的路径不要乱改, 不然插件会安装不上<br>这种方式改完之后问题是解决了, 可是之后你在增量升级 AS 的时候就会发现总是失败, 原因就是因为你改了 bin 目录下的 <code>idea.properties</code>  文件, 那么 Google 给出的解决办法就是不要直接改 bin 目录下的 <code>idea.properties</code>  文件, 而是在 <code>%USERPROFILE%\.{FOLDER_NAME}\</code>  目录下创建一个空的<code>idea.properties</code>  文件, 把修改过的 <code>idea.properties</code> 文件复制到这里</p>
+</li>
+<li><p><code>.android</code> 文件夹的修改 </p>
+<p>这个文件夹是由 Android SDK 配置模拟器生成的, 也是最占空间的一个<br>首先, 需要添加一个系统的环境变量<br>变量名<code>ANDROID_SDK_HOME</code><br>变量值<code>D:\Users\XXX</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="设置Android-Studio"><a href="#设置Android-Studio" class="headerlink" title="设置Android Studio"></a>设置Android Studio</h2><p>不要急着新建工程,先Configure→Settings去修改设置</p>
+<ul>
+<li><p>修改主题,全局字体</p>
+<p><img src="http://i.imgur.com/TBaBBoL.png" alt=""><br>主题默认就好,个人不喜欢深色主题,字体选<code>Microsoft YaHei UI</code>就不错了</p>
+<p>​</p>
+</li>
+<li><p>禁止自动打开上次的工程</p>
+<p><img src="http://i.imgur.com/hWbUQJw.png" alt="Imgur"></p>
+<p>​</p>
+</li>
+<li><p>设置代理</p>
+<p><img src="http://i.imgur.com/dNkZTxI.png" alt="Imgur"></p>
+<p>​</p>
+</li>
+<li><p>SDK目录</p>
+<p><img src="http://i.imgur.com/Kh2X0VK.png" alt="Imgur"></p>
+</li>
+</ul>
+<ul>
+<li><p>快捷键</p>
+<p>不推荐使用 Eclipse 快捷键了, 很多功能会缺失, 强烈建议使用 IDEA 的快捷键<br><img src="http://i.imgur.com/ISqSFIO.png" alt="Imgur"></p>
+</li>
+</ul>
+<ul>
+<li><p>鼠标悬停显示文档, 格式化&amp;导包提示</p>
+<p><img src="http://i.imgur.com/RuGGzmM.png" alt="Imgur"></p>
+<ul>
+<li>鼠标指针悬停若干时间, 显示文档, 时间自己改</li>
+<li>就是按格式化代码或者导包时, 是否会显示个对话框</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>自动导包</p>
+<p><img src="http://i.imgur.com/YuCVtDI.png" alt="Imgur"></p>
+</li>
+</ul>
+<ul>
+<li><p>显示行号, 显示方法分隔线</p>
+<p><img src="http://i.imgur.com/UWDzVPc.png" alt="Imgur"></p>
+</li>
+</ul>
+<ul>
+<li><p>代码智能提示</p>
+<p><img src="http://i.imgur.com/WQy5bVQ.png" alt="Imgur"></p>
+<ol>
+<li>敲什么字符会提示<ul>
+<li>All 大小写全部符合</li>
+<li>None 不管大小写, 符合就提示</li>
+<li>First letter 第一个字符符合就OK, 其他随意</li>
+</ul>
+</li>
+<li>自动弹出时间自己改下</li>
+</ol>
+<p>​</p>
+</li>
+<li><p>代码样式配置</p>
+<p><img src="http://i.imgur.com/0ZOskTn.png" alt="Imgur"></p>
+</li>
+</ul>
+<ul>
+<li><p>修改注释位置, 禁用“语句堆一行”</p>
+<p><img src="http://i.imgur.com/7z4UgAF.png" alt="Imgur"></p>
+<ul>
+<li>Line breaks: 启用的话, 表示保持断行</li>
+<li>Comment at frist column: 启用的话, 注释符号就会在行首, 否则就按照缩进来注释</li>
+<li>Control statement in one line: 格式化代码的时候, 会把些很短的语句合并成一行. 我觉得这样影响代码可读性, 故取消</li>
+<li>Ensure right margin is not exceeded: 表示代码超过标准线就自动换行</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>修改新建文件文件头</p>
+<p><img src="http://i.imgur.com/HjWR4NW.png" alt="Imgur"></p>
+</li>
+</ul>
+<ul>
+<li><p>修改文件编码为UTF-8</p>
+<p><img src="http://i.imgur.com/Wu7625a.png" alt="Imgur"></p>
+</li>
+</ul>
+<ul>
+<li><p>修改Gradle目录</p>
+<p><img src="http://i.imgur.com/2vYMJBz.png" alt="Imgur"></p>
+</li>
+</ul>
+<ul>
+<li><p>开启Instant Run</p>
+<p><img src="http://i.imgur.com/ynI0US0.png" alt="Imgur"></p>
+</li>
+</ul>
+<hr>
+<p>到此已经配置好 AS , 新建一个工程试试吧<br>为了保险, 打开Android Studio内置的终端, 在输入如下命令查看 gradle 版本:<code>gradlew -v</code><br>配置没问题的话就显示你的 gradle 版本, 如果你配置错误 AS 会自动下载并安装个 gradle</p>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><ul>
+<li>Gradle 设置代理</li>
+</ul>
+<ol>
+<li><p>找到 <code>gradle.properties</code> 这个文件，如果你按照我上面的环境变量设置，那么文件在<code>GRADLE_USER_HOME=D:\Users\XXX\.gradle</code> 下，否则在 C 盘</p>
+</li>
+<li><p>修改 <code>gradle.properties</code> 这个文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span># Proxy setup</span><br><span class="line">systemProp.proxySet="true"</span><br><span class="line">systemProp.http.keepAlive="true"</span><br><span class="line">systemProp.http.proxyHost=127.0.0.1</span><br><span class="line">systemProp.http.proxyPort=1080</span><br><span class="line">systemProp.https.keepAlive="true"</span><br><span class="line">systemProp.https.proxyHost=127.0.0.1</span><br><span class="line">systemProp.https.proxyPort=1080</span><br><span class="line"><span class="meta">#</span># 据说只要添加下面这行 https://www.zhihu.com/question/37810416/answer/82464203</span><br><span class="line">org.gradle.jvmargs=-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span># 自动删除 30 天前的缓存</span><br><span class="line">buildCache &#123; local &#123; removeUnusedEntriesAfterDays = 30 &#125; &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span># 为所有的构建启用构建缓存</span><br><span class="line">org.gradle.caching=true</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li><p><a href="http://color-themes.com/" target="_blank" rel="noopener">IDEA主题</a></p>
+</li>
+<li><p>修改最大堆内存 </p>
+<p>在Help菜单下面，有个Edit Custom VM Option 选项，可以直接打开那个studio(64?).vmoptions文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-Xmx4g</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.zhihu.com/question/38604486" target="_blank" rel="noopener">自定义androidstudio的配置文件目录后，无法正常安装和卸载插件，是何原因？ - 知乎</a></p>
+<p><a href="https://www.zhihu.com/question/32282404/answer/55605283" target="_blank" rel="noopener">Android Studio 使用起来很卡，你们是如何解决的？</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-05-31T16:39:55.000Z" itemprop="dateUpdated">2018-06-01 00:39:55</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="" target="_blank" rel="external">https://imeiji.github.io/2017/08/22/Android Studio设置教程/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://imeiji.github.io">
+            <img src="../../../../img/avatar.jpg" alt="iMeiji">
+            iMeiji
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2017/08/22/Android Studio设置教程/&title=《Android Studio设置教程》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2017/08/22/Android Studio设置教程/&title=《Android Studio设置教程》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2017/08/22/Android Studio设置教程/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android Studio设置教程》 — 这是个标题&url=https://imeiji.github.io/2017/08/22/Android Studio设置教程/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2017/08/22/Android Studio设置教程/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="../../../09/16/OpenConnect VPN server/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">OpenConnect VPN server</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="../../../07/10/Windows 软件清单/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Windows 软件清单</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'imeijimyblog';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="../../../../index.html" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="../../../../atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>iMeiji &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2017/08/22/Android Studio设置教程/&title=《Android Studio设置教程》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2017/08/22/Android Studio设置教程/&title=《Android Studio设置教程》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2017/08/22/Android Studio设置教程/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android Studio设置教程》 — 这是个标题&url=https://imeiji.github.io/2017/08/22/Android Studio设置教程/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2017/08/22/Android Studio设置教程/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvUlEQVR42u3aQW4bMRAEQP3/0wngU4BE6+4Z0naA2pNgaVcsGiBHPXy94uvXx/Xn67+v50++e/f59bvnHL7w8PDwRkPPB53c9fy0dkLzKf7Ht+Dh4eFd4+WbQbvEP0/Z8+Dy6X77dzw8PLxv5eX4Wa2bfBIPDw/v/+Lli/uGmgcieHh4eN/LO1X+tkNPiukvylrw8PDwzqzYr1nj6vbr6/09PDw8vFFXfdMM2wTEp1pueHh4eDd4SUS72R7yIGNWXkfbBh4eHt5RXv7z/lREm8Qc7RGEt1OMh4eHd4F3Kp6YFcGbgHgWGePh4eHteUkJm28P7aKfz3G+6OPh4eF9DW9WkuYBRF5ezzahKGXBw8PDO8SbHWZqJ6WND4oEOgiL8fDw8M7yNnFtHrkm4Jyab0t4eHh4N3iz4rVtZbWbRLGnxd+Lh4eHd4O3KXlnDfvZJpQEwZ8cwMLDw8Nb8GZha976mh0sWBXN+ywZDw8Pr7ySUrjec8rwYhbpFv9PPDw8vDUvf9ypY1X7u4pWHB4eHt4FXvLozbbRHi/Yj+FVv42Hh4fX8WYL8T6YyJttq/YbHh4e3gVeW+wmqUZbLrclezJaPDw8vBu8/UKcJMSbI1ZJEPz2Xjw8PLxrvOerPWrQltezaGO4y+Hh4eEd4iXt/H35m8QNbXT7yWfw8PDwLvPyZtisgM4j4FNTj4eHh3eDty+s21bW7DBWu8Hg4eHh3ePlRW2y6M/K6LpHF2cOeHh4eLd57fbQflny5KTNVrTi8PDw8C7w8isfaDK4ffPsAAkPDw9vwWsH2pbX7V/yECS6Fw8PD+8ab9Pm3wwln+L8qFZxgAAPDw/vMi+PG/LtZNYwq/t7eHh4eD+A1za92uBj31TDw8PDu81rW1N5aXvqmclkrbIWPDw8vPI3e3vcKo8kZlvLYQAeHh7eGd5vhsxUuVMz3/oAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '这是个标题';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '这是个标题';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

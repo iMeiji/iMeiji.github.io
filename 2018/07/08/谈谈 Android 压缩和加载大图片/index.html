@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>谈谈 Android 压缩和加载大图片 | 这是个标题 | 这是个子标题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="引言目前手机摄像头像素越来越高，拍个照动不动就 5-10 M，图片体积过大导致程序很可能直接 OOM，所以压缩和加载大图片要特殊处理。微信官方有一条关于图片流量的数据，根据原图质量压缩至50-200K/张 。朋友圈的图片是强制压缩，我们只能给朋友发照片的时候选择发送原图。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谈谈 Android 压缩和加载大图片">
+<meta property="og:url" content="https://imeiji.github.io/2018/07/08/谈谈 Android 压缩和加载大图片/index.html">
+<meta property="og:site_name" content="这是个标题">
+<meta property="og:description" content="引言目前手机摄像头像素越来越高，拍个照动不动就 5-10 M，图片体积过大导致程序很可能直接 OOM，所以压缩和加载大图片要特殊处理。微信官方有一条关于图片流量的数据，根据原图质量压缩至50-200K/张 。朋友圈的图片是强制压缩，我们只能给朋友发照片的时候选择发送原图。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2018/07/08/5b41b28cc3423.png">
+<meta property="og:image" content="https://i.loli.net/2018/07/08/5b41c76443f0b.png">
+<meta property="og:image" content="https://i.loli.net/2018/07/08/5b4209cf58cd0.png">
+<meta property="og:updated_time" content="2018-07-08T13:31:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="谈谈 Android 压缩和加载大图片">
+<meta name="twitter:description" content="引言目前手机摄像头像素越来越高，拍个照动不动就 5-10 M，图片体积过大导致程序很可能直接 OOM，所以压缩和加载大图片要特殊处理。微信官方有一条关于图片流量的数据，根据原图质量压缩至50-200K/张 。朋友圈的图片是强制压缩，我们只能给朋友发照片的时候选择发送原图。">
+<meta name="twitter:image" content="https://i.loli.net/2018/07/08/5b41b28cc3423.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="这是个标题" href="../../../../atom.xml">
+    
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(../../../../img/brand.jpg)">
+      <div class="brand">
+        <a href="../../../../index.html" class="avatar waves-effect waves-circle waves-light">
+          <img src="../../../../img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">iMeiji</h5>
+          <a href="mailto:meijilmz@gmail.com" title="meijilmz@gmail.com" class="mail">meijilmz@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../index.html"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/iMeiji" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">谈谈 Android 压缩和加载大图片</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">谈谈 Android 压缩和加载大图片</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-07-08T13:28:15.000Z" itemprop="datePublished" class="page-time">
+  2018-07-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引言"><span class="post-toc-number">1.</span> <span class="post-toc-text">引言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为什么会-OOM"><span class="post-toc-number">2.</span> <span class="post-toc-text">为什么会 OOM</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#压缩图片"><span class="post-toc-number">3.</span> <span class="post-toc-text">压缩图片</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#质量压缩"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">质量压缩</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#尺寸压缩"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">尺寸压缩</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#执行顺序"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">执行顺序</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#加载图片"><span class="post-toc-number">4.</span> <span class="post-toc-text">加载图片</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#降低像素点字节"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">降低像素点字节</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#局部加载"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">局部加载</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最后"><span class="post-toc-number">5.</span> <span class="post-toc-text">最后</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-谈谈 Android 压缩和加载大图片"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">谈谈 Android 压缩和加载大图片</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-07-08 21:28:15" datetime="2018-07-08T13:28:15.000Z"  itemprop="datePublished">2018-07-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>目前手机摄像头像素越来越高，拍个照动不动就 5-10 M，图片体积过大导致程序很可能直接 OOM，所以压缩和加载大图片要特殊处理。<a href="http://weixin.qq.com/cgi-bin/readtemplate?promote=2&amp;nav=contact&amp;t=weixin_faq_networkflow" target="_blank" rel="noopener">微信官方</a>有一条关于图片流量的数据，根据原图质量压缩至50-200K/张 。朋友圈的图片是强制压缩，我们只能给朋友发照片的时候选择发送原图。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/07/08/5b41b28cc3423.png" alt="wechat.png" title="">
+                </div>
+                <div class="image-caption">wechat.png</div>
+            </figure>
+<h2 id="为什么会-OOM"><a href="#为什么会-OOM" class="headerlink" title="为什么会 OOM"></a>为什么会 OOM</h2><ul>
+<li>通常情况下，移动设备的内存资源是有限的，Android 系统会根据手机的屏幕大小和密度，为每个程序设置一个最大内存限制，应用程序消耗的内存不能超过这个最大内存限制，否则就会出现 OOM 现象。当然，这个内存限制是跟手机配置相关联的，可以通过 <code>ActivityManager.getLargeMemoryClass</code> 读取</li>
+<li>图片的操作会消耗大量的内存，特别是细节丰富的图片，例如照片。以 Galaxy Nexus 相机为例子，它拍摄一张 2592x1936 像素的照片，如果使用的位图配置是 ARGB_8888 (默认从 Android 2.3 开始)，那么这张照片加载到内存，大约会消耗 19MB 的内存（2592 x 1936 x 4字节），仅仅是图片消耗内存的数值可能已经超过了某些设备的内存限制</li>
+<li>Android 的 UI 经常会一次加载多张图片，例如，ListView、GridView、ViewPager 等等</li>
+</ul>
+<h2 id="压缩图片"><a href="#压缩图片" class="headerlink" title="压缩图片"></a>压缩图片</h2><p>首先，在 Android 设备中，图片有如下三种存在形式：</p>
+<ol>
+<li>在硬盘上时，图片展现的方式是 File</li>
+<li>在网络传输时，图片展现的方式是 Stream</li>
+<li>在内存中，图片展现的方式是 Stream 或 Bitmap</li>
+</ol>
+<p>因此，我们既要压缩图片 File 大小（减轻服务器存储压力），又要压缩图片 Pixel（避免 OOM）</p>
+<p>Android 中有两种压缩图片的方法：</p>
+<ol>
+<li><p>质量压缩（不改变图片的尺寸）</p>
+<p>质量压缩一般可用于上传大图前的处理，这样就可以节省一定的流量。<br>所谓的质量压缩，它其实只能实现对 File 的影响。<br>缺点：照片失真、耗时</p>
+</li>
+<li><p>尺寸压缩（相当于是像素上的压缩）</p>
+<p>尺寸压缩一般可用于生成缩略图<br>通过缩放图片像素来减少图片占用内存大小</p>
+</li>
+</ol>
+<p>那么问题来了，拿到一张超大图片是先进行质量压缩，还是尺寸压缩呢？</p>
+<h3 id="质量压缩"><a href="#质量压缩" class="headerlink" title="质量压缩"></a>质量压缩</h3><p><code>Bitmap.compress(CompressFormat format, int quality, OutputStream stream)</code></p>
+<p>这个方法有三个参数，是布尔类型的返回值</p>
+<ul>
+<li>CompressFormat 指定的 Bitmap 被压缩成的图片格式，只支持 JPEG，PNG，WEBP 三种</li>
+<li>quality  图片压缩质量的控制，范围为 0~100，0 表示压缩后体积最小，但是质量也是最差，100 表示压缩后体积最大，但是质量也是最好的（个人认为相当于未压缩，注意某些特殊情况压缩后体积反而增大），有些格式，例如 PNG，它是无损的，所以会忽略这个值。</li>
+<li>OutputStream 压缩后的数据会写入这个字节流中</li>
+<li>返回值表示返回的字节流是否可以使用<code>BitmapFactory.decodeStream()</code>解码成 Bitmap，至于返回值是怎么得到的，因为是 Native 的代码，没法找到逻辑。</li>
+</ul>
+<p>压缩过程如下，通过依次减少图片质量，将图片大小控制在限制值范围内</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 压缩图片</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> bitmap 被压缩的图片</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> sizeLimit 大小限制</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 压缩后的图片</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> Bitmap <span class="title">compressBitmap</span><span class="params">(Bitmap bitmap, <span class="keyword">long</span> sizeLimit)</span> </span>&#123;</span><br><span class="line">    ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">    <span class="keyword">int</span> quality = <span class="number">100</span>;</span><br><span class="line">    bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 循环判断压缩后图片是否超过限制大小，注意控制 quality 不能小于 0 ，我这里设置为 10</span></span><br><span class="line">    <span class="keyword">while</span>(baos.toByteArray().length / <span class="number">1024</span> &gt; sizeLimit &amp;&amp; quality &gt;= <span class="number">10</span>) &#123;</span><br><span class="line">        <span class="comment">// 清空baos</span></span><br><span class="line">        baos.reset();</span><br><span class="line">        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos);</span><br><span class="line">        quality -= <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Bitmap newBitmap = BitmapFactory.decodeStream(<span class="keyword">new</span> ByteArrayInputStream(baos.toByteArray()), <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> newBitmap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>小结，质量压缩通过不断较少 quality 来限制文件大小，假如图片特别大，当执行ByteArrayOutputStream.toByteArray() 这行时很可能 OOM，消耗的内存超过最大内存限制，所以质量压缩不能先执行。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/07/08/5b41c76443f0b.png" alt="OOM.png" title="">
+                </div>
+                <div class="image-caption">OOM.png</div>
+            </figure>
+<h3 id="尺寸压缩"><a href="#尺寸压缩" class="headerlink" title="尺寸压缩"></a>尺寸压缩</h3><p>Android 中的 BitmapFactory 类提供了一些解码方法，decodeByteArray()、decodeFile()、decodeResource()等等，根据不通的图片源选择不同的解码方法加载图片创建出 Bitmap。这些方法中都会传入一个<code>BitmapFactory.Options</code> 实例化对象，通过这个对象，可以更改一些加载图片的设置。由于这些解码方法用于解码加载图片，会占用内存构建 Bitmap，因此很容易导致 OOM 的异常。<br>如果将 <code>options.inJustDecodeBounds</code> 设置为 true，在解码过程中就不会申请内存去创建 Bitmap，返回的是一个空的 Bitmap，但是可以获取图片的一些属性，例如图片宽高，图片类型等等。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">BitmapFactory.Options options = <span class="keyword">new</span> BitmapFactory.Options();</span><br><span class="line">options.inJustDecodeBounds = <span class="keyword">true</span>;      <span class="comment">// 设置为true，不将图片解码到内存中</span></span><br><span class="line">BitmapFactory.decodeResource(getResources(), R.id.myimage, options);</span><br><span class="line"><span class="keyword">int</span> imageHeight = options.outHeight;    <span class="comment">// 图片高度</span></span><br><span class="line"><span class="keyword">int</span> imageWidth = options.outWidth;      <span class="comment">// 图片宽度</span></span><br><span class="line">String imageType = options.outMimeType; <span class="comment">// 图片类型</span></span><br></pre></td></tr></table></figure>
+<p>我们知道图片的大小之后，就可以决定是否将完整的图片加载到内存或者加载压缩版的图片到内存。可以基于以下几点做出决定： </p>
+<ul>
+<li>估计完整图片加载到内存中所使用内存</li>
+<li>可分配给加载图片的内存</li>
+<li>用于显示图片的控件的大小</li>
+<li>当前设备的屏幕大小和密度</li>
+</ul>
+<p>例如，如果显示图片的控件大小为 128x96 像素，就没有必要将一个 1024x768 像素的图片加载到内存中。</p>
+<p>设置<code>options.inSampleSize</code>的数值，来控制压缩图片程度。例如，将<code>options.inSampleSize</code>设置为 4，将一个 2048x1536 像素的图片解码加载到内存后产生的 Bitmap 大约为 512x384 像素，如果使用的位图配置是ARGB_8888，那么仅仅需要 0.75M（512 <em> 384 </em> 4 / 1024 / 1024） 就加载了缩小版的图片到内存，而加载完整的图片需要 12M（2048 <em> 1536 </em> 4 / 1024 / 1024）。</p>
+<p>也就是说，如果我们设置<code>inSampleSize == 2</code>，解码出来的位图的宽高是原图的 1/2，图片所占用内存缩小了1/4（1/2 * 1/2）。如果<code>inSampleSize</code>设置的值小于等1，都会当做<code>inSampleSize == 1</code>来解码加载图片。</p>
+<p>于是我们可以在加载图片的时候，根据控件的大小（显示到屏幕上的大小）来计算出压缩版图片的<code>inSampleSize</code>值。计算恰当的<code>inSampleSize</code>是尺寸压缩最重要的参数，网上有很多种算法，这里罗列几种</p>
+<ul>
+<li><p>Android 源码计算方式</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">computeSizeByAndroid</span><span class="params">(BitmapFactory.Options options, <span class="keyword">int</span> minSideLength, <span class="keyword">int</span> maxNumOfPixels)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> initialSize = computeInitialSampleSize(options, minSideLength,   maxNumOfPixels);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> roundedSize;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (initialSize &lt;= <span class="number">8</span>) &#123;</span><br><span class="line">            roundedSize = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (roundedSize &lt; initialSize) &#123;</span><br><span class="line">                roundedSize &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            roundedSize = (initialSize + <span class="number">7</span>) / <span class="number">8</span> * <span class="number">8</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> roundedSize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span>  <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">computeInitialSampleSize</span><span class="params">(BitmapFactory.Options options, <span class="keyword">int</span> minSideLength, <span class="keyword">int</span> maxNumOfPixels)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">double</span> w = options.outWidth;</span><br><span class="line">        <span class="keyword">double</span> h = options.outHeight;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> lowerBound = (maxNumOfPixels == -<span class="number">1</span>) ? <span class="number">1</span> :</span><br><span class="line">        (<span class="keyword">int</span>) Math.ceil(Math.sqrt(w * h / maxNumOfPixels));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> upperBound = (minSideLength == -<span class="number">1</span>) ? <span class="number">128</span> : (<span class="keyword">int</span>) Math.min(Math.floor(w / minSideLength), Math.floor(h / minSideLength));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (upperBound &lt; lowerBound) &#123;</span><br><span class="line">            <span class="comment">// return the larger one when there is no overlapping zone.</span></span><br><span class="line">            <span class="keyword">return</span> lowerBound;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ((maxNumOfPixels == -<span class="number">1</span>) &amp;&amp; (minSideLength == -<span class="number">1</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (minSideLength == -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> lowerBound;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> upperBound;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>使用方法如下，其中 tagWidth 和 tagHeight 为压缩后的长宽</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">BitmapFactory.Options options = <span class="keyword">new</span> BitmapFactory.Options();</span><br><span class="line">options.inJustDecodeBounds = <span class="keyword">true</span>;</span><br><span class="line">options.inSampleSize = computeSampleSize(options, -<span class="number">1</span>, tagWidth * tagHeight);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>常规算法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">computeSize</span><span class="params">(<span class="keyword">int</span> srcWidth, <span class="keyword">int</span> srcHeight, <span class="keyword">int</span> tagWidth, <span class="keyword">int</span> tagHeight)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sampleSize = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (srcHeight &gt; tagHeight &amp;&amp; srcWidth &gt; tagWidth) &#123;</span><br><span class="line">      sampleSize = srcWidth / tagWidth;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (srcHeight &lt; tagHeight &amp;&amp; srcWidth &gt; tagWidth) &#123;</span><br><span class="line">      sampleSize = srcHeight / tagHeight;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sampleSize;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>其中，srcWidth 和 srcHeight 为原图片大小，tagWidth 和 tagHeight 为压缩后的长宽</p>
+</li>
+<li><p><a href="https://github.com/Curzibn/Luban" target="_blank" rel="noopener">鲁班算法</a>，据说接近微信压缩算法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">computeSizeByLuban</span><span class="params">(<span class="keyword">int</span> srcWidth, <span class="keyword">int</span> srcHeight)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sampleSize;</span><br><span class="line">    srcWidth = srcWidth % <span class="number">2</span> == <span class="number">1</span> ? srcWidth + <span class="number">1</span> : srcWidth;</span><br><span class="line">    srcHeight = srcHeight % <span class="number">2</span> == <span class="number">1</span> ? srcHeight + <span class="number">1</span> : srcHeight;</span><br><span class="line">    srcWidth = srcWidth &gt; srcHeight ? srcHeight : srcWidth;</span><br><span class="line">    srcHeight = srcWidth &gt; srcHeight ? srcWidth : srcHeight;</span><br><span class="line">    <span class="keyword">double</span> scale = ((<span class="keyword">double</span>) srcWidth / srcHeight);</span><br><span class="line">    <span class="keyword">if</span> (scale &lt;= <span class="number">1</span> &amp;&amp; scale &gt; <span class="number">0.5625</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (srcHeight &lt; <span class="number">1664</span>) &#123;</span><br><span class="line">        sampleSize = <span class="number">1</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (srcHeight &gt;= <span class="number">1664</span> &amp;&amp; srcHeight &lt; <span class="number">4990</span>) &#123;</span><br><span class="line">        sampleSize = <span class="number">2</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (srcHeight &gt;= <span class="number">4990</span> &amp;&amp; srcHeight &lt; <span class="number">10240</span>) &#123;</span><br><span class="line">        sampleSize = <span class="number">4</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        sampleSize = srcHeight / <span class="number">1280</span> == <span class="number">0</span> ? <span class="number">1</span> : srcHeight / <span class="number">1280</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (scale &lt;= <span class="number">0.5625</span> &amp;&amp; scale &gt; <span class="number">0.5</span>) &#123;</span><br><span class="line">      sampleSize = srcHeight / <span class="number">1280</span> == <span class="number">0</span> ? <span class="number">1</span> : srcHeight / <span class="number">1280</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      sampleSize = (<span class="keyword">int</span>) Math.ceil(srcHeight / (<span class="number">1280.0</span> / scale));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sampleSize;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>OK，得到 inSampleSize 值后，就可以根据这个值来加载压缩版的图片了</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title">decodeSampledBitmapFromResource</span><span class="params">(Resources res, <span class="keyword">int</span> resId,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">int</span> reqWidth, <span class="keyword">int</span> reqHeight)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 先将inJustDecodeBounds设置为true来获取图片的长宽属性</span></span><br><span class="line">    <span class="keyword">final</span> BitmapFactory.Options options = <span class="keyword">new</span> BitmapFactory.Options();</span><br><span class="line">    options.inJustDecodeBounds = <span class="keyword">true</span>;</span><br><span class="line">    BitmapFactory.decodeResource(res, resId, options);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 计算inSampleSize</span></span><br><span class="line">    options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 加载压缩版图片</span></span><br><span class="line">    options.inJustDecodeBounds = <span class="keyword">false</span>;</span><br><span class="line">    <span class="comment">// 根据具体情况选择具体的解码方法</span></span><br><span class="line">    <span class="keyword">return</span> BitmapFactory.decodeResource(res, resId, options);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>小结，尺寸压缩的首先要获取原图的长宽值，设置<code>options.inJustDecodeBounds = true</code>仅获取 Bitmap 基本信息，接着计算 inSampleSize 值，最后通过 BitmapFactory 解码完成</p>
+<h3 id="执行顺序"><a href="#执行顺序" class="headerlink" title="执行顺序"></a>执行顺序</h3><p>回到上面那个问题，拿到一张超大图片是先进行质量压缩，还是尺寸压缩呢？</p>
+<p>答案是先尺寸压缩，后质量压缩，因为尺寸压缩可以设置<code>options.inJustDecodeBounds = true</code>仅获取 Bitmap 基本信息，几乎不占用应用程序的运行内存，最终代码如下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 图片压缩，先尺寸压缩，后质量压缩</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> srcImage  原图片文件</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> tagImage  压缩后的文件</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> byteSize  压缩后的文件大小 单位 byte</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> tagWidth  压缩后的图片宽度</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> tagHeight 压缩后的图片高度</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span> 压缩后的文件</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> File <span class="title">compress</span><span class="params">(File srcImage, File tagImage, <span class="keyword">long</span> byteSize, <span class="keyword">int</span> tagWidth, <span class="keyword">int</span> tagHeight)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    BitmapFactory.Options options = <span class="keyword">new</span> BitmapFactory.Options();</span><br><span class="line">    <span class="comment">// 仅获取基本 Bitmap 信息</span></span><br><span class="line">    options.inJustDecodeBounds = <span class="keyword">true</span>;</span><br><span class="line">    BitmapFactory.decodeFile(srcImage.getAbsolutePath(), options);</span><br><span class="line">    <span class="comment">// 原图片的宽高</span></span><br><span class="line">    <span class="keyword">int</span> srcWidth = options.outWidth;</span><br><span class="line">    <span class="keyword">int</span> srcHeight = options.outHeight;</span><br><span class="line">    <span class="comment">// 若不指定压缩后的图片宽高，采用鲁班算法</span></span><br><span class="line">    <span class="keyword">if</span> (tagHeight == <span class="number">0</span> || tagWidth == <span class="number">0</span>) &#123;</span><br><span class="line">      options.inSampleSize = computeSizeByLuban(srcWidth, srcHeight);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 定压缩后的图片宽高，采用Android算法</span></span><br><span class="line">      options.inSampleSize = computeSizeByAndroid(options, -<span class="number">1</span>, tagWidth * tagHeight);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    options.inJustDecodeBounds = <span class="keyword">false</span>;</span><br><span class="line">    <span class="comment">// 尺寸压缩后的 Bitmap</span></span><br><span class="line">    Bitmap tagBitmap = BitmapFactory.decodeFile(srcImage.getAbsolutePath(), options);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义字节流</span></span><br><span class="line">    ByteArrayOutputStream byteArrayOutputStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">    <span class="keyword">int</span> quality = <span class="number">100</span>;</span><br><span class="line">    <span class="comment">// 若不指定压缩后的文件大小，不压缩</span></span><br><span class="line">    <span class="keyword">if</span> (byteSize == <span class="number">0</span>) &#123;</span><br><span class="line">      tagBitmap.compress(Bitmap.CompressFormat.JPEG, quality, byteArrayOutputStream);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 开始质量压缩</span></span><br><span class="line">      tagBitmap.compress(Bitmap.CompressFormat.JPEG, quality, byteArrayOutputStream);</span><br><span class="line">      <span class="keyword">long</span> dataSize = byteArrayOutputStream.toByteArray().length;</span><br><span class="line">      <span class="comment">// 文件过大，压缩质量从 60 开始</span></span><br><span class="line">      <span class="keyword">if</span> (dataSize / byteSize &gt;= <span class="number">5</span>) &#123;</span><br><span class="line">        quality = <span class="number">60</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 质量低于 30 不压缩（压缩出来的效果太渣）</span></span><br><span class="line">      <span class="keyword">while</span> (quality &gt; <span class="number">30</span> &amp;&amp; dataSize &gt; byteSize) &#123;</span><br><span class="line">        quality = (<span class="keyword">int</span>) (quality * <span class="number">0.85</span>);</span><br><span class="line">        byteArrayOutputStream.reset();</span><br><span class="line">        tagBitmap.compress(Bitmap.CompressFormat.JPEG, quality, byteArrayOutputStream);</span><br><span class="line">        dataSize = byteArrayOutputStream.toByteArray().length;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Bitmap 回收</span></span><br><span class="line">    tagBitmap.recycle();</span><br><span class="line">    <span class="comment">// 输出文件</span></span><br><span class="line">    FileOutputStream fileOutputStream = <span class="keyword">new</span> FileOutputStream(tagImage);</span><br><span class="line">    fileOutputStream.write(byteArrayOutputStream.toByteArray());</span><br><span class="line">    fileOutputStream.flush();</span><br><span class="line">    fileOutputStream.close();</span><br><span class="line">    byteArrayOutputStream.close();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> tagImage;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>小结，压缩图片主要分为质量压缩和尺寸压缩，质量压缩用于减少 File 文件的体积大小，尺寸压缩用于生成缩略图，降低像素来减少图片占用内存大小（后面会讲到拒绝压缩像素加载高清图）。</p>
+<h2 id="加载图片"><a href="#加载图片" class="headerlink" title="加载图片"></a>加载图片</h2><p>首先要知道 Bitmap 所占内存大小计算方式：</p>
+<p>图片长度 x 图片宽度 x 一个像素点占用的字节数</p>
+<p>图片的长宽我们在上面已经讲到通过尺寸压缩的方式来降低，那么接下来就如何改变一个像素点占用的字节数</p>
+<h3 id="降低像素点字节"><a href="#降低像素点字节" class="headerlink" title="降低像素点字节"></a>降低像素点字节</h3><p>在 Bitmap 中有一个 Config 的属性，这个属性是用来描述每个像素被储存的大小。目前常用的 Config 有四个值：ALPHA_8、RGB_565、ARGB_4444、ARGB_8888。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/07/08/5b4209cf58cd0.png" alt="config.png" title="">
+                </div>
+                <div class="image-caption">config.png</div>
+            </figure>
+<p>其中，A 代表透明度；R 代表红色；G 代表绿色；B 代表蓝色。 </p>
+<ul>
+<li><p>ALPHA_8 </p>
+<p>表示 8 位 Alpha 位图，即 A=8，一个像素点占用 1 个字节,它没有颜色，只有透明度 </p>
+</li>
+<li><p>ARGB_4444<br>表示 16 位 ARGB 位图，即 A=4，R=4，G=4，B=4，一个像素点占 4+4+4+4=16 位，2 个字节 </p>
+</li>
+<li><p>ARGB_8888<br>表示 32 位 ARGB 位图，即 A=8，R=8，G=8，B=8，一个像素点占 8+8+8+8=32 位，4 个字节 </p>
+</li>
+<li><p>RGB_565<br>表示 16 位 RGB 位图，即 R=5，G=6，B=5，它没有透明度，一个像素点占 5+6+5=16 位，2个字节</p>
+</li>
+</ul>
+<p>有什么区别呢？最简单的，当一个颜色表现形式越多，那么画面整体的色彩就会更丰富，图片质量就会越高，当然，图片占用的储存空间也越大。Android 默认采用 ARGB_8888 ，那么我们在加载图片的时候使用 RGB_565 就能降低一半图片占用内存</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">BitmapFactory.Options options = <span class="keyword">new</span> BitmapFactory.Options();</span><br><span class="line">options.inPreferredConfig = Bitmap.Config.RGB_565;</span><br><span class="line">imageView.setImageBitmap(BitmapFactory.decodeFile(tagFile.absolutePath, options));</span><br></pre></td></tr></table></figure>
+<h3 id="局部加载"><a href="#局部加载" class="headerlink" title="局部加载"></a>局部加载</h3><p>对于图片加载还有种情况，就是单个图片非常巨大，并且还不允许压缩。比如显示：世界地图、清明上河图、微博长图等。</p>
+<p>那么对于这种需求，该如何做呢？</p>
+<p>首先不压缩，按照原图尺寸加载，那么屏幕肯定是不够大的，并且考虑到内存的情况，不可能一次性整图加载到内存中，所以肯定是局部加载，那么就需要用到一个类：<code>BitmapRegionDecoder</code></p>
+<p>至于 <code>BitmapRegionDecoder</code> 是啥，本文不打算讲，感兴趣的去看看<a href="https://blog.csdn.net/lmj623565791/article/details/49300989" target="_blank" rel="noopener">鸿洋的文章</a></p>
+<p>这里我直接推荐 2个 开源库，拿来就用</p>
+<ol>
+<li><a href="https://github.com/LuckyJayce/LargeImage" target="_blank" rel="noopener">https://github.com/LuckyJayce/LargeImage</a></li>
+<li><a href="https://github.com/davemorrissey/subsampling-scale-image-view" target="_blank" rel="noopener">https://github.com/davemorrissey/subsampling-scale-image-view</a></li>
+</ol>
+<p>具体用法看看 example ，本文也不打算讲</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>图片的处理，时刻都需要注意，因为机型配置的不同，以及现场设备内存使用的情况，都有可能导致 OOM 的现象，上述提到了压缩方法，基本适用与大部分图片压缩情况。当然如果对图片画质显示有要求，使用局部加载方法。</p>
+<p>参考：</p>
+<p><a href="https://developer.android.com/reference/android/graphics/Bitmap" target="_blank" rel="noopener">https://developer.android.com/reference/android/graphics/Bitmap</a></p>
+<p><a href="https://www.jianshu.com/p/0f56f35068e2" target="_blank" rel="noopener">https://www.jianshu.com/p/0f56f35068e2</a></p>
+<p><a href="https://blog.csdn.net/HarryWeasley/article/details/51955467" target="_blank" rel="noopener">https://blog.csdn.net/HarryWeasley/article/details/51955467</a></p>
+<p><a href="https://blog.csdn.net/lmj623565791/article/details/49300989" target="_blank" rel="noopener">https://blog.csdn.net/lmj623565791/article/details/49300989</a></p>
+<p><a href="https://github.com/LuckyJayce/LargeImage" target="_blank" rel="noopener">https://github.com/LuckyJayce/LargeImage</a></p>
+<p><a href="https://github.com/davemorrissey/subsampling-scale-image-view" target="_blank" rel="noopener">https://github.com/davemorrissey/subsampling-scale-image-view</a></p>
+<p><a href="https://github.com/Curzibn/Luban" target="_blank" rel="noopener">https://github.com/Curzibn/Luban</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-07-08T13:31:20.000Z" itemprop="dateUpdated">2018-07-08 21:31:20</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="" target="_blank" rel="external">https://imeiji.github.io/2018/07/08/谈谈 Android 压缩和加载大图片/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://imeiji.github.io">
+            <img src="../../../../img/avatar.jpg" alt="iMeiji">
+            iMeiji
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2018/07/08/谈谈 Android 压缩和加载大图片/&title=《谈谈 Android 压缩和加载大图片》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2018/07/08/谈谈 Android 压缩和加载大图片/&title=《谈谈 Android 压缩和加载大图片》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2018/07/08/谈谈 Android 压缩和加载大图片/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《谈谈 Android 压缩和加载大图片》 — 这是个标题&url=https://imeiji.github.io/2018/07/08/谈谈 Android 压缩和加载大图片/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2018/07/08/谈谈 Android 压缩和加载大图片/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="../../23/Android 开发艺术探索 - 第一章笔记/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android 开发艺术探索 - 第一章笔记</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="../../../03/24/IntelliJ IDEA license server服务器搭建/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">搭建 IDEA license server 服务器</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'imeijimyblog';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="../../../../index.html" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="../../../../atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>iMeiji &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2018/07/08/谈谈 Android 压缩和加载大图片/&title=《谈谈 Android 压缩和加载大图片》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2018/07/08/谈谈 Android 压缩和加载大图片/&title=《谈谈 Android 压缩和加载大图片》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2018/07/08/谈谈 Android 压缩和加载大图片/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《谈谈 Android 压缩和加载大图片》 — 这是个标题&url=https://imeiji.github.io/2018/07/08/谈谈 Android 压缩和加载大图片/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2018/07/08/谈谈 Android 压缩和加载大图片/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACqklEQVR42u3aMXIDIRAEQP3/03aVU1unmd1DctBEqrPM0QSAZnk84vb1064/t+26n+TJbQ0PDw9v9Jpn7brr2bCue/v99mfTcT1mPDw8vNO82cL97JXXT3JS3s/T53h4eHgf5SXI6+ft5tEe5fHw8PD+Gy/ZAFpqHnbg4eHh/TdeEkbky33bZz6JB7MWPDw8vJh3VwHsnZ8/UN/Dw8PDC5bXZNlNAos2YsjLYy/GiYeHh3eAlw9rtnm0kzULiF+MHA8PD+9W3j6cTaj5d9rLWC8+4+Hh4R3j5VejkoAgX+7zqHd4KQEPDw/vAK99fb5YbzaGfOm/OdjFw8PDi3ltRJsPIr8glRzlhyEyHh4e3jFeu1XkYWs7EUkskv8vHh4e3vt5ecDaFqjyklgbedyQKOPh4eEtyvPtUt6CN7Hs8E4EHh4e3pqX/LVd7meFtDySiC5v4eHh4R3j7bvetFlxK9nS8PDw8E7w8iU+57XFszbUqA/ZeHh4eLfy2u6S4GA/Wfupx8PDwzvHm/1+z+ODE3HGppCGh4eHd4J3okiW95y/6/r4/sgbHh4e3oLXhqf7KwUz9jD8xcPDwzvAa4PaJBrYXBEYXrSanb7x8PDwFofmNqidlcQ2VwHqqcHDw8N7Iy+nzhb6TXGruJqAh4eHd4BX/JgfHab3IW8LHmYteHh4eHHPm8NugmwP8UlvxSUtPDw8vGO8trw0G0R+cJ+l0dEvBjw8PLwF76ts7aKcXI3KS2v1RoKHh4d3gDcLHfbJR0vaTBAeHh7eCd6s8N+Wo+4qjNUlNzw8PLxjvHsX6Lu+MyuV/ZG14OHh4X2Ul0e3OaaF5REJHh4e3md5baR780CD4AMPDw/vnby26LVHttM6zKTx8PDwDvBmBbBNFNvGtSciDDw8PLwR7xtOllS5rA9fIAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '这是个标题';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '这是个标题';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

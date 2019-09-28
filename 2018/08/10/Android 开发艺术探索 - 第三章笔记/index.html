@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Android 开发艺术探索 - 第三章笔记 | 这是个标题 | 这是个子标题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="3.1 View 基础知识3.1.1 什么是 ViewView 是 Android 中所有控件的基类，View 是一种界面层的控件的一种抽象，它代表了一个控件（如：Button、TextView）。除了 View 还有 ViewGroup，可以理解为控件组，它内部包含了许多个控件，即一组 View。在 Android 设计中，ViewGroup 也继承了 View，这就意味 View 本身就可以是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 开发艺术探索 - 第三章笔记">
+<meta property="og:url" content="https://imeiji.github.io/2018/08/10/Android 开发艺术探索 - 第三章笔记/index.html">
+<meta property="og:site_name" content="这是个标题">
+<meta property="og:description" content="3.1 View 基础知识3.1.1 什么是 ViewView 是 Android 中所有控件的基类，View 是一种界面层的控件的一种抽象，它代表了一个控件（如：Button、TextView）。除了 View 还有 ViewGroup，可以理解为控件组，它内部包含了许多个控件，即一组 View。在 Android 设计中，ViewGroup 也继承了 View，这就意味 View 本身就可以是">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2018/08/10/5b6daf240078d.png">
+<meta property="og:updated_time" content="2018-08-11T09:10:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 开发艺术探索 - 第三章笔记">
+<meta name="twitter:description" content="3.1 View 基础知识3.1.1 什么是 ViewView 是 Android 中所有控件的基类，View 是一种界面层的控件的一种抽象，它代表了一个控件（如：Button、TextView）。除了 View 还有 ViewGroup，可以理解为控件组，它内部包含了许多个控件，即一组 View。在 Android 设计中，ViewGroup 也继承了 View，这就意味 View 本身就可以是">
+<meta name="twitter:image" content="https://i.loli.net/2018/08/10/5b6daf240078d.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="这是个标题" href="../../../../atom.xml">
+    
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(../../../../img/brand.jpg)">
+      <div class="brand">
+        <a href="../../../../index.html" class="avatar waves-effect waves-circle waves-light">
+          <img src="../../../../img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">iMeiji</h5>
+          <a href="mailto:meijilmz@gmail.com" title="meijilmz@gmail.com" class="mail">meijilmz@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../index.html"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/iMeiji" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android 开发艺术探索 - 第三章笔记</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android 开发艺术探索 - 第三章笔记</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-08-09T16:15:15.000Z" itemprop="datePublished" class="page-time">
+  2018-08-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-1-View-基础知识"><span class="post-toc-number">1.</span> <span class="post-toc-text">3.1 View 基础知识</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-1-1-什么是-View"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">3.1.1 什么是 View</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-1-2-View-的位置参数"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">3.1.2 View 的位置参数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-1-3-MotionEvent-和-TouchSlop"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">3.1.3 MotionEvent 和 TouchSlop</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-1-4-VelocityTracker、GestureDetector-和-Scroller"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">3.1.4 VelocityTracker、GestureDetector 和 Scroller</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-2-View-的滑动"><span class="post-toc-number">2.</span> <span class="post-toc-text">3.2 View 的滑动</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-2-1-使用-scrollTo-scrollBy"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">3.2.1 使用 scrollTo/scrollBy</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-2-2-使用动画"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">3.2.2 使用动画</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-2-3-改变布局参数"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">3.2.3 改变布局参数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-2-4-各种滑动方式的对比"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">3.2.4 各种滑动方式的对比</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-4-View-的事件分发机制"><span class="post-toc-number">3.</span> <span class="post-toc-text">3.4 View 的事件分发机制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-4-1-事件分发机制的三个重要方法"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">3.4.1 事件分发机制的三个重要方法</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-5-View-的滑动冲突"><span class="post-toc-number">4.</span> <span class="post-toc-text">3.5 View 的滑动冲突</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-5-1-常见的滑动冲突场景"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">3.5.1 常见的滑动冲突场景</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-5-2-滑动冲突的处理规则"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">3.5.2 滑动冲突的处理规则</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-5-3-滑动冲突的解决方式"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">3.5.3 滑动冲突的解决方式</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Android 开发艺术探索 - 第三章笔记"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android 开发艺术探索 - 第三章笔记</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-10 00:15:15" datetime="2018-08-09T16:15:15.000Z"  itemprop="datePublished">2018-08-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h3 id="3-1-View-基础知识"><a href="#3-1-View-基础知识" class="headerlink" title="3.1 View 基础知识"></a>3.1 View 基础知识</h3><h4 id="3-1-1-什么是-View"><a href="#3-1-1-什么是-View" class="headerlink" title="3.1.1 什么是 View"></a>3.1.1 什么是 View</h4><p>View 是 Android 中所有控件的基类，View 是一种界面层的控件的一种抽象，它代表了一个控件（如：Button、TextView）。除了 View 还有 ViewGroup，可以理解为控件组，它内部包含了许多个控件，即一组 View。在 Android 设计中，ViewGroup 也继承了 View，这就意味 View 本身就可以是单个控件也可以是多个控件组成的一组控件，通过这种关系就形成了 View 树，这和 Web 前端中的 DOM 树的概念是相识的。</p>
+<h4 id="3-1-2-View-的位置参数"><a href="#3-1-2-View-的位置参数" class="headerlink" title="3.1.2 View 的位置参数"></a>3.1.2 View 的位置参数</h4><p>View 的位置主要由它的四个定点来决定，分别对应于 View 的四个属性：top、left、right、bottom。在 Android 中，x 轴和 y 轴的正方向分别为右和下。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/08/10/5b6daf240078d.png" alt="View的位置坐标和父容器的关系.png" title="">
+                </div>
+                <div class="image-caption">View的位置坐标和父容器的关系.png</div>
+            </figure>
+<p>根据 View 的宽高和坐标的关系，得出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">width = right - left</span><br><span class="line">height = bottom - top</span><br></pre></td></tr></table></figure>
+<p>解释部分参数：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// View 的四个属性</span><br><span class="line">left = getLeft();</span><br><span class="line">right = getRight();</span><br><span class="line">top = getTop();</span><br><span class="line">bottom = getBottom();</span><br><span class="line"></span><br><span class="line">// x、y 是 View 左上角的坐标</span><br><span class="line">x = getX(); </span><br><span class="line">y = getY();</span><br><span class="line"></span><br><span class="line">// View 左上角相对于父容器的偏移量</span><br><span class="line">translationX = getTranslationX()</span><br><span class="line">translationY = getTranslationY()</span><br><span class="line"></span><br><span class="line">// 换算关系</span><br><span class="line">y = top + translationY</span><br></pre></td></tr></table></figure>
+<h4 id="3-1-3-MotionEvent-和-TouchSlop"><a href="#3-1-3-MotionEvent-和-TouchSlop" class="headerlink" title="3.1.3 MotionEvent 和 TouchSlop"></a>3.1.3 MotionEvent 和 TouchSlop</h4><ul>
+<li><p>MotionEvent</p>
+<p>在手指接触屏幕后所产生的一系列事件中，典型的事件类型有如下几种：</p>
+<ul>
+<li>ACTION_DOWM 手指刚接触屏幕</li>
+<li>ACTION_MOVE 手指在屏幕上移动</li>
+<li>ACTION_UP 手指从屏幕上松开的一瞬间</li>
+</ul>
+<p>正常情况下，一次手指触摸屏幕的行为会触发一系列点击事件，考虑如下几种形况：</p>
+<ul>
+<li>点击屏幕后离开松开，事件序列为 DOWN -&gt; UP</li>
+<li>点击屏幕滑动一会儿再松开，事件序列为 DOWN -&gt; MOVE -&gt; …. &gt; MOVE -&gt; UP</li>
+</ul>
+</li>
+<li><p>TouchSlop</p>
+<p>TouchSlop 是系统所能识别出的被认为是滑动的最小距离。当手指在屏幕上滑动，如果两次滑动之间的距离小于这个常量，那么系统就不认为你是在进行滑动操作。</p>
+<p>通过以下方式获取这个常量：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ViewConfiguration.get(getContext()).getScaledTouchSlop();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="3-1-4-VelocityTracker、GestureDetector-和-Scroller"><a href="#3-1-4-VelocityTracker、GestureDetector-和-Scroller" class="headerlink" title="3.1.4 VelocityTracker、GestureDetector 和 Scroller"></a>3.1.4 VelocityTracker、GestureDetector 和 Scroller</h4><ol>
+<li><p>VelocityTracker</p>
+<p>速度追踪，用于追踪手指在滑动过程中的速度，包括水平和竖直方向的速度。速度的计算公式如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">速度 = （终点位置 - 起点位置）/ 时间段</span><br></pre></td></tr></table></figure>
+<p>使用方式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// 首先在 View 的 onTouchEvent 方法中追踪当前单击事件的速度</span><br><span class="line">VelocityTracker vt = VelocityTracker.obtain();</span><br><span class="line">vt.addMovement(event);</span><br><span class="line">// 计算速度</span><br><span class="line">vt.computeCurrentVelocity(1000);</span><br><span class="line">// 获取速度</span><br><span class="line">getXVelocity()；</span><br><span class="line">getYVelocity()</span><br><span class="line">// 重置和回收</span><br><span class="line">vt.clear();</span><br><span class="line">vt.recycler();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>GestureDetector</p>
+<p>手势检测，用于辅助检测用户的单击、滑动、长按、双击等行为。如果只是监听滑动相关的，建议自己在 onTouchEvent 中实现，如果想要监听双击这种行为，那么就用 GestureDetecort。</p>
+<p>使用方式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GestureDetector mGes = new GestureDetector(this);</span><br><span class="line">// 接管目标 View 的 onTouchEvent 方法</span><br><span class="line">boolean consume = mGes.onTouchEvent(event);</span><br><span class="line">return consume;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Scroller</p>
+<p>弹性滑动对象，用于实现View的弹性滑动。Scroller本身无法让View弹性滑动，它需要和 View 的computeScroll 方法配合使用才能共同完成这个功能。 </p>
+<p>使用方式：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Scroller mScroller = <span class="keyword">new</span> Scroller(getContext());</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 缓慢滑动到指定位置，1000 ms</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">smoothScrollTo</span><span class="params">(<span class="keyword">int</span> destX, <span class="keyword">int</span> destY)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> scrollX = getScrollX();</span><br><span class="line">        <span class="keyword">int</span> delta = destX - scrollX;</span><br><span class="line">        mScroller.startScroll(scrollX, <span class="number">0</span>, delta, <span class="number">0</span>, <span class="number">1000</span>);</span><br><span class="line">        invalidate();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">computeScroll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (scroller.computeScrollOffset()) &#123;</span><br><span class="line">            scrollTo(mScroller.getCurrX(),mScroller.getCurrY());</span><br><span class="line">            postInvalidate();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="3-2-View-的滑动"><a href="#3-2-View-的滑动" class="headerlink" title="3.2 View 的滑动"></a>3.2 View 的滑动</h3><p>通过三种方式可以实现 View 的滑动</p>
+<ul>
+<li>第一种是通过 View 本身提供的 scrollTo/scrollBy 方法来实现滑动</li>
+<li>第二种是通过动画给 View 施加平移效果来实现滑动</li>
+<li>通过改变 View 的 LayoutParams 使得 View 重新布局从而实现滑动</li>
+</ul>
+<h4 id="3-2-1-使用-scrollTo-scrollBy"><a href="#3-2-1-使用-scrollTo-scrollBy" class="headerlink" title="3.2.1 使用 scrollTo/scrollBy"></a>3.2.1 使用 scrollTo/scrollBy</h4><p>scrollTo 和 scrollBy 方法只能改变 view 内容的位置而不能改变 view 在布局中的位置。 scrollBy 是基于当前位置的相对滑动，而 scrollTo 是基于所传参数的绝对滑动。通过 View 的 getScrollX 和 getScrollY 方法可以得到滑动的距离。</p>
+<h4 id="3-2-2-使用动画"><a href="#3-2-2-使用动画" class="headerlink" title="3.2.2 使用动画"></a>3.2.2 使用动画</h4><p>使用动画来移动 View 主要是操作view的 translationX 和 translationY 属性，既可以使用传统的 View 动画，也可以使用属性动画。</p>
+<h4 id="3-2-3-改变布局参数"><a href="#3-2-3-改变布局参数" class="headerlink" title="3.2.3 改变布局参数"></a>3.2.3 改变布局参数</h4><p>通过改变 LayoutParams 的方式去实现 View 的滑动是一种灵活的方法。</p>
+<h4 id="3-2-4-各种滑动方式的对比"><a href="#3-2-4-各种滑动方式的对比" class="headerlink" title="3.2.4 各种滑动方式的对比"></a>3.2.4 各种滑动方式的对比</h4><ul>
+<li>scrollTo/scrollBy：操作简单，适合对 View 内容的滑动</li>
+<li>动画：操作简单，主要适用于没有交互的 View 和实现复杂的动画效果</li>
+<li>改变布局参数：操作稍微复杂，适用于有交互的 View</li>
+</ul>
+<h3 id="3-4-View-的事件分发机制"><a href="#3-4-View-的事件分发机制" class="headerlink" title="3.4 View 的事件分发机制"></a>3.4 View 的事件分发机制</h3><h4 id="3-4-1-事件分发机制的三个重要方法"><a href="#3-4-1-事件分发机制的三个重要方法" class="headerlink" title="3.4.1 事件分发机制的三个重要方法"></a>3.4.1 事件分发机制的三个重要方法</h4><ul>
+<li>public boolean dispatchTouchEvent(MotionEvent ev)</li>
+</ul>
+<p>用来进行事件的分发。如果事件能够传递给当前的 View，那么此方法一定会被调用，返回结果受当前 View 的onTouchEvent 和下级 View 的 dispatchTouchEvent 方法的影响，表示是否消耗当前事件。</p>
+<ul>
+<li>public boolean onInterceptTouchEvent(MotionEvent event)</li>
+</ul>
+<p>在上述方法内部调用，用来判断是否拦截某个事件，如果当前 View 拦截了某个事件，那么在同一个事件序列当中，此方法不会被再次调用，返回结果表示是否拦截当前事件。</p>
+<ul>
+<li>public boolean onTouchEvent(MotionEvent event)</li>
+</ul>
+<p>在 dispatchTouchEvent 方法中调用，用来处理点击事件，返回结果表示是否消耗当前的事件，如果不消耗，则在同一个事件序列中，当前 View 无法再次接受到事件。</p>
+<p>这三个方法的关系可以用如下伪代码表示：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">boolean</span> consume = <span class="keyword">false</span>;</span><br><span class="line">	<span class="keyword">if</span>(onInterceptTouchEvent(ev))</span><br><span class="line">	&#123;</span><br><span class="line">		consume = onTouchEvent(ev);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		consume = child.dispatchTouchEvent(ev);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> consume;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以大致了解点击事件的传递规则：对于一个根 ViewGroup 来说，点击事件产生后，首先会传递给它，这时它的 dispatchTouchEvent 会被调用，如果这个 ViewGroup 的 onInterceptTouchEvent 方法返回 true 就表示它要拦截当前事件，接着事件就会交给这个 ViewGroup 处理，即它的 onTouchEvent 方法就会被调用；如果这个 ViewGroup 的 onInterceptTouchEvent 方法返回 false 就表示它不拦截当前事件，这时当前事件就会继续传递给它的子元素，接着子元素的 dispatchTouchEvent 方法就会被调用，如此反复直到事件被最终处理。</p>
+<p><strong>OnTouchListener 的优先级比 onTouchEvent 要高</strong></p>
+<p>如果给一个 View 设置了 OnTouchListener，那么 OnTouchListener 中的 onTouch 方法会被回调。这时事件如何处理还要看 onTouch 的返回值，如果返回 false，那么当前 View 的 onTouchEvent 方法会被调用；如果返回 true，那么 onTouchEvent 方法将不会被调用。 在 onTouchEvent 方法中，如果当前 View 设置了  OnClickListener，那么它的 onClick 方法会被调用，所以 OnClickListener 的优先级最低。</p>
+<p><strong>当点击一个事件产生后，它的传递过程遵循如顺序，Activity -&gt; Window -&gt; View</strong></p>
+<p>如果一个 View 的 onTouchEvent 方法返回 false，那么它的父容器的 onTouchEvent 方法将会被调用，依次类推，如果所有的元素都不处理这个事件，那么这个事件将会最终传递给 Activity 处理（调用 Activity 的onTouchEvent 方法）</p>
+<p><strong>关于事件传递的机制，给出一些结论：</strong></p>
+<ul>
+<li>同一个事件序列是以 down 事件开始，中间含有数量不定的 move 事件，最终以 up 事件结束</li>
+<li>正常情况下，一个事件序列只能被一个 View 拦截且消耗。一旦一个元素拦截了某次事件，那么同一个事件序列内的所有事件都会直接交给它处理，因此同一个事件序列中的事件不能分别由两个View同时处理，但是通过特殊手段可以做到，比如一个 View 将本该自己处理的事件通过 onTouchEvent 强行传递给其他 View 处理</li>
+<li>某个 View 一旦开始处理事件，如果它不消耗 ACTION_DOWN 事件，那么同一事件序列的其他事情都不会再交给它来处理，并且事件将重新交给它的父容器去处理（调用父容器的 onTouchEvent 方法）；如果它消耗 ACTION_DOWN 事件，但是不消耗其他类型事件，那么这个点击事件会消失，父容器的 onTouchEvent 方法不会被调用，当前 View 依然可以收到后续的事件，但是这些事件最后都会传递给 Activity 处理。</li>
+<li>ViewGroup 默认不拦截任何事件。Android 源码中 ViewGroup 的 onInterceptTouchEvent 方法默认返回false，View 没有 onInterceptTouchEvent 方法，一旦有点击事件传递给它，那么它的 onTouchEvent 方法就会调用。</li>
+<li>View 的 onTouchEvent 默认都会消耗事件（返回true），除非它是不可点击的（clickable 和 longClickable 同时为 false）。View 的 longClickable 属性默认都为 false，clickable 要分情况，比如 Button 的 clickable 属性默认为 true，而 TextView 的 clickable 属性默认为 false。</li>
+<li>View 的 enable 属性不影响 onTouchEvent 的默认返回值，哪怕一个 View 是 disable 状态的，只要它的 clickable 或者 longClickable 有一个为 true，那么它的 onTouchEvent 就返回 true</li>
+<li>事件传递过程总是先传递给父元素，然后再由父元素分发给子 View，通过requestDisallowInterceptTouchEvent 方法可以在子元素中干预父元素的事件分发过程，但是ACTION_DOWN 事件除外，即当面对 ACTION_DOWN 事件时，ViewGroup 总是会调用自己的onInterceptTouchEvent 方法来询问自己是否要拦截事件。</li>
+</ul>
+<h3 id="3-5-View-的滑动冲突"><a href="#3-5-View-的滑动冲突" class="headerlink" title="3.5 View 的滑动冲突"></a>3.5 View 的滑动冲突</h3><h4 id="3-5-1-常见的滑动冲突场景"><a href="#3-5-1-常见的滑动冲突场景" class="headerlink" title="3.5.1 常见的滑动冲突场景"></a>3.5.1 常见的滑动冲突场景</h4><ul>
+<li>外部滑动方向与内部滑动方向不一致，比如 ViewPager 中包含 ListView</li>
+<li>外部滑动方向与内部滑动方向一致</li>
+<li>上面两种情况的嵌套</li>
+</ul>
+<h4 id="3-5-2-滑动冲突的处理规则"><a href="#3-5-2-滑动冲突的处理规则" class="headerlink" title="3.5.2 滑动冲突的处理规则"></a>3.5.2 滑动冲突的处理规则</h4><p>可以根据滑动距离和水平方向形成的夹角；或者根据水平和竖直方向滑动的距离差；或者两个方向上的速度差等。</p>
+<h4 id="3-5-3-滑动冲突的解决方式"><a href="#3-5-3-滑动冲突的解决方式" class="headerlink" title="3.5.3 滑动冲突的解决方式"></a>3.5.3 滑动冲突的解决方式</h4><ul>
+<li>外部拦截法</li>
+</ul>
+<p>点击事件都经过父容器的拦截处理，如果父容器需要此事件就拦截，如果不需要此事件就不拦截，该方法需要重写父容器的 onInterceptTouchEvent 方法，在内部做相应的拦截即可，伪代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span> intercepted = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">int</span> x = (<span class="keyword">int</span>) event.getX();</span><br><span class="line">        <span class="keyword">int</span> y = (<span class="keyword">int</span>) event.getY();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">switch</span> (event.getAction()) &#123;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_DOWN: &#123;</span><br><span class="line">                intercepted = <span class="keyword">false</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_MOVE: &#123;</span><br><span class="line">                <span class="keyword">int</span> deltaX = x - mLastXIntercept;</span><br><span class="line">                <span class="keyword">int</span> deltaY = y - mLastYIntercept;</span><br><span class="line">                <span class="keyword">if</span> (父容器需要拦截当前点击事件的条件，例如：Math.abs(deltaX) &gt; Math.abs(deltaY))&#123;</span><br><span class="line">                    intercepted = <span class="keyword">true</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                    intercepted = <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_UP: &#123;</span><br><span class="line">                intercepted = <span class="keyword">false</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        mLastXIntercept = x;</span><br><span class="line">        mLastYIntercept = y;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> intercepted;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>内部拦截法</li>
+</ul>
+<p>父容器不拦截任何事件，所有的事件都传递给子元素，如果子元素需要此事件就直接消耗掉，否则就由父容器进行处理，这种方法和 Android 中的事件分发机制不一样，需要配合 requestDisallowInterceptTouchEvent 方法才能正常工作。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x = (<span class="keyword">int</span>) event.getX();</span><br><span class="line">        <span class="keyword">int</span> y = (<span class="keyword">int</span>) event.getY();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">switch</span> (event.getAction()) &#123;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_DOWN: &#123;]</span><br><span class="line">                getParent().requestDisallowInterceptTouchEvent(<span class="keyword">true</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_MOVE: &#123;</span><br><span class="line">                <span class="keyword">int</span> deltaX = x - mLastX;</span><br><span class="line">                <span class="keyword">int</span> deltaY = y - mLastY;</span><br><span class="line">                <span class="keyword">if</span> (当前view需要拦截当前点击事件的条件，例如：Math.abs(deltaX) &gt; Math.abs(deltaY))&#123;</span><br><span class="line">                    getParent().requestDisallowInterceptTouchEvent(<span class="keyword">false</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_UP: &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        mLastX = x;</span><br><span class="line">        mLastY = y;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.dispatchTouchEvent(event);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-08-11T09:10:51.000Z" itemprop="dateUpdated">2018-08-11 17:10:51</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="" target="_blank" rel="external">https://imeiji.github.io/2018/08/10/Android 开发艺术探索 - 第三章笔记/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://imeiji.github.io">
+            <img src="../../../../img/avatar.jpg" alt="iMeiji">
+            iMeiji
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2018/08/10/Android 开发艺术探索 - 第三章笔记/&title=《Android 开发艺术探索 - 第三章笔记》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2018/08/10/Android 开发艺术探索 - 第三章笔记/&title=《Android 开发艺术探索 - 第三章笔记》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2018/08/10/Android 开发艺术探索 - 第三章笔记/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android 开发艺术探索 - 第三章笔记》 — 这是个标题&url=https://imeiji.github.io/2018/08/10/Android 开发艺术探索 - 第三章笔记/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2018/08/10/Android 开发艺术探索 - 第三章笔记/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="../../01/Android 开发艺术探索 - 第二章笔记/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android 开发艺术探索 - 第二章笔记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'imeijimyblog';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="../../../../index.html" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="../../../../atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>iMeiji &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2018/08/10/Android 开发艺术探索 - 第三章笔记/&title=《Android 开发艺术探索 - 第三章笔记》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2018/08/10/Android 开发艺术探索 - 第三章笔记/&title=《Android 开发艺术探索 - 第三章笔记》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2018/08/10/Android 开发艺术探索 - 第三章笔记/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android 开发艺术探索 - 第三章笔记》 — 这是个标题&url=https://imeiji.github.io/2018/08/10/Android 开发艺术探索 - 第三章笔记/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2018/08/10/Android 开发艺术探索 - 第三章笔记/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACqElEQVR42u3aQXKjUAwEUN//0sl2FoF0S3zHU/VYuWJieCwsuaXXKz6+/jnu/3L/v1dHfv7rxIGHh4e3uPWrj7u/wBUyAbT3Vj8CPDw8vGO89qbvL39/Ey3j/vUvFjw8PLyP4eXNcd6mz9h4eHh4/xfv6hP2DXpeJPDw8PD+ipfc0J6XkPIrPpy14OHh4R2YIn3O6yPzPTw8PLz1VH3f2rZhxKYY/HC3eHh4eAd4+Rfu6Ra5jXGLaBgPDw/vUd7weYzWApIG/f6cOhzBw8PDO8xLvrjbMjArHptjOMHDw8PDW/Pai23i13a0VvwdDw8P7wBv9oN/s1Y1G/nPmnI8PDy8E7ykaU5a3tnoa9NkRw8LDw8P7zCvjWLb0CEvGG2gfFkq8PDw8I7x2iB1HyLsW+roEePh4eEd4CUBbhsHtF/xswdRRMZ4eHh4j/LyWCFvhYv8OA4jhtksHh4e3lt47UfPottZyakXFPDw8PAO89oVgX1bnAci+QP9JWvBw8PDW/P2Y6rkSzwf/G8YRZiLh4eHt+DlMUTO2ywBzFas8PDw8N7JO/3R+TltgakDETw8PLyHeLNdgxYzC47z4OPyXTw8PLwDvNmP/1lUsV9snS144eHh4Z3mbVZLZ6TZ8GxVHvDw8PDe2Fjnseks0m1XE4qlATw8PLwDvPbyCXsT1Oa1Kwog8PDw8I7x2vg1CS/yVru+9eR8PDw8vEd5X+WxKR45rA12o50yPDw8vId4sznR6ZFYG/6uBmB4eHh4I15SDPLXSTO9WRpor4KHh4d3jjdbCMhHaLOC0QYQl6sDeHh4eB/Dawdds1ghf7gPFwY8PDy8h3iznGNTJGZDODw8PLzTvHa5al8e9gFxsRmBh4eH93x2Wv/gTyKJ5N182D+McfHw8PCe5H0DYnfQdZfFRLEAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '这是个标题';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '这是个标题';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

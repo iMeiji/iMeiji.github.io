@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Android NDK 入门 - 玩转 CMake | 这是个标题 | 这是个子标题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="前言在上一篇文章 Android NDK 入门 - 初探 CMake 中，学习了如何在 AS 中使用 CMake 来开发 NDK，而编写 CMakeLists.txt 构建脚本是其中一个重要的环节，今天我们就来一起学习 CMakeLists.txt 的一些应用，介绍它在下面四种场景的用法：  CMakeLists.txt 文件解析 使用 Android NDK 的 API 编写 so 库 使用 s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android NDK 入门 - 玩转 CMake">
+<meta property="og:url" content="https://imeiji.github.io/2018/03/17/Android NDK 入门 - 玩转 CMake/index.html">
+<meta property="og:site_name" content="这是个标题">
+<meta property="og:description" content="前言在上一篇文章 Android NDK 入门 - 初探 CMake 中，学习了如何在 AS 中使用 CMake 来开发 NDK，而编写 CMakeLists.txt 构建脚本是其中一个重要的环节，今天我们就来一起学习 CMakeLists.txt 的一些应用，介绍它在下面四种场景的用法：  CMakeLists.txt 文件解析 使用 Android NDK 的 API 编写 so 库 使用 s">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2018/03/17/5aacb4bb4a226.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/17/5aacb4bcc7ac1.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/17/5aacb4bcc4611.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/17/5aacb6e3cb410.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/17/5aacc35b65bab.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/17/5aacc4a11f0be.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/17/5aacc61fb7e55.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/17/5aacd98386bd0.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/17/5aacc8b62df2c.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/17/5aacc93187c57.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/17/5aacd0106fade.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/17/5aacd12decbdb.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/17/5aacda9fe478a.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/17/5aacd82178c4b.png">
+<meta property="og:updated_time" content="2018-03-17T12:36:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android NDK 入门 - 玩转 CMake">
+<meta name="twitter:description" content="前言在上一篇文章 Android NDK 入门 - 初探 CMake 中，学习了如何在 AS 中使用 CMake 来开发 NDK，而编写 CMakeLists.txt 构建脚本是其中一个重要的环节，今天我们就来一起学习 CMakeLists.txt 的一些应用，介绍它在下面四种场景的用法：  CMakeLists.txt 文件解析 使用 Android NDK 的 API 编写 so 库 使用 s">
+<meta name="twitter:image" content="https://i.loli.net/2018/03/17/5aacb4bb4a226.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="这是个标题" href="../../../../atom.xml">
+    
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(../../../../img/brand.jpg)">
+      <div class="brand">
+        <a href="../../../../index.html" class="avatar waves-effect waves-circle waves-light">
+          <img src="../../../../img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">iMeiji</h5>
+          <a href="mailto:meijilmz@gmail.com" title="meijilmz@gmail.com" class="mail">meijilmz@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../index.html"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/iMeiji" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android NDK 入门 - 玩转 CMake</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android NDK 入门 - 玩转 CMake</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-17T12:30:34.000Z" itemprop="datePublished" class="page-time">
+  2018-03-17
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#CMakeLists-txt-文件解析"><span class="post-toc-number">2.</span> <span class="post-toc-text">CMakeLists.txt 文件解析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用-Android-NDK-的-API"><span class="post-toc-number">3.</span> <span class="post-toc-text">使用 Android NDK 的 API</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#编写-so-库"><span class="post-toc-number">4.</span> <span class="post-toc-text">编写 so 库</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用-so-库"><span class="post-toc-number">5.</span> <span class="post-toc-text">使用 so 库</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#小结"><span class="post-toc-number">6.</span> <span class="post-toc-text">小结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Android NDK 入门 - 玩转 CMake"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android NDK 入门 - 玩转 CMake</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-17 20:30:34" datetime="2018-03-17T12:30:34.000Z"  itemprop="datePublished">2018-03-17</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在上一篇文章 <a href="https://imeiji.github.io/2018/03/15/Android%20NDK%20%E5%85%A5%E9%97%A8%20-%20%E5%88%9D%E6%8E%A2%20CMake/">Android NDK 入门 - 初探 CMake</a> 中，学习了如何在 AS 中使用 CMake 来开发 NDK，而编写 CMakeLists.txt 构建脚本是其中一个重要的环节，今天我们就来一起学习 CMakeLists.txt 的一些应用，介绍它在下面四种场景的用法：</p>
+<ul>
+<li>CMakeLists.txt 文件解析</li>
+<li>使用 Android NDK 的 API</li>
+<li>编写 so 库</li>
+<li>使用 so 库</li>
+</ul>
+<h2 id="CMakeLists-txt-文件解析"><a href="#CMakeLists-txt-文件解析" class="headerlink" title="CMakeLists.txt 文件解析"></a>CMakeLists.txt 文件解析</h2><p>把常用的语法说明下，关于 <code>CMake</code> 的语法，可以查看 <a href="https://cmake.org/cmake/help/git-master/manual/cmake-commands.7.html" target="_blank" rel="noopener">官方的 API 说明</a></p>
+<ul>
+<li><p><code>cmake_minimum_required(VERSION3.4.1)</code><br>指定 CMake 最低版本 </p>
+</li>
+<li><p><code>add_library(native-lib SHARED src/main/cpp/native-lib.cpp)</code><br>用于向 CMake 添加依赖源文件或库，指令需传入三个参数（函数库名称、库类型、依赖源文件相对路径）</p>
+<ul>
+<li><p>函数库名称：生成函数库的名称，决定了最终生成的共享库的名字，例如我们将共享库的名字定义为 native-lib ，那么最终生成的 so 文件将在前面加上 lib 前缀即 libnative-lib.so 或 libnative-lib.a ，但是我们在代码中加载该共享库的时候，仍然应当使用 native-lib ，也就是像下面这样</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">static &#123;</span><br><span class="line">	 System.loadLibrary(“native-lib”);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>库类型：动态库为 SHARED ，静态库为 STATIC，我们可以指定根据源文件编译出来的是静态库还是共享库，这里简单提一下两者的区别：</p>
+<ul>
+<li>静态库：以.a结尾。静态库在程序链接的时候使用，链接器会将程序中使用到函数的代码从库文件中拷贝到应用程序中。一旦链接完成，在执行程序的时候就不需要静态库了。</li>
+<li>共享库：以.so结尾。在程序的链接时候并不像静态库那样在拷贝使用函数的代码，而只是作些标记。然后在程序开始启动运行的时候，动态地加载所需模块。</li>
+</ul>
+</li>
+<li><p>依赖源文件相对路径，依赖的 c/cpp 文件（相对路径），如果我们有多个源文件，那么就在后面添加文件的路径即可。</p>
+</li>
+</ul>
+</li>
+<li><p><code>find_library(log-lib log)</code></p>
+<p>用于定位 NDK 中的库 ，需传入两个参数(path变量、ndk 库名称) ，具体有哪些 API 查看<a href="https://developer.android.com/ndk/reference/index.html" target="_blank" rel="noopener">官网</a> </p>
+<ul>
+<li>path变量：设置 path 变量的名称，这里为 NDK 中的日志库，文件位于 <code>$NDK/platforms/android-&lt;level&gt;/&lt;abi&gt;/usr/lib</code></li>
+<li>ndk 库名称：指定 cmake 查询库的名称，即在 ndk 开发包中查询 liblog.so 函数库，将其路径赋值给 log-lib</li>
+</ul>
+</li>
+<li><p><code>target_link_libraries(native-lib  source1 source2 ... sourceN)</code></p>
+<p>要将预构建库关联到您自己的原生库，需传入至少两个参数(指定目标库、链接的库) </p>
+<ul>
+<li>指定目标库：与上面 add_library 指定的函数库名一致</li>
+<li>链接的库：可链接 add_library ，find_library 中的库，其中 find_library 的库要填写变量 ${log-lib}</li>
+</ul>
+</li>
+<li><p><code>include_directories(src/main/cpp/include/)</code></p>
+<p>为了确保 CMake 可以在编译时定位您的标头文件，填写头文件路径</p>
+<p>​</p>
+</li>
+</ul>
+<h2 id="使用-Android-NDK-的-API"><a href="#使用-Android-NDK-的-API" class="headerlink" title="使用 Android NDK 的 API"></a>使用 Android NDK 的 API</h2><p>在 Android 系统当中，预制了一些标准的 NDK 库，这些库函数的目的就是让开发者能够在原生方法中实现之前在 Java 层开发的一些功能，我们可以通过 <a href="https://developer.android.google.cn/ndk/reference/index.html" target="_blank" rel="noopener">NDK 库</a> 查找所需要的 API 。</p>
+<p>因为这些库已经预制在系统当中了，所以如果我们要调用这些库中的函数，那么不需要将其打包到 APK 当中，所需要做的就是向 CMake 提供希望使用的库名称，并将其关联到自己的原生库，最后在原生代码中引入相应的头文件，调用方法就可以了。</p>
+<p>下面，我们再来创建一个新项目（Including C++ support），研究 NDK 的 API。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/03/17/5aacb4bb4a226.png" alt="Snipaste_2018-03-17_14-13-23.png" title="">
+                </div>
+                <div class="image-caption">Snipaste_2018-03-17_14-13-23.png</div>
+            </figure>
+<p>创建项目后，打开 CMakeLists.txt ，看到引用了 NDK 的 log 库，并链接到 native-lib</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/03/17/5aacb4bcc7ac1.png" alt="Snipaste_2018-03-17_14-21-21.png" title="">
+                </div>
+                <div class="image-caption">Snipaste_2018-03-17_14-21-21.png</div>
+            </figure>
+<p><img src="https://i.loli.net/2018/03/17/5aacb4bcc4611.png" alt="Snipaste_2018-03-17_14-22-45.png"></p>
+<p>既然引用了 log 库，那我们就在 native-lib 里调用 log 库 </p>
+<p>在 MainActivity 里定义 native 接口，按 ALT+ENTER 自动生成 C 函数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public native void printByJNI(String tag, String content);</span><br></pre></td></tr></table></figure>
+<p>编写 printByJNI 函数 </p>
+<p><img src="https://i.loli.net/2018/03/17/5aacb6e3cb410.png" alt="Snipaste_2018-03-17_14-33-19.png"></p>
+<p>最后在 Activity 里调用 <code>printByJNI(TAG, &quot;onCreate()&quot;);</code> ，查看结果。本来打算再引用个 NDK 的 API，但代码很复杂 ，倒不如自己写个简单的 so 库，再玩玩 CMakeLists 的配置 。</p>
+<h2 id="编写-so-库"><a href="#编写-so-库" class="headerlink" title="编写 so 库"></a>编写 so 库</h2><p>观察上面的 log 库，发现引入一个 so 库需要  libxxx.so 文件和 .h 文件。OK，编写一个简单的计算器 so 库。</p>
+<p>在 cpp 目录下创建 calc-lib ，注意要同时生成 .cpp 和 .h 文件</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/03/17/5aacc35b65bab.png" alt="Snipaste_2018-03-17_14-57-20.png" title="">
+                </div>
+                <div class="image-caption">Snipaste_2018-03-17_14-57-20.png</div>
+            </figure>
+<p>在 cpp 目录下创建 include 文件夹，把 .h 文件放进去</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/03/17/5aacc4a11f0be.png" alt="Snipaste_2018-03-17_15-32-42.png" title="">
+                </div>
+                <div class="image-caption">Snipaste_2018-03-17_15-32-42.png</div>
+            </figure>
+<p>编写 calc-lib.h 头文件，定义方法</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> CMAKEDEMO2_CALC_LIB_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CMAKEDEMO2_CALC_LIB_H</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sub</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>编写 calc-lib.cpp 文件，实现方法</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"include/calc-lib.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sub</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x - y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编写完 calc-lib 库后，要修改 CMakeLists ，然后我们再通过 JNI 测试下我们的库是否能用</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/03/17/5aacc61fb7e55.png" alt="Snipaste_2018-03-17_15-39-06.png" title="">
+                </div>
+                <div class="image-caption">Snipaste_2018-03-17_15-39-06.png</div>
+            </figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1. add_library 增加一个库，这个上面已经说过</span><br><span class="line">2. include_directories 为了确保 CMake 可以在编译时定位您的标头文件</span><br><span class="line">3. target_link_libraries 我们想通过 native-lib 调用 calc-lib，所以链接，注意可以同时链接多个库</span><br></pre></td></tr></table></figure>
+<p>每次修改 CMakeLists 都需要执行 <code>Refresh Linked C++ Project</code>  和 <code>Clean Project</code>，等待 gradle 刷新完</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/03/17/5aacd98386bd0.png" alt="Snipaste_2018-03-17_17-01-11.png" title="">
+                </div>
+                <div class="image-caption">Snipaste_2018-03-17_17-01-11.png</div>
+            </figure>
+<p>编写 Java 接口，然后生成 JNI 函数，再调用我们的 calc-lib 库，基本上就这样。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/03/17/5aacc8b62df2c.png" alt="Snipaste_2018-03-17_15-50-04.png" title="">
+                </div>
+                <div class="image-caption">Snipaste_2018-03-17_15-50-04.png</div>
+            </figure>
+<p><img src="https://i.loli.net/2018/03/17/5aacc93187c57.png" alt="Snipaste_2018-03-17_15-52-08.png"></p>
+<p>最后启动 App，查看结果。</p>
+<h2 id="使用-so-库"><a href="#使用-so-库" class="headerlink" title="使用 so 库"></a>使用 so 库</h2><p>经过上面的折腾，我们实现了在同个 App 内调用我们编写的 so 库，那怎么让别人使用我们的 so 库，同时不公开代码呢（主要实现代码在 calc-lib.cpp 内）</p>
+<p>继续折腾，把 so 库提取出来，导入到项目 ，然后删除 calc-lib.cpp，最后通过 native-lib 调用。</p>
+<p>Build APK 后，在 <code>app/build/intermediates/cmake</code> 下会生成 so 库，我们把 libcalc-lib.so 拷贝出来</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/03/17/5aacd0106fade.png" alt="Snipaste_2018-03-17_16-21-13.png" title="">
+                </div>
+                <div class="image-caption">Snipaste_2018-03-17_16-21-13.png</div>
+            </figure>
+<p>在 <code>app/src/main/</code> 下创建 jniLibs 文件夹，把 so 库复制进去</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/03/17/5aacd12decbdb.png" alt="Snipaste_2018-03-17_16-25-47.png" title="">
+                </div>
+                <div class="image-caption">Snipaste_2018-03-17_16-25-47.png</div>
+            </figure>
+<p>删除 <code>app/src/main/cpp/calc-lib.cpp</code></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2018/03/17/5aacda9fe478a.png" alt="Snipaste_2018-03-17_17-06-32.png" title="">
+                </div>
+                <div class="image-caption">Snipaste_2018-03-17_17-06-32.png</div>
+            </figure>
+<p>修改 CMakeLists </p>
+<p><img src="https://i.loli.net/2018/03/17/5aacd82178c4b.png" alt="Snipaste_2018-03-17_16-55-50.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1. add_library 通过 IMPORTANT 标志告知 CMake 只希望将库导入到项目中</span><br><span class="line">2. set_target_properties $&#123;CMAKE_SOURCE_DIR&#125;表示的是 CMakeLists.txt 所在的路径，我们指定第三方 so 所在路径时，应当以这个常量为起点。</span><br><span class="line">	按理来说，我们应当为每种 ABI 接口提供单独的软件包，那么，我们就可以在 jinLibs 下建立多个文件夹，每个文件夹对应一种 ABI 接口类型，之后再通过 $&#123;ANDROID_ABI&#125; 来泛化这一层目录的结构，这样将有助于充分利用特定的CPU架构</span><br></pre></td></tr></table></figure>
+<p>执行 <code>Refresh Linked C++ Project</code>  和 <code>Clean Project</code>，等待 gradle 刷新完，最后启动 App，查看结果。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>这篇文章简单的解释 CMakeLists 文件的配置，如何导入 Android NDK 的 API，如何链接 so 库到 JNI，如何编写和使用 so 库，接下来会继续学习 ndk-build 的方式开发 Android NDK，对比两种方式。</p>
+<p>参考：</p>
+<p><a href="https://www.jianshu.com/p/843cf09a1db2" target="_blank" rel="noopener">https://www.jianshu.com/p/843cf09a1db2</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-03-17T12:36:16.000Z" itemprop="dateUpdated">2018-03-17 20:36:16</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="" target="_blank" rel="external">https://imeiji.github.io/2018/03/17/Android NDK 入门 - 玩转 CMake/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://imeiji.github.io">
+            <img src="../../../../img/avatar.jpg" alt="iMeiji">
+            iMeiji
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2018/03/17/Android NDK 入门 - 玩转 CMake/&title=《Android NDK 入门 - 玩转 CMake》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2018/03/17/Android NDK 入门 - 玩转 CMake/&title=《Android NDK 入门 - 玩转 CMake》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2018/03/17/Android NDK 入门 - 玩转 CMake/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android NDK 入门 - 玩转 CMake》 — 这是个标题&url=https://imeiji.github.io/2018/03/17/Android NDK 入门 - 玩转 CMake/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2018/03/17/Android NDK 入门 - 玩转 CMake/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="../../24/IntelliJ IDEA license server服务器搭建/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">搭建 IDEA license server 服务器</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="../../16/Android Studio 配置 javah 和 ndk-build 快捷编译/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android Studio 配置 javah 和 ndk-build 快捷编译</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'imeijimyblog';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="../../../../index.html" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="../../../../atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>iMeiji &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2018/03/17/Android NDK 入门 - 玩转 CMake/&title=《Android NDK 入门 - 玩转 CMake》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2018/03/17/Android NDK 入门 - 玩转 CMake/&title=《Android NDK 入门 - 玩转 CMake》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2018/03/17/Android NDK 入门 - 玩转 CMake/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android NDK 入门 - 玩转 CMake》 — 这是个标题&url=https://imeiji.github.io/2018/03/17/Android NDK 入门 - 玩转 CMake/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2018/03/17/Android NDK 入门 - 玩转 CMake/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuUlEQVR42u3awW6sYAgG0L7/S0+Tu7tp1Q/4mc7iuJqYqhwXQoGvr/h4/TuS868fx/1f/ryqGsOBAw8PD68V+tVxFUoeYn7m6un3z7q/Cg8PD2+Pd/8hvv/EXwV6fyZJCXmauTyPh4eH96e8+9CTkreaPKqvGA8PD+/TeL1WQl4iz5MTHh4e3jt5STMibyIUmgVx22K914KHh4fXuX80APuE34vzPTw8PLzBVH3+8c0XC3ot3YcI8fDw8BZ4+cJTPujqBTR5BQ+R4+Hh4R3lJQOtaishXxRIxmDVO//3Gw8PD2+NVx2G5Y3XvAXcW9h6iAcPDw9vgVftglYbB/MXka8vNDvTeHh4eC1eb7TfSyr578kLwsPDw3s/rzf0mvCSpkMzUeHh4eGt8eaN1N5ordf8LTcd8PDw8BZ4Caw6xDq7ItBreeDh4eGd5eWf17wUzodePXwhSeDh4eEt8KrNiHzo1btPNeVE9TMeHh7eAq+aMKqh5y2MeTOisEyAh4eHN+ZVi+DqAOxUuyEv6/Hw8PA2eL0lqt66QF4i5wO2h1eJh4eHt8zrNRTK07ZDiwtJ8Y2Hh4e3wcubBZOCuLqwlT8rSiF4eHh4a7wENgmummx6LxQPDw/vnbw8rCTQalshv6q6cICHh4e3x5sEXR3zT5YP8qfj4eHh7fEmQ6kJftICzhca8PDw8DZ4r+KRP7KXPKqrA4UBGB4eHt4ab2OglZTI1bWD6Co8PDy8o7xeSsj/+U/O53eojsrw8PDwNniTfJInhrz4zu9fTTN4eHh4Z3nVZNC7tvpZz1cERm1cPDw8vAGvOgzLC9kqpprBHtrNeHh4eB/Dm6SHcqe5OGw7kBjw8PDwDvF6Ze6pkjqPBA8PD+89vElDoVdA98rrakGPh4eHt8Fr7mrFKSQJaF58H57v4eHh4f1+1Td2kVS57u1zAAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '这是个标题';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '这是个标题';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

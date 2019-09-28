@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>自动备份 VPS 数据到 email 和 Dropbox | 这是个标题 | 这是个子标题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="Dropbox 准备 登录 Dropbox，打开 Apps 页面，点击 Create App 按钮，创建一个 App   获取 Access token，点击 Generate 获取备用。   接着 SSH 登录 VPS 获取最新的 Dropbox Uploader 脚本 git clone https://github.com/andreafabrizi/Dropbox-Uploader.git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动备份 VPS 数据到 email 和 Dropbox">
+<meta property="og:url" content="https://imeiji.github.io/2017/01/08/自动备份 VPS 数据到 email 和 Dropbox/index.html">
+<meta property="og:site_name" content="这是个标题">
+<meta property="og:description" content="Dropbox 准备 登录 Dropbox，打开 Apps 页面，点击 Create App 按钮，创建一个 App   获取 Access token，点击 Generate 获取备用。   接着 SSH 登录 VPS 获取最新的 Dropbox Uploader 脚本 git clone https://github.com/andreafabrizi/Dropbox-Uploader.git">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2017/12/18/5a376c923ca03.png">
+<meta property="og:image" content="https://i.loli.net/2017/12/18/5a376c923c928.png">
+<meta property="og:updated_time" content="2017-12-18T07:53:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自动备份 VPS 数据到 email 和 Dropbox">
+<meta name="twitter:description" content="Dropbox 准备 登录 Dropbox，打开 Apps 页面，点击 Create App 按钮，创建一个 App   获取 Access token，点击 Generate 获取备用。   接着 SSH 登录 VPS 获取最新的 Dropbox Uploader 脚本 git clone https://github.com/andreafabrizi/Dropbox-Uploader.git">
+<meta name="twitter:image" content="https://i.loli.net/2017/12/18/5a376c923ca03.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="这是个标题" href="../../../../atom.xml">
+    
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(../../../../img/brand.jpg)">
+      <div class="brand">
+        <a href="../../../../index.html" class="avatar waves-effect waves-circle waves-light">
+          <img src="../../../../img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">iMeiji</h5>
+          <a href="mailto:meijilmz@gmail.com" title="meijilmz@gmail.com" class="mail">meijilmz@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../index.html"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/iMeiji" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">自动备份 VPS 数据到 email 和 Dropbox</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">自动备份 VPS 数据到 email 和 Dropbox</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-01-07T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-01-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/VPS/">VPS</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Dropbox-准备"><span class="post-toc-number">1.</span> <span class="post-toc-text">Dropbox 准备</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Email-准备"><span class="post-toc-number">2.</span> <span class="post-toc-text">Email 准备</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#创建备份脚本"><span class="post-toc-number">3.</span> <span class="post-toc-text">创建备份脚本</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考文章"><span class="post-toc-number">4.</span> <span class="post-toc-text">参考文章</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-自动备份 VPS 数据到 email 和 Dropbox"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">自动备份 VPS 数据到 email 和 Dropbox</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-01-08 00:00:00" datetime="2017-01-07T16:00:00.000Z"  itemprop="datePublished">2017-01-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/VPS/">VPS</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="Dropbox-准备"><a href="#Dropbox-准备" class="headerlink" title="Dropbox 准备"></a>Dropbox 准备</h2><ol>
+<li><p>登录 Dropbox，打开 <a href="https://www.dropbox.com/developers/apps" target="_blank" rel="noopener">Apps</a> 页面，点击 Create App 按钮，创建一个 App</p>
+<p><img src="https://i.loli.net/2017/12/18/5a376c923ca03.png" alt="dropbox-app.png"></p>
+</li>
+<li><p>获取 Access token，点击 Generate 获取备用。</p>
+<p><img src="https://i.loli.net/2017/12/18/5a376c923c928.png" alt="dropbox-app-token.png"></p>
+</li>
+<li><p>接着 SSH 登录 VPS 获取最新的 <a href="https://github.com/andreafabrizi/Dropbox-Uploader" target="_blank" rel="noopener">Dropbox Uploader</a> 脚本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/andreafabrizi/Dropbox-Uploader.git</span><br><span class="line">chmod +x dropbox_uploader.sh</span><br><span class="line">./dropbox_uploader.sh info</span><br></pre></td></tr></table></figure>
+<p>根据提示输入 Access token，Dropbox 绑定成功。再次运行 <code>./dropbox_uploader.sh info</code> 可以看到绑定的 Dropbox 账户信息。</p>
+</li>
+</ol>
+<h2 id="Email-准备"><a href="#Email-准备" class="headerlink" title="Email 准备"></a>Email 准备</h2><ol>
+<li><p>安装Email组件，以保证数据库文件可以发送到您的邮箱</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apt-get install sendmail mutt</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="创建备份脚本"><a href="#创建备份脚本" class="headerlink" title="创建备份脚本"></a>创建备份脚本</h2><ol>
+<li><p>请确保有以下目录，如果没有请执行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir -p /root/backups/sql</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>脚本开始<br><code>vi backup.sh</code>  </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">你要修改的地方从这里开始</span></span><br><span class="line">MYSQL_USER=			#数据库用户</span><br><span class="line">MYSQL_PASS=			#数据库密码</span><br><span class="line">MAIL_TO=			#发送邮箱	</span><br><span class="line">WEB_DATA=/home/wwwroot	#本地网站路径</span><br><span class="line">DOMAIN=				#域名</span><br><span class="line"><span class="meta">#</span><span class="bash">你要修改的地方从这里结束</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">定义备份的名字</span></span><br><span class="line">DBName=Data_$(date +"%Y%m%d%H").tar.gz</span><br><span class="line">WebName=Web_$(date +%Y%m%d).tar.gz</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">定义旧数据名字 这里删除60天前的数据</span></span><br><span class="line">OldDBName=Data_$(date -d -60day +"%Y%m%d").tar.gz</span><br><span class="line">OldWebName=Web_$(date -d -60day +"%Y%m%d").tar.gz</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#备份目录</span></span></span><br><span class="line">cd /root/backups/sql</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">导出数据库,一个数据库一个压缩文件</span></span><br><span class="line">for db in `/usr/bin/mysql -u$MYSQL_USER -p$MYSQL_PASS -B -N -e 'SHOW DATABASES' | xargs`; do</span><br><span class="line">    (/usr/bin/mysqldump -u$MYSQL_USER -p$MYSQL_PASS $&#123;db&#125; | gzip -9 - &gt; $&#123;db&#125;.sql.gz)</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">压缩数据库文件为一个文件</span></span><br><span class="line">tar zcf $DBName *.sql.gz</span><br><span class="line">rm -rf *.sql.gz</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">将文件上传到 Dropbox</span></span><br><span class="line">/root/dropbox_uploader.sh upload "$DBName" "/"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">删除旧的数据</span></span><br><span class="line">rm -rf OldDBName OldWebName</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">开始删除远程旧的文件</span></span><br><span class="line">/root/dropbox_uploader.sh delete $OldDBName</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">以下内容需要根据实际环境修改</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">发送数据库到Email</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="built_in">echo</span> <span class="string">"主题:数据库备份"</span> | mutt -e <span class="string">"my_hdr from:<span class="variable">$DOMAIN</span>&lt;root@<span class="variable">$DOMAIN</span>&gt;"</span> -a /root/backups/sql/<span class="variable">$DBName</span> -s <span class="string">"内容:数据库备份"</span> -- <span class="variable">$MAIL_TO</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">压缩网站数据</span></span><br><span class="line"><span class="meta">#</span><span class="bash">tar zcf /root/backups/<span class="variable">$WebName</span> <span class="variable">$WEB_DATA</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">将文件上传到 Dropbox</span></span><br><span class="line"><span class="meta">#</span><span class="bash">/root/dropbox_uploader.sh upload <span class="string">"<span class="variable">$WebName</span>"</span> <span class="string">"/"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">/root/dropbox_uploader.sh delete <span class="variable">$OldWebName</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">发送网站数据到Email</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="built_in">echo</span> <span class="string">"主题:网站备份"</span> | mutt -e <span class="string">"my_hdr from:<span class="variable">$DOMAIN</span>&lt;root@<span class="variable">$DOMAIN</span>&gt;"</span> -a /root/backups/<span class="variable">$DBName</span> /root/backups/<span class="variable">$DBName</span> -s <span class="string">"内容:网站备份"</span> -- <span class="variable">$MAIL_TO</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>脚本修改完，上传至 /root/ 目录下，并赋予执行权限<br><code>chmod +x /root/backup.sh</code> </p>
+</li>
+<li><p>准备添加定时设置，每2小时备份数据</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">crontab -e</span><br><span class="line">0 */2 * * * bash /root/backupsql.sh</span><br></pre></td></tr></table></figure>
+<p>重启Crontab<br><code>/etc/init.d/cron restart</code>  </p>
+</li>
+</ol>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a href="http://www.laozuo.org/4560.html" target="_blank" rel="noopener">http://www.laozuo.org/4560.html</a></p>
+<p><a href="https://cyhour.com/549/" target="_blank" rel="noopener">https://cyhour.com/549/</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-12-18T07:53:11.000Z" itemprop="dateUpdated">2017-12-18 15:53:11</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="" target="_blank" rel="external">https://imeiji.github.io/2017/01/08/自动备份 VPS 数据到 email 和 Dropbox/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://imeiji.github.io">
+            <img src="../../../../img/avatar.jpg" alt="iMeiji">
+            iMeiji
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2017/01/08/自动备份 VPS 数据到 email 和 Dropbox/&title=《自动备份 VPS 数据到 email 和 Dropbox》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2017/01/08/自动备份 VPS 数据到 email 和 Dropbox/&title=《自动备份 VPS 数据到 email 和 Dropbox》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2017/01/08/自动备份 VPS 数据到 email 和 Dropbox/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《自动备份 VPS 数据到 email 和 Dropbox》 — 这是个标题&url=https://imeiji.github.io/2017/01/08/自动备份 VPS 数据到 email 和 Dropbox/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2017/01/08/自动备份 VPS 数据到 email 和 Dropbox/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="../../09/搭建 sspanel v3 魔改版记录/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">搭建 sspanel v3 魔改版记录</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="../../05/今日头条Api分析/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">今日头条Api分析</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'imeijimyblog';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="../../../../index.html" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="../../../../atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>iMeiji &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2017/01/08/自动备份 VPS 数据到 email 和 Dropbox/&title=《自动备份 VPS 数据到 email 和 Dropbox》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2017/01/08/自动备份 VPS 数据到 email 和 Dropbox/&title=《自动备份 VPS 数据到 email 和 Dropbox》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2017/01/08/自动备份 VPS 数据到 email 和 Dropbox/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《自动备份 VPS 数据到 email 和 Dropbox》 — 这是个标题&url=https://imeiji.github.io/2017/01/08/自动备份 VPS 数据到 email 和 Dropbox/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2017/01/08/自动备份 VPS 数据到 email 和 Dropbox/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACt0lEQVR42u3aQZIiMQwEQP7/6dnrRrBAlWTPcsg+ERC4nX2w1WU9HvH183T9/f3z51f/ff/9T3A9blx4eHh466m/v/HzfxNe8jkfv3gEeHh4eNd47bSSm70f/9Rj+mDBw8PD+wJeMumclIyTPzI8PDy87+S1JXheoCdRBR4eHt738PKy+D0jn2K+SbSBLx4eHt5tXn6K9D2fr5zv4eHh4a1P1WeHYW2Muw+LX84WDw8P7wLvVOSaFNl5IZ48smKeeHh4eL/Cmx19zSr6TTEdbUV4eHh4R3lJ8Nou1rODsf0V9S/g4eHhHeLl20C+QLdjXtzx8PDw8I7yWkayhcy2jTzqXR2G4eHh4a15bctUTk1Gno2T/4qHh4d3jzc74J8dbrXhRb4ZvOyMwMPDwzvKy1/vN0f4eYw7K/frSBcPDw9vwctL2/Z0KSnQ21C4Lvrx8PDwLvCSVqf3i3sS6bbx8ey+H0758PDw8C7wNqHtJizYkKK74+Hh4R3l5e1Qm6m3rQZt8f3yGzw8PLxrvHbxzYPU2RLfMl6OiYeHh3eBl8cBm0W/jY9PNWDh4eHh/Q6vPbDflM4zWN10hYeHh3eB1063bZxqWwHaZq9jDQR4eHh4JW8WAWymO2v8msUZeHh4eGd5s8OnvPhuy+LN3F6+MeDh4eH9Iq8NYTdNVJsyfbgx4OHh4S14+6V8Xyi3jzh6V8DDw8O7zEvChXZZTwLiYV6SPFY8PDy8o7yf8kqK2k1R3pbsH37Fw8PDu8BrF99Zc1W7MeT/TQ7q8PDw8G7wzpbC+2aplv1hQ8LDw8O7xts0BLSlbb7BzMKIf2wMeHh4eP+Vl0cPydTzULh99Hh4eHjfw5uFp23Jno/w4e54eHh413jJ7WeRa76FbAruA1kLHh4eXjf+6oV/hmkP+081aeHh4eEteH8AVYPaT1PRYccAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '这是个标题';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '这是个标题';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

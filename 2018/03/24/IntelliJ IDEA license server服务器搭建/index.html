@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>搭建 IDEA license server 服务器 | 这是个标题 | 这是个子标题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="前言若资金允许，请点击 https://www.jetbrains.com/idea/buy/ 购买正版 搭建 方法一：使用 nginx 反代   server &amp;#123;    location /idea/ &amp;#123;        proxy_pass http://idea.lanyus.com/;    &amp;#125;&amp;#125;   然后使用 https://yourdomain.c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建 IDEA license server 服务器">
+<meta property="og:url" content="https://imeiji.github.io/2018/03/24/IntelliJ IDEA license server服务器搭建/index.html">
+<meta property="og:site_name" content="这是个标题">
+<meta property="og:description" content="前言若资金允许，请点击 https://www.jetbrains.com/idea/buy/ 购买正版 搭建 方法一：使用 nginx 反代   server &amp;#123;    location /idea/ &amp;#123;        proxy_pass http://idea.lanyus.com/;    &amp;#125;&amp;#125;   然后使用 https://yourdomain.c">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-03-24T14:13:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="搭建 IDEA license server 服务器">
+<meta name="twitter:description" content="前言若资金允许，请点击 https://www.jetbrains.com/idea/buy/ 购买正版 搭建 方法一：使用 nginx 反代   server &amp;#123;    location /idea/ &amp;#123;        proxy_pass http://idea.lanyus.com/;    &amp;#125;&amp;#125;   然后使用 https://yourdomain.c">
+    
+        <link rel="alternate" type="application/atom+xml" title="这是个标题" href="../../../../atom.xml">
+    
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(../../../../img/brand.jpg)">
+      <div class="brand">
+        <a href="../../../../index.html" class="avatar waves-effect waves-circle waves-light">
+          <img src="../../../../img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">iMeiji</h5>
+          <a href="mailto:meijilmz@gmail.com" title="meijilmz@gmail.com" class="mail">meijilmz@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../index.html"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/iMeiji" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">搭建 IDEA license server 服务器</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">搭建 IDEA license server 服务器</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-24T12:30:34.000Z" itemprop="datePublished" class="page-time">
+  2018-03-24
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/VPS/">VPS</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#搭建"><span class="post-toc-number">2.</span> <span class="post-toc-text">搭建</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#激活网址"><span class="post-toc-number">3.</span> <span class="post-toc-text">激活网址</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-IntelliJ IDEA license server服务器搭建"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">搭建 IDEA license server 服务器</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-24 20:30:34" datetime="2018-03-24T12:30:34.000Z"  itemprop="datePublished">2018-03-24</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/VPS/">VPS</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>若资金允许，请点击 <a href="https://www.jetbrains.com/idea/buy/" target="_blank" rel="noopener">https://www.jetbrains.com/idea/buy/</a> 购买正版</p>
+<h2 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a>搭建</h2><ul>
+<li><p>方法一：使用 nginx 反代</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    location /idea/ &#123;</span><br><span class="line">        proxy_pass http://idea.lanyus.com/;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  然后使用 <code>https://yourdomain.com/idea/</code> 即可</p>
+</li>
+</ul>
+<ul>
+<li><p>方法二：使用反代软件</p>
+<p>  项目地址 ： <a href="https://github.com/ilanyu/ReverseProxy" target="_blank" rel="noopener">https://github.com/ilanyu/ReverseProxy</a></p>
+<p>  下载对应系统的二进制文件，下面以 linux-amd64 为例</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget https://github.com/ilanyu/ReverseProxy/releases/download/v1.2/ReverseProxy_linux_amd64</span><br><span class="line">chmod a+x ReverseProxy_linux_amd64</span><br><span class="line">./ReverseProxy_linux_amd64 -l &quot;0.0.0.0:8888&quot; -r http://idea.lanyus.com/</span><br></pre></td></tr></table></figure>
+<p>  然后使用 <code>http://yourdomain.com:8888</code> 即可</p>
+</li>
+</ul>
+<ul>
+<li><p>方法三：使用破解补丁</p>
+<p>  <a href="http://idea.lanyus.com/" target="_blank" rel="noopener">http://idea.lanyus.com/</a></p>
+</li>
+</ul>
+<h2 id="激活网址"><a href="#激活网址" class="headerlink" title="激活网址"></a>激活网址</h2><p>上面地址失效了可以换个试试</p>
+<p><a href="http://xidea.online/" target="_blank" rel="noopener">http://xidea.online/</a><br><a href="http://idea.singee77.com/" target="_blank" rel="noopener">http://idea.singee77.com/</a><br><a href="http://idea.lanyus.com/" target="_blank" rel="noopener">http://idea.lanyus.com/</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-03-24T14:13:31.000Z" itemprop="dateUpdated">2018-03-24 22:13:31</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="" target="_blank" rel="external">https://imeiji.github.io/2018/03/24/IntelliJ IDEA license server服务器搭建/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://imeiji.github.io">
+            <img src="../../../../img/avatar.jpg" alt="iMeiji">
+            iMeiji
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2018/03/24/IntelliJ IDEA license server服务器搭建/&title=《搭建 IDEA license server 服务器》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2018/03/24/IntelliJ IDEA license server服务器搭建/&title=《搭建 IDEA license server 服务器》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2018/03/24/IntelliJ IDEA license server服务器搭建/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《搭建 IDEA license server 服务器》 — 这是个标题&url=https://imeiji.github.io/2018/03/24/IntelliJ IDEA license server服务器搭建/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2018/03/24/IntelliJ IDEA license server服务器搭建/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="../../../07/08/谈谈 Android 压缩和加载大图片/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">谈谈 Android 压缩和加载大图片</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="../../17/Android NDK 入门 - 玩转 CMake/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android NDK 入门 - 玩转 CMake</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'imeijimyblog';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="../../../../index.html" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="../../../../atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>iMeiji &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2018/03/24/IntelliJ IDEA license server服务器搭建/&title=《搭建 IDEA license server 服务器》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2018/03/24/IntelliJ IDEA license server服务器搭建/&title=《搭建 IDEA license server 服务器》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2018/03/24/IntelliJ IDEA license server服务器搭建/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《搭建 IDEA license server 服务器》 — 这是个标题&url=https://imeiji.github.io/2018/03/24/IntelliJ IDEA license server服务器搭建/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2018/03/24/IntelliJ IDEA license server服务器搭建/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACs0lEQVR42u3a0Y4iMQwEQP7/pznpXoGh2xnv3kmVp9UgklRWmhjbj0c8nn/H65PX0X7r9Xk+/20DDw8Pb7T16+mSha+/9YmR7yTfAx4eHt7P8K4vg2SjxZLBVdHu5+NzPDw8vF/lXYfOs40mbDw8PLz/l5csPCMlDDw8PLx/jZf/+M9D4XyG9hBXci14eHh4k8zAY+PFvfH3Yn0PDw8P76Cq3jYHnKdr88RxtE88PDy8BV5Szs/TrMmn54WuOhWCh4eHt8CbMU7SELNwOZmnBuPh4eEd8/ZyG0mI3Ibm9fWGh4eHdxPvuTbalMSszLaSzMXDw8Nb+4WevNbPm7rymaMjwMPDwzvmnbQ6zcpgswaF/FJ5UwDDw8PDu5XXFp9mW5+lenNeUevDw8PDO+DNGqFmxar2SmibDN6si4eHh7fGawtgJy/xPPnbfvpGgYeHh7fMm7VVnTDyqL9NUuDh4eHt8c7bC06Svy0pKYzd3D2Bh4eH9yHPmRe3ZqMNo2cJ4qKyh4eHh3fMm6UGkmD3OjSfNR8USDw8PLwFXvJBvtFZq0E7/7DlCw8PD2+Nl7cI5AucNHLlofaXPePh4eEt8K5fxLOXe3KF5EWsWRsWHh4e3gavnbpNv+bNByfgL2UwPDw8vAVeGxC3S7YtCOdNYHh4eHh7vDblelcAPUtA1KkHPDw8vAVem3ht06nJ0eT7yRO7eHh4eNu8JMXQFuxn18nsZot6IvDw8PCOec9ytOHyvU1U9b8BDw8Pb4GXj3zJ/CCuN3fOxsPDw9vjJZdBHkDPjiA/4jpAx8PDw1vjtdttL4aThoOc/aXpCg8PD++XeLMlZ8WzldYBPDw8vB/ktQ0BG1mTxZAaDw8PbyEZMbse8tC5PcRhDgMPDw/vmDcrgOUNAe0WT1oEbqvv4eHh4b1/8geQ8KZLwjrX4gAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '这是个标题';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '这是个标题';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

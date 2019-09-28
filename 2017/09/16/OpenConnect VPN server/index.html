@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>OpenConnect VPN server | 这是个标题 | 这是个子标题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="OpenConnet Server（ocserv）是通过实现Cisco的AnyConnect协议，用DTLS作为主要的加密传输协议。我认为它的主要好处在于——  AnyConnect的VPN协议默认使用UDP DTLS作为数据传输，但如果有什么网络问题导致UDP传输出现问题，它会利用最初建立的TCP TLS通道作为备份通道，降低VPN断开的概率。 AnyConnect作为Cisco新一代的VPN解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenConnect VPN server">
+<meta property="og:url" content="https://imeiji.github.io/2017/09/16/OpenConnect VPN server/index.html">
+<meta property="og:site_name" content="这是个标题">
+<meta property="og:description" content="OpenConnet Server（ocserv）是通过实现Cisco的AnyConnect协议，用DTLS作为主要的加密传输协议。我认为它的主要好处在于——  AnyConnect的VPN协议默认使用UDP DTLS作为数据传输，但如果有什么网络问题导致UDP传输出现问题，它会利用最初建立的TCP TLS通道作为备份通道，降低VPN断开的概率。 AnyConnect作为Cisco新一代的VPN解">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-10-02T10:10:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenConnect VPN server">
+<meta name="twitter:description" content="OpenConnet Server（ocserv）是通过实现Cisco的AnyConnect协议，用DTLS作为主要的加密传输协议。我认为它的主要好处在于——  AnyConnect的VPN协议默认使用UDP DTLS作为数据传输，但如果有什么网络问题导致UDP传输出现问题，它会利用最初建立的TCP TLS通道作为备份通道，降低VPN断开的概率。 AnyConnect作为Cisco新一代的VPN解">
+    
+        <link rel="alternate" type="application/atom+xml" title="这是个标题" href="../../../../atom.xml">
+    
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(../../../../img/brand.jpg)">
+      <div class="brand">
+        <a href="../../../../index.html" class="avatar waves-effect waves-circle waves-light">
+          <img src="../../../../img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">iMeiji</h5>
+          <a href="mailto:meijilmz@gmail.com" title="meijilmz@gmail.com" class="mail">meijilmz@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../index.html"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/iMeiji" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">OpenConnect VPN server</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">OpenConnect VPN server</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-09-16T06:10:54.000Z" itemprop="datePublished" class="page-time">
+  2017-09-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/GFW/">GFW</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置环境"><span class="post-toc-number">1.</span> <span class="post-toc-text">配置环境</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置-OpenConnect-Server"><span class="post-toc-number">2.</span> <span class="post-toc-text">配置 OpenConnect Server</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#优化OpenConnectServer"><span class="post-toc-number">3.</span> <span class="post-toc-text">优化OpenConnectServer</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-OpenConnect VPN server"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">OpenConnect VPN server</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-09-16 14:10:54" datetime="2017-09-16T06:10:54.000Z"  itemprop="datePublished">2017-09-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/GFW/">GFW</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>OpenConnet Server（ocserv）是通过实现Cisco的AnyConnect协议，用DTLS作为主要的加密传输协议。我认为它的主要好处在于——</p>
+<ul>
+<li>AnyConnect的VPN协议默认使用UDP DTLS作为数据传输，但如果有什么网络问题导致UDP传输出现问题，它会利用最初建立的TCP TLS通道作为备份通道，降低VPN断开的概率。</li>
+<li>AnyConnect作为Cisco新一代的VPN解决方案，被用于许多大型企业，这些企业依赖它提供正常的商业运作，这些正常运作对应的经济效益（读作GDP），是我们最好的伙伴。</li>
+<li>OpenConnet的架设足够麻烦，我的意思是，如果你不是大型企业，你会用AnyConnect的概率无限趋近于零。再者，如果它足够简单，我就不用写这篇文章了。<br>至于它的自定义路由表支持，我觉得都是次要了。</li>
+</ul>
+<p>介绍到此，让我们按步骤干好事情。</p>
+<p>（下文选用 Debian8 和 ocser v0.11.8 作为标准环境）  </p>
+<h2 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h2><ol>
+<li><p>安装依赖</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apt-get install -y build-essential pkg-config libgnutls28-dev libreadline-dev libseccomp-dev libwrap0-dev libnl-nf-3-dev liblz4-dev libev-dev autogen</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译安装</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看最新版本 http://www.infradead.org/ocserv/download.html</span></span><br><span class="line">wget ftp://ftp.infradead.org/pub/ocserv/ocserv-0.11.8.tar.xz</span><br><span class="line">tar xvf ocserv-*.tar.xz &amp;&amp; cd ocserv-*</span><br><span class="line">./configure </span><br><span class="line">make &amp;&amp; make install &amp;&amp; cd ..</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="配置-OpenConnect-Server"><a href="#配置-OpenConnect-Server" class="headerlink" title="配置 OpenConnect Server"></a>配置 OpenConnect Server</h2><ol>
+<li><p>配置证书</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">安装证书工具  </span><br><span class="line">apt-get install gnutls-bin</span><br><span class="line">cd ~ &amp;&amp; mkdir certificates &amp;&amp; cd certificates</span><br></pre></td></tr></table></figure>
+<p>在此目录下创建一个名为<code>vi ca.tmpl</code> 的CA证书模板，写入如下语句：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cn = &quot;Your CA name&quot; </span><br><span class="line">organization = &quot;Your fancy name&quot; </span><br><span class="line">serial = 1 </span><br><span class="line">expiration_days = 3650</span><br><span class="line">ca </span><br><span class="line">signing_key </span><br><span class="line">cert_signing_key </span><br><span class="line">crl_signing_key</span><br></pre></td></tr></table></figure>
+<p>生成CA密钥和证书</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">certtool --generate-privkey --outfile ca-key.pem</span><br><span class="line">certtool --generate-self-signed --load-privkey ca-key.pem --template ca.tmpl --outfile ca-cert.pem</span><br></pre></td></tr></table></figure>
+<p>然后我们生成服务器证书<code>vi server.tmpl</code>，这里注意<code>cn</code> 项必须对应你服务器的域名或IP，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cn = &quot;Your hostname or IP&quot; </span><br><span class="line">organization = &quot;Your fancy name&quot; </span><br><span class="line">expiration_days = 3650</span><br><span class="line">signing_key </span><br><span class="line">encryption_key</span><br><span class="line">tls_www_server</span><br></pre></td></tr></table></figure>
+<p>生成Server密钥和证书</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">certtool --generate-privkey --outfile server-key.pem</span><br><span class="line">certtool --generate-certificate --load-privkey server-key.pem --load-ca-certificate ca-cert.pem --load-ca-privkey ca-key.pem --template server.tmpl --outfile server-cert.pem</span><br></pre></td></tr></table></figure>
+<p>把证书移动到合适的地方：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cp ca-cert.pem /etc/ssl/private/my-ca-cert.pem</span><br><span class="line">cp server-cert.pem /etc/ssl/private/my-server-cert.pem</span><br><span class="line">cp server-key.pem /etc/ssl/private/my-server-key.pem</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>准备配置文件</p>
+<p>我们把配置文件放到 ocserv 默认读取的位置：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir /etc/ocserv</span><br><span class="line">cd ~/ocserv*</span><br><span class="line">cp doc/sample.config /etc/ocserv/ocserv.conf</span><br><span class="line">vi /etc/ocserv/ocserv.conf</span><br></pre></td></tr></table></figure>
+<p>配置文件可以<a href="http://www.infradead.org/ocserv/manual.html" target="_blank" rel="noopener">官方手册</a>手册来写，不过这里我们重点要确保以下条目正确：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 登陆方式，目前先用密码登录</span><br><span class="line">auth = &quot;plain[/etc/ocserv/ocpasswd]&quot;</span><br><span class="line"> </span><br><span class="line"># 允许同时连接的客户端数量</span><br><span class="line">max-clients = 4</span><br><span class="line"> </span><br><span class="line"># 限制同一客户端的并行登陆数量</span><br><span class="line">max-same-clients = 2</span><br><span class="line"> </span><br><span class="line"># 服务监听的IP（服务器IP，可不设置）</span><br><span class="line">listen-host = 1.2.3.4</span><br><span class="line"> </span><br><span class="line"># 服务监听的TCP/UDP端口（选择你喜欢的数字）</span><br><span class="line">tcp-port = 9000</span><br><span class="line">udp-port = 9001</span><br><span class="line"> </span><br><span class="line"># 自动优化VPN的网络性能</span><br><span class="line">try-mtu-discovery = true</span><br><span class="line"> </span><br><span class="line"># 确保服务器正确读取用户证书（后面会用到用户证书）</span><br><span class="line">cert-user-oid = 2.5.4.3</span><br><span class="line"> </span><br><span class="line"># 服务器证书与密钥</span><br><span class="line">ca-cert = /etc/ssl/private/my-ca-cert.pem</span><br><span class="line">server-cert = /etc/ssl/private/my-server-cert.pem</span><br><span class="line">server-key = /etc/ssl/private/my-server-key.pem</span><br><span class="line"> </span><br><span class="line"># 客户端连上vpn后使用的dns</span><br><span class="line">dns = 8.8.8.8</span><br><span class="line">dns = 8.8.4.4</span><br><span class="line"> </span><br><span class="line"># 注释掉所有的route，让服务器成为gateway</span><br><span class="line">#route = 192.168.1.0/255.255.255.0</span><br><span class="line"> </span><br><span class="line"># 启用cisco客户端兼容性支持</span><br><span class="line">cisco-client-compat = true</span><br><span class="line"></span><br><span class="line">#据说可以优化速度</span><br><span class="line">output-buffer = 23000 </span><br><span class="line">try-mtu-discovery = true</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试服务器</p>
+<p>创建一个登陆用的用户名与密码<br><code>ocpasswd -c /etc/ocserv/ocpasswd your-username</code>  </p>
+<p>修改内核设置，使得支持转发，<code>vi /etc/sysctl.conf</code>,将<code>net.ipv4.ip_forward=0</code>改为<code>net.ipv4.ip_forward=1</code> , 保存生效<code>sysctl -p</code>  </p>
+<p>查看网卡信息<code>ifconfig</code>用于修改防火墙<br>开启NAT转发, 开启端口(对应上面配置的端口)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">iptables -t nat -A POSTROUTING -j MASQUERADE</span><br><span class="line">iptables -A INPUT -p tcp --dport 443 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p udp --dport 443 -j ACCEPT</span><br><span class="line"># 规则保存 Ubuntu</span><br><span class="line">iptables-save &gt; /etc/iptables.rules</span><br><span class="line"># 规则保存 Debian</span><br><span class="line">apt-get install iptables-persistent -y</span><br><span class="line">service netfilter-persistent save</span><br></pre></td></tr></table></figure>
+<p>使用<code>iptables -t nat -L</code>来验证转发是否开启成功  </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Chain PREROUTING (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination</span><br><span class="line"> </span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination</span><br><span class="line"> </span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination</span><br><span class="line"> </span><br><span class="line">Chain POSTROUTING (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination</span><br><span class="line">MASQUERADE  all  --  192.168.1.0/24       anywhere</span><br></pre></td></tr></table></figure>
+<p>使用 <code>iptables -L -n</code> 查看端口是否开启</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">`Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line">ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:443</span><br><span class="line">ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:443</span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination</span><br></pre></td></tr></table></figure>
+<p>使用<code>ocserv -f -d 1</code>命令来启动下服务啦<br>打开你手机上的 OpenConnect / Cisco Anyconnect 新建一个 VPN, 添加服务器 IP 就是你的 vps的IP:端口,例如<code>X.X.X.X:443</code><br>好了，如果你看到如下信息，那服务器应该已经能够正常运行了：  </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Parsing plain auth method subconfig using legacy format</span><br><span class="line">Setting &apos;plain&apos; as primary authentication method</span><br><span class="line">listening (TCP) on 0.0.0.0:443...</span><br><span class="line">listening (UDP) on 0.0.0.0:443...</span><br><span class="line">ocserv[16104]: main: initialized ocserv 0.11.8</span><br><span class="line">ocserv[16105]: sec-mod: reading supplemental config from files</span><br><span class="line">ocserv[16105]: sec-mod: sec-mod initialized (socket: /var/run/ocserv-socket.16104)</span><br><span class="line">ocserv[16109]: GnuTLS error (at worker-vpn.c:468): A TLS fatal alert has been received.: Unknown certificate</span><br><span class="line">ocserv[16104]: main: 60.0.14.48:9890 user disconnected</span><br><span class="line">ocserv[16105]: sec-mod: using &apos;plain&apos; authentication to authenticate user (session: FXS0l)</span><br><span class="line">ocserv[16104]: main: 60.0.14.48:36627 user disconnected</span><br><span class="line">ocserv[16105]: sec-mod: initiating session for user &apos;test&apos; (session: FXS0l)</span><br><span class="line">ocserv[16104]: main[test]: 60.0.14.48:9663 new user session</span><br><span class="line">ocserv[16104]: main[test]: 60.0.14.48:9663 user logged in</span><br><span class="line">ocserv[16104]: main: 60.0.14.48:46429 user disconnected</span><br><span class="line">ocserv[16104]: main[test]: 60.0.14.48:9663 user disconnected</span><br><span class="line">ocserv[16105]: sec-mod: temporarily closing session for test (session: FXS0l)</span><br><span class="line">ocserv[16105]: sec-mod: initiating session for user &apos;test&apos; (session: FXS0l)ocserv[16104]: main[test]: 60.0.14.48:38135 new user session</span><br><span class="line">ocserv[16104]: main[test]: 60.0.14.48:38135 user logged in</span><br></pre></td></tr></table></figure>
+<p>好了，目前已经搞定了OpenConnect server，下面讲的是一些优化，创建客户端证书，智能分流  </p>
+</li>
+</ol>
+<h2 id="优化OpenConnectServer"><a href="#优化OpenConnectServer" class="headerlink" title="优化OpenConnectServer"></a>优化OpenConnectServer</h2><ol>
+<li><p>制作启动脚本</p>
+<p>首先，来写个启动脚本——毕竟，不能每次都用调试模式启动不是吗？</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vi /etc/init.d/ocserv</span><br></pre></td></tr></table></figure>
+<p>在配置文件中写入如下脚本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## BEGIN INIT INFO</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Provides:          ocserv</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Required-Start:    <span class="variable">$remote_fs</span> <span class="variable">$syslog</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Required-Stop:     <span class="variable">$remote_fs</span> <span class="variable">$syslog</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Default-Start:     2 3 4 5</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Default-Stop:      0 1 6</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## END INIT INFO</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Copyright Rene Mayrhofer, Gibraltar, 1999</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> This script is distibuted under the GPL</span></span><br><span class="line"></span><br><span class="line">PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/sbin</span><br><span class="line">DAEMON=/usr/local/sbin/ocserv</span><br><span class="line">PIDFILE=/var/run/ocserv.pid</span><br><span class="line">DAEMON_ARGS="-c /etc/ocserv/ocserv.conf"</span><br><span class="line"></span><br><span class="line">case "$1" in</span><br><span class="line">start)</span><br><span class="line">if [ ! -r $PIDFILE ]; then</span><br><span class="line">echo -n "Starting OpenConnect VPN Server Daemon: "</span><br><span class="line">start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON -- \</span><br><span class="line"><span class="meta">$</span><span class="bash">DAEMON_ARGS &gt; /dev/null</span></span><br><span class="line">echo "ocserv."</span><br><span class="line">else</span><br><span class="line">echo -n "OpenConnect VPN Server is already running.\n\r"</span><br><span class="line">exit 0</span><br><span class="line">fi</span><br><span class="line">;;</span><br><span class="line">stop)</span><br><span class="line">echo -n "Stopping OpenConnect VPN Server Daemon: "</span><br><span class="line">start-stop-daemon --stop --quiet --pidfile $PIDFILE --exec $DAEMON</span><br><span class="line">echo "ocserv."</span><br><span class="line">rm -f $PIDFILE</span><br><span class="line">;;</span><br><span class="line">force-reload|restart)</span><br><span class="line">echo "Restarting OpenConnect VPN Server: "</span><br><span class="line"><span class="meta">$</span><span class="bash">0 stop</span></span><br><span class="line">sleep 1</span><br><span class="line"><span class="meta">$</span><span class="bash">0 start</span></span><br><span class="line">;;</span><br><span class="line">status)</span><br><span class="line">if [ ! -r $PIDFILE ]; then</span><br><span class="line"><span class="meta">#</span><span class="bash"> no pid file, process doesn<span class="string">'t seem to be running correctly</span></span></span><br><span class="line">exit 3</span><br><span class="line">fi</span><br><span class="line">PID=`cat $PIDFILE | sed 's/ //g'`</span><br><span class="line">EXE=/proc/$PID/exe</span><br><span class="line">if [ -x "$EXE" ] &amp;&amp;</span><br><span class="line">[ "`ls -l \"$EXE\" | cut -d'&gt;' -f2,2 | cut -d' ' -f2,2`" = \</span><br><span class="line">"$DAEMON" ]; then</span><br><span class="line"><span class="meta">#</span><span class="bash"> ok, process seems to be running</span></span><br><span class="line">exit 0</span><br><span class="line">elif [ -r $PIDFILE ]; then</span><br><span class="line"><span class="meta">#</span><span class="bash"> process not running, but pidfile exists</span></span><br><span class="line">exit 1</span><br><span class="line">else</span><br><span class="line"><span class="meta">#</span><span class="bash"> no lock file to check <span class="keyword">for</span>, so simply <span class="built_in">return</span> the stopped status</span></span><br><span class="line">exit 3</span><br><span class="line">fi</span><br><span class="line">;;</span><br><span class="line">*)</span><br><span class="line">echo "Usage: /etc/init.d/ocserv &#123;start|stop|restart|force-reload|status&#125;"</span><br><span class="line">exit 1</span><br><span class="line">;;</span><br><span class="line">esac</span><br><span class="line"></span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+<p>赋予其可执行权限</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chmod 755 /etc/init.d/ocserv`</span><br><span class="line">update-rc.d ocserv defaults</span><br></pre></td></tr></table></figure>
+<p>之后就可以使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">/etc/init.d/ocserv start | stop | restart</span><br><span class="line">service ocserv start | stop | restart</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>免密码登录</p>
+<p>创建客户端证书，省的老输入密码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd ~/certificates/</span><br><span class="line">vi user.tmpl</span><br></pre></td></tr></table></figure>
+<p>写入如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cn = &quot;some random name&quot;</span><br><span class="line">unit = &quot;some random unit&quot;</span><br><span class="line">expiration_days = 365</span><br><span class="line">signing_key</span><br><span class="line">tls_www_client</span><br></pre></td></tr></table></figure>
+<p>生成User密钥和证书</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">certtool --generate-privkey --outfile user-key.pem</span><br><span class="line">certtool --generate-certificate --load-privkey user-key.pem --load-ca-certificate ca-cert.pem --load-ca-privkey ca-key.pem --template user.tmpl --outfile user-cert.pem</span><br></pre></td></tr></table></figure>
+<p>然后要将证书和密钥转为PKCS12的格式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">certtool --to-p12 --load-privkey user-key.pem --pkcs-cipher 3des-pkcs12 --load-certificate user-cert.pem --outfile user.p12 --outder</span><br></pre></td></tr></table></figure>
+<p>期间会要求你输入证书名字和密码。</p>
+<p>然后你需要把这个证书放到一个可以被直接访问的地方，然后通过 URL 将 user.p12 文件导入AnyConnect，具体位置在诊断标签页的证书栏目下，导入成功之后，将对应的VPN设置的高级设置部分的证书栏目，改为导入的这张证书。</p>
+<p>现在，为了让服务器能够认得这张证书，我们再来修改一下配置：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vi /etc/ocserv/ocserv.conf</span><br><span class="line"> </span><br><span class="line"># 改为证书登陆，注释掉原来的登陆模式</span><br><span class="line">auth = &quot;certificate&quot;</span><br><span class="line"> </span><br><span class="line"># 证书认证不支持这个选项，注释掉这行</span><br><span class="line">#listen-clear-file = /var/run/ocserv-conn.socket</span><br><span class="line"> </span><br><span class="line"># 启用证书验证</span><br><span class="line">ca-cert = /etc/ssl/private/my-ca-cert.pem</span><br></pre></td></tr></table></figure>
+<p>这样，我们使用<code>service ocserv restart</code>来启动它即可！        </p>
+</li>
+<li><p>智能分流</p>
+<p>编译 ocserv 前需要修改 src/vpn.h 来支持超过 96 行(ocserv默认值)但不超过200行(Cisco AnyConnect最大值)的路由表:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vi ~/ocserv*/src/vpn.h</span><br><span class="line">#把96改为200以上</span><br><span class="line">#define DEFAULT_CONFIG_ENTRIES 96</span><br></pre></td></tr></table></figure>
+<p>修改 ocserv 配置文件，添加<a href="https://github.com/CNMan/ocserv-cn-no-route/blob/master/cn-no-route.txt" target="_blank" rel="noopener">这些内容</a></p>
+</li>
+</ol>
+<hr>
+<p>补充:<br>一键脚本(新) <a href="https://moeclub.org/2017/06/22/268/" target="_blank" rel="noopener">https://moeclub.org/2017/06/22/268/</a><br>一键脚本 <a href="https://github.com/fanyueciyuan/eazy-for-ss/tree/master/ocservauto" target="_blank" rel="noopener">https://github.com/fanyueciyuan/eazy-for-ss/tree/master/ocservauto</a><br>注意Anyconnect和速锐一起使用的话,首先要禁止掉udp-port(详细看配置文件) ,接着重启速锐 最后重启Anyconnect    </p>
+<p>参考:<br><a href="http://bitinn.net/11084/" target="_blank" rel="noopener">http://bitinn.net/11084/</a><br><a href="https://www.logcg.com/archives/1343.html" target="_blank" rel="noopener">https://www.logcg.com/archives/1343.html</a><br><a href="http://www.fanyueciyuan.info/fq/ocserv-debian.html" target="_blank" rel="noopener">http://www.fanyueciyuan.info/fq/ocserv-debian.html</a><br><a href="https://github.com/CNMan/ocserv-cn-no-route" target="_blank" rel="noopener">https://github.com/CNMan/ocserv-cn-no-route</a>    </p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-10-02T10:10:23.000Z" itemprop="dateUpdated">2017-10-02 18:10:23</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="" target="_blank" rel="external">https://imeiji.github.io/2017/09/16/OpenConnect VPN server/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://imeiji.github.io">
+            <img src="../../../../img/avatar.jpg" alt="iMeiji">
+            iMeiji
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2017/09/16/OpenConnect VPN server/&title=《OpenConnect VPN server》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2017/09/16/OpenConnect VPN server/&title=《OpenConnect VPN server》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2017/09/16/OpenConnect VPN server/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《OpenConnect VPN server》 — 这是个标题&url=https://imeiji.github.io/2017/09/16/OpenConnect VPN server/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2017/09/16/OpenConnect VPN server/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="../../../10/02/Android 仿知乎分享控件/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android 仿知乎分享控件</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="../../../08/22/Android Studio设置教程/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android Studio设置教程</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'imeijimyblog';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="../../../../index.html" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="../../../../atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>iMeiji &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2017/09/16/OpenConnect VPN server/&title=《OpenConnect VPN server》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2017/09/16/OpenConnect VPN server/&title=《OpenConnect VPN server》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2017/09/16/OpenConnect VPN server/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《OpenConnect VPN server》 — 这是个标题&url=https://imeiji.github.io/2017/09/16/OpenConnect VPN server/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2017/09/16/OpenConnect VPN server/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJklEQVR42u3aQZKDMAwFUe5/aeYAGUh/yaQKub2iEgh+XiiypePA4/wY99+S+6+uP+9fNmTIkPFaBnl97ZP7d6Ww+6WRIUPGDoyrV666vvqWv/fLnGXIkCEDBNb76XKMDBkyZPQZ/GV819mhypAhYx8G2cSS7SiZIp/6I3txGTJkvJDBg+Pvrx+pb8iQIeNVjDMc5NlOkfIsDRkyZMxm8ACXTjptyCCb6i+JqQwZMoYy+NaRYO4nzZPOGCZDhowNGOlxW3rgVVuUYA4yZMgYzegc4vPCZ/pUbbFkyJAxlZEGzc52NC1DLugWkSFDxggGwZB0rVakJEE2aLCQIUPGUMZ9i0PtICwNu+lS/vO5DBkyRjPSM/b0Ht5gQaYbHPnJkCFjEKOWuqUFUf4JD7KX3SIyZMjYjPGbPfSCBFSGDBnbMEj58B6Q3p8WLFFqKEOGjHGM587V00JCUMdI/z1kyJAxglErRtaaLfjUi6FZhgwZQxmdHyLFAx6sawskQ4aMfRh801grSaZlUd6UJkOGjH0Y/Ec7QTNdAt46JkOGjB0Y/YYtfrifHquhZ2XIkDGUcYajkwiuCvcHX0sZMmSMYCyL2Q1YWk7gzRkyZMiYxOAH/enk0knzJZMhQ8aejDR0pukaTzFbW1kZMmTIWHQ8R6YetFnIkCFDBk7gaiWBfolUhgwZ+zBqbVs84qXIB/fiMmTIeCGDbx2LSVspNWyliTJkyJjD+AOYerJQiBLuwAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '这是个标题';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '这是个标题';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

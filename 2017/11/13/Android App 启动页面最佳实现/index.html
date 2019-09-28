@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Android App 启动页面最佳实现 | 这是个标题 | 这是个子标题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="什么是App启动屏幕App 启动页 (Splash)，最经典的莫过于微信的启动页了  首次启动出现一个地球界面，然后才进入主界面，这是因为从桌面点击 App 图标启动应用开始，程序会显示一个启动界面等待 Activity 的创建加载完毕再进行显示 再次启动微信，发现并不会出现地球界面，而是直接进入主界面，这是因为微信并没有完全退出(在后台运行)  来看一下 Google 官方文档《Launch-T">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android App 启动页面最佳实现">
+<meta property="og:url" content="https://imeiji.github.io/2017/11/13/Android App 启动页面最佳实现/index.html">
+<meta property="og:site_name" content="这是个标题">
+<meta property="og:description" content="什么是App启动屏幕App 启动页 (Splash)，最经典的莫过于微信的启动页了  首次启动出现一个地球界面，然后才进入主界面，这是因为从桌面点击 App 图标启动应用开始，程序会显示一个启动界面等待 Activity 的创建加载完毕再进行显示 再次启动微信，发现并不会出现地球界面，而是直接进入主界面，这是因为微信并没有完全退出(在后台运行)  来看一下 Google 官方文档《Launch-T">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2017/11/13/5a09453df043a.png">
+<meta property="og:image" content="https://i.loli.net/2017/11/13/5a094a6959c30.png">
+<meta property="og:image" content="https://i.loli.net/2017/11/13/5a094b31d202a.png">
+<meta property="og:updated_time" content="2017-11-15T06:44:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android App 启动页面最佳实现">
+<meta name="twitter:description" content="什么是App启动屏幕App 启动页 (Splash)，最经典的莫过于微信的启动页了  首次启动出现一个地球界面，然后才进入主界面，这是因为从桌面点击 App 图标启动应用开始，程序会显示一个启动界面等待 Activity 的创建加载完毕再进行显示 再次启动微信，发现并不会出现地球界面，而是直接进入主界面，这是因为微信并没有完全退出(在后台运行)  来看一下 Google 官方文档《Launch-T">
+<meta name="twitter:image" content="https://i.loli.net/2017/11/13/5a09453df043a.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="这是个标题" href="../../../../atom.xml">
+    
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(../../../../img/brand.jpg)">
+      <div class="brand">
+        <a href="../../../../index.html" class="avatar waves-effect waves-circle waves-light">
+          <img src="../../../../img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">iMeiji</h5>
+          <a href="mailto:meijilmz@gmail.com" title="meijilmz@gmail.com" class="mail">meijilmz@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../index.html"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="../../../../categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/iMeiji" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android App 启动页面最佳实现</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android App 启动页面最佳实现</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-11-13T09:16:34.000Z" itemprop="datePublished" class="page-time">
+  2017-11-13
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#什么是App启动屏幕"><span class="post-toc-number">1.</span> <span class="post-toc-text">什么是App启动屏幕</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#启动方式"><span class="post-toc-number">2.</span> <span class="post-toc-text">启动方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#冷启动"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">冷启动</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#热启动"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">热启动</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#温启动"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">温启动</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为什么出现白屏"><span class="post-toc-number">3.</span> <span class="post-toc-text">为什么出现白屏</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#优化方案"><span class="post-toc-number">4.</span> <span class="post-toc-text">优化方案</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#直接干掉"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">直接干掉</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Material-Design"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">Material Design</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#品牌展示"><span class="post-toc-number">4.2.1.</span> <span class="post-toc-text">品牌展示</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#主页预加载"><span class="post-toc-number">4.2.2.</span> <span class="post-toc-text">主页预加载</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注意的问题"><span class="post-toc-number">5.</span> <span class="post-toc-text">注意的问题</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Android App 启动页面最佳实现"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android App 启动页面最佳实现</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-11-13 17:16:34" datetime="2017-11-13T09:16:34.000Z"  itemprop="datePublished">2017-11-13</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="../../../../categories/Android/">Android</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="什么是App启动屏幕"><a href="#什么是App启动屏幕" class="headerlink" title="什么是App启动屏幕"></a>什么是App启动屏幕</h2><p>App 启动页 (Splash)，最经典的莫过于微信的启动页了</p>
+<ol>
+<li>首次启动出现一个地球界面，然后才进入主界面，这是因为从桌面点击 App 图标启动应用开始，程序会显示一个启动界面等待 Activity 的创建加载完毕再进行显示</li>
+<li>再次启动微信，发现并不会出现地球界面，而是直接进入主界面，这是因为微信并没有完全退出(在后台运行)</li>
+</ol>
+<p>来看一下 Google 官方文档《<a href="https://developer.android.google.cn/topic/performance/launch-time.html" target="_blank" rel="noopener">Launch-Time Performance</a>》对应用启动方式的概述：</p>
+<h2 id="启动方式"><a href="#启动方式" class="headerlink" title="启动方式"></a>启动方式</h2><h3 id="冷启动"><a href="#冷启动" class="headerlink" title="冷启动"></a>冷启动</h3><p>冷启动指的是应用程序从头开始：系统的进程没有，直到此开始，创建了应用程序的进程。 在应用程序自设备启动以来第一次启动或系统杀死应用程序等情况下会发生冷启动。 这种类型的启动在最小化启动时间方面是最大的挑战，因为系统和应用程序比其他启动状态具有更多的工作。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2017/11/13/5a09453df043a.png" alt="cold-launch.png" title="">
+                </div>
+                <div class="image-caption">cold-launch.png</div>
+            </figure>
+<h3 id="热启动"><a href="#热启动" class="headerlink" title="热启动"></a>热启动</h3><p>与冷启动相比，热启动应用程序要简单得多，开销更低。在热启动，系统会把你活动放到前台，如果所有应用程序的活动仍驻留在内存中，那么应用程序可以避免重复对象初始化，UI的布局和渲染。<br>热启动显示与冷启动场景相同的屏幕行为：系统进程显示空白屏幕，直到应用程序完成呈现活动。</p>
+<h3 id="温启动"><a href="#温启动" class="headerlink" title="温启动"></a>温启动</h3><p>用户退出您的应用，但随后重新启动。该过程可能已继续运行，但应用程序必须通过调用 onCreate() 从头开始重新创建活动。系统从内存中驱逐您的应用程序，然后用户重新启动它。进程和Activity需要重新启动，但任务可以从保存的实例状态包传递到 onCreate() 中。</p>
+<h2 id="为什么出现白屏"><a href="#为什么出现白屏" class="headerlink" title="为什么出现白屏"></a>为什么出现白屏</h2><p>冷启动白屏持续时间可能会很长，这可是个槽糕的体验，它的启动速度是由于以下引起的：<br>1、Application 的 onCreate 流程，对于大型的 App 来说，通常会在这里做大量的通用组件的初始化操作；<br>建议：很多第三方SDK都放在Application初始化，我们可以放到用到的地方才进行初始化操作。</p>
+<p>2、Activity 的 onCreate() 流程，特别是UI的布局与渲染操作，如果布局过于复杂很可能导致严重的启动性能问题；<br>建议：Activity 仅初始化那些立即需要的对象，xml布局减少冗余或嵌套布局。</p>
+<p>优化APP启动速度意义重大，启动时间过长，可能会使用户直接卸载 App 。</p>
+<h2 id="优化方案"><a href="#优化方案" class="headerlink" title="优化方案"></a>优化方案</h2><p>优化方案主要是从主题切换的方向着手：</p>
+<h3 id="直接干掉"><a href="#直接干掉" class="headerlink" title="直接干掉"></a>直接干掉</h3><p>既然有这个 Activity 启动界面，那能不能直接不要这个呢，当然是可以：<br>定义一个 style ：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"SplashTheme"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">    <span class="comment">&lt;!--关闭启动窗口--&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowDisablePreview"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在 manifest 修改启动页面的主题：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">".SplashActivity"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:theme</span>=<span class="string">"@style/SplashTheme"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>SplashActivity 代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SplashActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        Intent intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, MainActivity.class);</span><br><span class="line">        startActivity(intent);</span><br><span class="line">        finish();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样启动 App，就没有白屏，但会出现点击桌面图标而半天没有反应的现象，显然不好，据我所知 <a href="https://play.google.com/store/apps/details?id=com.innologica.inoreader" target="_blank" rel="noopener">Inoreader (版本5.3)</a> 就是采用这种方法。</p>
+<h3 id="Material-Design"><a href="#Material-Design" class="headerlink" title="Material Design"></a>Material Design</h3><p>其实 Google 针对 App 闪屏，在 Material Design 规范 <a href="https://material.io/guidelines/patterns/launch-screens.html" target="_blank" rel="noopener">Launch screens</a>，也给出了非常详细的设计定义，有两种方案：</p>
+<h4 id="品牌展示"><a href="#品牌展示" class="headerlink" title="品牌展示"></a>品牌展示</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2017/11/13/5a094a6959c30.png" alt="patterns-launch-screens-01.png" title="">
+                </div>
+                <div class="image-caption">patterns-launch-screens-01.png</div>
+            </figure>
+<p>屏幕提供短暂的品牌曝光，来看看如何实现的，定义一个 style ：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"SplashTheme"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowBackground"</span>&gt;</span>@drawable/branded_launch_screens<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>新建 drawable/branded_launch_screens</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">layer-list</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:opacity</span>=<span class="string">"opaque"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--黑色背景颜色--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span>=<span class="string">"@android:color/black"</span> /&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 产品logo--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bitmap</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:gravity</span>=<span class="string">"center"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">"@mipmap/empty_image01"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 右上角的图标元素 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bitmap</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:gravity</span>=<span class="string">"top|right"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">"@mipmap/github"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--最下面的文字--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:bottom</span>=<span class="string">"50dp"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bitmap</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:gravity</span>=<span class="string">"bottom"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">"@mipmap/ic_launcher"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">layer-list</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>其中 android:opacity=”opaque” 参数是为了防止在启动的时候出现背景的闪烁。关于 layer-list 介绍，见博客：用 <a href="http://www.cnblogs.com/tianzhijiexian/p/3889770.html" target="_blank" rel="noopener">layer-list 实现图片旋转叠加、错位叠加、阴影、按钮指示灯</a> 。同样需要在 manifest 修改启动页面的主题。微信、YouTube 就是采用这种方式。</p>
+<h4 id="主页预加载"><a href="#主页预加载" class="headerlink" title="主页预加载"></a>主页预加载</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2017/11/13/5a094b31d202a.png" alt="patterns-launch-screens-03.png" title="">
+                </div>
+                <div class="image-caption">patterns-launch-screens-03.png</div>
+            </figure>
+<p>使用与主界面 UI 一致的占位内容，给用户感觉已经在加载中了，这里模拟了一个高度为 25dp 的状态栏和一个高度为 56dp 的标题栏，定义一个style：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"SplashTheme"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowBackground"</span>&gt;</span>@drawable/placeholder_ui<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>新建 drawable/placeholder_ui</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">layer-list</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:opacity</span>=<span class="string">"opaque"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--状态栏颜色--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span>=<span class="string">"@color/colorPrimaryDark"</span> /&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--假装这里是个toolbar--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:drawable</span>=<span class="string">"@color/colorPrimary"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:top</span>=<span class="string">"25dp"</span> /&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--状态栏25+toolbar56=距离top81--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:drawable</span>=<span class="string">"@android:color/white"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:top</span>=<span class="string">"81dp"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">layer-list</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>同样需要在 manifest 修改启动页面的主题。据我所知，<a href="https://play.google.com/store/apps/details?id=com.czbix.v2ex&amp;hl=zh-CN" target="_blank" rel="noopener">V2EX+</a> 就是采用这种方法。</p>
+<h2 id="注意的问题"><a href="#注意的问题" class="headerlink" title="注意的问题"></a>注意的问题</h2><p>以上的优化方案基本实现了启动页的基本功能，不过还是有一些小的问题需要注意的。</p>
+<ol>
+<li><p>只显示一次启动页（ App 没被 kill 的情况下）</p>
+<p>微信打开之后，按下返回键回到桌面，再打开微信，并不会再看到启动页（除非你手动清了微信的后台或者被系统 kill 了），这个是怎么实现的呢？</p>
+<p>其实很简单，只需要重写一下 <code>MainActivity</code> 的 <code>onBackPressed()</code> 方法就行。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBackPressed</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// super.onBackPressed(); 	不要调用父类的方法</span></span><br><span class="line">    Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_MAIN);</span><br><span class="line">    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line">    intent.addCategory(Intent.CATEGORY_HOME);</span><br><span class="line">    startActivity(intent);</span><br><span class="line">    <span class="comment">// 或者直接使用 moveTaskToBack(true);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上就实现了和微信一样的效果，按返回键不关闭 MainActivity（好恶心的做法~~）</p>
+</li>
+</ol>
+<p>参考：</p>
+<p><a href="http://wuxiaolong.me/2017/03/13/appStart/" target="_blank" rel="noopener">Android APP启动优化</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-11-15T06:44:07.000Z" itemprop="dateUpdated">2017-11-15 14:44:07</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="" target="_blank" rel="external">https://imeiji.github.io/2017/11/13/Android App 启动页面最佳实现/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://imeiji.github.io">
+            <img src="../../../../img/avatar.jpg" alt="iMeiji">
+            iMeiji
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2017/11/13/Android App 启动页面最佳实现/&title=《Android App 启动页面最佳实现》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2017/11/13/Android App 启动页面最佳实现/&title=《Android App 启动页面最佳实现》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2017/11/13/Android App 启动页面最佳实现/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android App 启动页面最佳实现》 — 这是个标题&url=https://imeiji.github.io/2017/11/13/Android App 启动页面最佳实现/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2017/11/13/Android App 启动页面最佳实现/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="../../15/compileSdkVersion、buildToolsVersion、minSdkVersion、targetSdkV/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">compileSdkVersion、buildToolsVersion、minSdkVersion、targetSdkVersion 的区别</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="../../../10/02/Android 仿知乎分享控件/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android 仿知乎分享控件</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'imeijimyblog';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="../../../../index.html" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="../../../../atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>iMeiji &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://imeiji.github.io/2017/11/13/Android App 启动页面最佳实现/&title=《Android App 启动页面最佳实现》 — 这是个标题&pic=https://imeiji.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://imeiji.github.io/2017/11/13/Android App 启动页面最佳实现/&title=《Android App 启动页面最佳实现》 — 这是个标题&source=描述一下" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://imeiji.github.io/2017/11/13/Android App 启动页面最佳实现/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android App 启动页面最佳实现》 — 这是个标题&url=https://imeiji.github.io/2017/11/13/Android App 启动页面最佳实现/&via=https://imeiji.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://imeiji.github.io/2017/11/13/Android App 启动页面最佳实现/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrklEQVR42u3aUY7bMAwFwNz/0ukBUsvviVaaAuOvheNIGgWwuCRfr/h6f1zJM5/Pr0dYz7X+1ujCw8PDGy+9HXqC/xw//3s9Jh4eHt5p3tWCkuHyReSj5VtwY8HDw8P7Ad76eGhD5PwOHh4e3v/Iu1r0+n4Sauf5BDw8PLzf4eXp13m6oU3LtkE5Hh4e3mlePsHv/H2kvoeHh4c3rqrPC2NtanhS9PrLaHh4eHgHeM+W6ttgem9r8uQvHh4e3jnepDlgb9HrxESe+Chmx8PDw3uIt1fEWn+rTci2RbUioMfDw8M7xmuLYUkgm7dn5eWrOqTGw8PDO8DLX+t7E+fjtP8BPHBI4OHh4Y1561d20kbQhuOTBMdmWQ4PDw/vIV5Ceirgzu9Pkhf1L4aHh4dXFr3aV3ybjJhT85aFy1wLHh4e3kO8p5IFe4HvuZavOuOCh4eHV/ImjQL50ZKH6XvtAnh4eHjf4b2Da/7kGt82V9UBNB4eHt4BXs5OFje/kzdm3WwHHh4e3gHe3gSTReQNUm3p6/LHwMPDwzvMmwS+k2+1TQPJyvHw8PC+w5tPtpdKyNPE9ZGDh4eHd4DXBsd7vaB77VxtKB/9hnh4eHgDXt3AVCYvTm/Kzarw8PDwvsKbFLGSsLs9BvbGxMPDwzvHyyPuZz/dSwHXMDw8PLwDvDx5em7pk8PjZnY8PDy8A7y9sDWZbC8NMdkIPDw8vO/w3uX1iq/HXutxyqPIteDh4eENeO1y8wRu+2TehjU/SPDw8PDmvPmLe+/T9kDaXAMeHh7eMV7bRLW36DwEn6ck8PDw8H6BN7nTphLabbrcFDw8PLx/ystbAfZSDJNQO8oo4+Hh4T3KywPlvCuhDZT3Ms03W4aHh4d3gDdpBVjfSUpoyRLzYH1U38PDw8O75/0BKjKIvWpWjEcAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '这是个标题';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '这是个标题';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
